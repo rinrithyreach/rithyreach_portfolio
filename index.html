@@ -6,7 +6,7 @@
 <title>Portfolio – Rin Rithyreach</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 
@@ -30,7 +30,7 @@
   --font: 'Outfit', sans-serif;
 }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
 body {
   font-family: var(--font);
   background: var(--bg);
@@ -120,6 +120,7 @@ nav.scrolled { border-bottom-color: var(--border); }
 /* ── HERO ── */
 .hero {
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
   text-align: center;
@@ -414,6 +415,87 @@ section { padding: 100px 56px; position: relative; z-index: 1; }
 }
 .skill-fill.go { width: var(--w); }
 
+/* ── SKILLS / TOOLS ── */
+#skills { background: var(--bg2); }
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  max-width: 1100px;
+  margin: 56px auto 0;
+}
+
+.tool-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 26px 24px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+.tool-card::after {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: var(--c);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.4s ease;
+}
+.tool-card:hover {
+  border-color: color-mix(in srgb, var(--c) 45%, transparent);
+  transform: translateY(-5px);
+  box-shadow: 0 16px 44px rgba(0,0,0,0.45);
+}
+.tool-card:hover::after { transform: scaleX(1); }
+
+.tool-head { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+
+.tool-icon {
+  width: 48px; height: 48px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; font-weight: 800; letter-spacing: -0.5px;
+  color: var(--c);
+  background: color-mix(in srgb, var(--c) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--c) 32%, transparent);
+  flex-shrink: 0;
+  transition: box-shadow 0.3s;
+}
+.tool-card:hover .tool-icon {
+  box-shadow: 0 0 22px color-mix(in srgb, var(--c) 30%, transparent);
+}
+
+.tool-meta { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.tool-name { font-size: 15px; font-weight: 700; color: var(--text); letter-spacing: -0.3px; }
+.tool-cat { font-size: 11px; font-weight: 500; color: var(--text3); }
+
+.tool-bar-head {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: 8px;
+}
+.tool-bar-lbl {
+  font-size: 10px; font-weight: 700; color: var(--text3);
+  text-transform: uppercase; letter-spacing: 0.8px;
+}
+.tool-pct { font-size: 14px; font-weight: 800; color: var(--c); }
+
+.tool-track {
+  height: 6px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 100px;
+  overflow: hidden;
+}
+.tool-fill {
+  height: 100%;
+  width: 0;
+  border-radius: 100px;
+  background: var(--c);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--c) 45%, transparent);
+  transition: width 1.4s cubic-bezier(0.4,0,0.2,1);
+}
+.tool-fill.go { width: var(--w); }
+
 /* ── SERVICES ── */
 #services { background: var(--bg2); }
 
@@ -679,6 +761,75 @@ footer strong { color: var(--green); font-weight: 600; }
 .reveal-right { opacity: 0; transform: translateX(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
 .reveal-right.in { opacity: 1; transform: translateX(0); }
 
+.reveal.pop { transform: scale(0.92); }
+.reveal.pop.in { transform: scale(1); }
+
+/* ══════════════════════════════════════
+   ENHANCED INTERACTIONS & ANIMATIONS
+══════════════════════════════════════ */
+
+/* Scroll progress bar */
+.scroll-progress {
+  position: fixed; top: 0; left: 0;
+  height: 3px; width: 0;
+  background: linear-gradient(90deg, var(--green), #22d3ee);
+  box-shadow: 0 0 10px rgba(74,222,128,0.6);
+  z-index: 200;
+  transition: width 0.15s ease-out;
+}
+
+/* Animated nav underline + active link (scrollspy) */
+.nav-links a { position: relative; }
+.nav-links a::after {
+  content: '';
+  position: absolute; left: 0; bottom: -5px;
+  width: 100%; height: 2px;
+  background: var(--green); border-radius: 2px;
+  transform: scaleX(0); transform-origin: right;
+  transition: transform 0.3s ease;
+}
+.nav-links a:hover::after,
+.nav-links a.active::after { transform: scaleX(1); transform-origin: left; }
+.nav-links a.active { color: var(--text); }
+
+/* Logo interaction */
+.logo-icon { transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s; }
+.logo:hover .logo-icon {
+  transform: rotate(-10deg) scale(1.1);
+  box-shadow: 0 6px 22px rgba(34,197,94,0.6);
+}
+
+/* Shine sweep across primary buttons */
+.btn-green, .btn-green-lg { position: relative; overflow: hidden; }
+.btn-green::before, .btn-green-lg::before {
+  content: '';
+  position: absolute; top: 0; left: -120%;
+  width: 70%; height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.45), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.6s ease;
+  pointer-events: none;
+}
+.btn-green:hover::before, .btn-green-lg:hover::before { left: 150%; }
+
+/* Press feedback */
+.btn-green:active, .btn-green-lg:active, .btn-outline:active, .scroll-top:active { transform: scale(0.95); }
+
+/* Card title accent on hover */
+.port-body h3, .svc-card h3 { transition: color 0.25s ease; }
+.port-card:hover .port-body h3,
+.svc-card:hover h3 { color: var(--green); }
+
+/* Service icon springs on hover */
+.svc-icon { transition: background 0.3s, box-shadow 0.3s, transform 0.35s cubic-bezier(0.34,1.56,0.64,1); }
+.svc-card:hover .svc-icon { transform: translateY(-4px) rotate(-8deg); }
+
+/* Keyboard focus visibility */
+a:focus-visible, button:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 3px;
+}
+
 /* ══════════════════════════════════════
    RESPONSIVE — TABLET (≤1024px)
 ══════════════════════════════════════ */
@@ -687,11 +838,15 @@ footer strong { color: var(--green); font-weight: 600; }
   section { padding: 80px 32px; }
   footer { padding: 32px; }
 
+  .nav-links { gap: 22px; }
+  .nav-actions .btn-login { display: none; }
+
   .stats-row { grid-template-columns: repeat(2, 1fr); max-width: 600px; }
   .about-grid { grid-template-columns: 1fr; gap: 32px; }
   .contact-wrap { grid-template-columns: 1fr; gap: 40px; }
   .services-grid { grid-template-columns: 1fr 1fr; }
   .port-grid { grid-template-columns: 1fr 1fr; }
+  .skills-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 /* ══════════════════════════════════════
@@ -710,6 +865,7 @@ footer strong { color: var(--green); font-weight: 600; }
     top: 64px; right: -100%;
     width: 75%; max-width: 280px;
     height: calc(100vh - 64px);
+    height: calc(100dvh - 64px);
     background: rgba(22,27,34,0.98);
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
@@ -728,6 +884,8 @@ footer strong { color: var(--green); font-weight: 600; }
     color: var(--text2);
   }
   .nav-links a:hover { color: var(--green); }
+  .nav-links a.active { color: var(--green); }
+  .nav-links a::after { display: none; }
 
   .nav-actions { order: 2; }
   .nav-actions .btn-login { display: none; }
@@ -774,6 +932,13 @@ footer strong { color: var(--green); font-weight: 600; }
   .exp-card { padding: 22px 20px; }
   .exp-card:hover { transform: none; } /* disable slide on mobile */
   .skills-card { padding: 24px 20px; }
+
+  /* SKILLS / TOOLS */
+  .skills-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 40px; }
+  .tool-card { padding: 20px 16px; }
+  .tool-card:hover { transform: none; }
+  .tool-head { gap: 12px; margin-bottom: 16px; }
+  .tool-icon { width: 44px; height: 44px; }
 
   /* SERVICES */
   .services-grid {
@@ -825,6 +990,7 @@ footer strong { color: var(--green); font-weight: 600; }
   .section-title { font-size: clamp(22px, 7vw, 32px); }
   .exp-card { padding: 18px 16px; }
   .skills-card { padding: 20px 16px; }
+  .skills-grid { grid-template-columns: 1fr; }
   .svc-card { padding: 24px 18px; }
   .contact-form { padding: 20px 16px; }
 
@@ -842,12 +1008,28 @@ footer strong { color: var(--green); font-weight: 600; }
   .stat-number { font-size: 22px; }
   .stat-label-top { display: none; }
 }
+
+/* ══════════════════════════════════════
+   REDUCED MOTION — accessibility & low-power
+══════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+}
 </style>
 </head>
 <body>
 
 <!-- Particle Canvas -->
 <canvas id="particles"></canvas>
+
+<!-- Scroll Progress Bar -->
+<div class="scroll-progress" id="scrollProgress"></div>
 
 <!-- NAV -->
 <nav id="navbar">
@@ -858,6 +1040,7 @@ footer strong { color: var(--green); font-weight: 600; }
   <ul class="nav-links" id="navLinks">
     <li><a href="#home">Home</a></li>
     <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
     <li><a href="#services">Services</a></li>
     <li><a href="#portfolio">Portfolio</a></li>
     <!-- <li><a href="#contact">Contact</a></li> -->
@@ -917,9 +1100,9 @@ footer strong { color: var(--green); font-weight: 600; }
 
 <!-- ABOUT -->
 <section id="about">
-  <div class="section-label">About Me</div>
-  <h2 class="section-title">Crafting digital experiences<br>with purpose &amp; precision</h2>
-  <p class="section-sub">Passionate about combining beautiful design with clean, efficient code to create products people love.</p>
+  <div class="section-label reveal">About Me</div>
+  <h2 class="section-title reveal" style="transition-delay:.08s">Crafting digital experiences<br>with purpose &amp; precision</h2>
+  <p class="section-sub reveal" style="transition-delay:.16s">Passionate about combining beautiful design with clean, efficient code to create products people love.</p>
 
   <div class="about-grid">
     <div>
@@ -959,11 +1142,116 @@ footer strong { color: var(--green); font-weight: 600; }
   </div>
 </section>
 
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label reveal">Skills &amp; Tools</div>
+  <h2 class="section-title reveal" style="transition-delay:.08s">Tools &amp; technologies I use</h2>
+  <p class="section-sub reveal" style="transition-delay:.16s">From first sketch to final deploy — the creative and technical toolkit I work with every day.</p>
+
+  <div class="skills-grid">
+    <div class="tool-card reveal pop" style="--c:#31A8FF;transition-delay:.04s">
+      <div class="tool-head">
+        <div class="tool-icon">Ps</div>
+        <div class="tool-meta">
+          <span class="tool-name">Photoshop</span>
+          <span class="tool-cat">Photo Editing</span>
+        </div>
+      </div>
+      <div class="tool-bar-head"><span class="tool-bar-lbl">Proficiency</span><span class="tool-pct">85%</span></div>
+      <div class="tool-track"><div class="tool-fill" style="--w:85%"></div></div>
+    </div>
+
+    <div class="tool-card reveal pop" style="--c:#FF9A00;transition-delay:.08s">
+      <div class="tool-head">
+        <div class="tool-icon">Ai</div>
+        <div class="tool-meta">
+          <span class="tool-name">Illustrator</span>
+          <span class="tool-cat">Vector Design</span>
+        </div>
+      </div>
+      <div class="tool-bar-head"><span class="tool-bar-lbl">Proficiency</span><span class="tool-pct">80%</span></div>
+      <div class="tool-track"><div class="tool-fill" style="--w:80%"></div></div>
+    </div>
+
+    <div class="tool-card reveal pop" style="--c:#F24E1E;transition-delay:.12s">
+      <div class="tool-head">
+        <div class="tool-icon">Fig</div>
+        <div class="tool-meta">
+          <span class="tool-name">Figma</span>
+          <span class="tool-cat">UI / UX Design</span>
+        </div>
+      </div>
+      <div class="tool-bar-head"><span class="tool-bar-lbl">Proficiency</span><span class="tool-pct">75%</span></div>
+      <div class="tool-track"><div class="tool-fill" style="--w:75%"></div></div>
+    </div>
+
+    <div class="tool-card reveal pop" style="--c:#B388FF;transition-delay:.16s">
+      <div class="tool-head">
+        <div class="tool-icon">Pr</div>
+        <div class="tool-meta">
+          <span class="tool-name">Premiere Pro</span>
+          <span class="tool-cat">Video Editing</span>
+        </div>
+      </div>
+      <div class="tool-bar-head"><span class="tool-bar-lbl">Proficiency</span><span class="tool-pct">70%</span></div>
+      <div class="tool-track"><div class="tool-fill" style="--w:70%"></div></div>
+    </div>
+
+    <div class="tool-card reveal pop" style="--c:#FF2D20;transition-delay:.2s">
+      <div class="tool-head">
+        <div class="tool-icon">Lv</div>
+        <div class="tool-meta">
+          <span class="tool-name">Laravel</span>
+          <span class="tool-cat">PHP Framework</span>
+        </div>
+      </div>
+      <div class="tool-bar-head"><span class="tool-bar-lbl">Proficiency</span><span class="tool-pct">78%</span></div>
+      <div class="tool-track"><div class="tool-fill" style="--w:78%"></div></div>
+    </div>
+
+    <div class="tool-card reveal pop" style="--c:#8B92D9;transition-delay:.24s">
+      <div class="tool-head">
+        <div class="tool-icon">php</div>
+        <div class="tool-meta">
+          <span class="tool-name">PHP</span>
+          <span class="tool-cat">Backend Logic</span>
+        </div>
+      </div>
+      <div class="tool-bar-head"><span class="tool-bar-lbl">Proficiency</span><span class="tool-pct">82%</span></div>
+      <div class="tool-track"><div class="tool-fill" style="--w:82%"></div></div>
+    </div>
+
+    <div class="tool-card reveal pop" style="--c:#00A8C5;transition-delay:.28s">
+      <div class="tool-head">
+        <div class="tool-icon">My</div>
+        <div class="tool-meta">
+          <span class="tool-name">MySQL</span>
+          <span class="tool-cat">Database</span>
+        </div>
+      </div>
+      <div class="tool-bar-head"><span class="tool-bar-lbl">Proficiency</span><span class="tool-pct">80%</span></div>
+      <div class="tool-track"><div class="tool-fill" style="--w:80%"></div></div>
+    </div>
+
+    <div class="tool-card reveal pop" style="--c:#F7DF1E;transition-delay:.32s">
+      <div class="tool-head">
+        <div class="tool-icon">JS</div>
+        <div class="tool-meta">
+          <span class="tool-name">JavaScript</span>
+          <span class="tool-cat">Frontend</span>
+        </div>
+      </div>
+      <div class="tool-bar-head"><span class="tool-bar-lbl">Proficiency</span><span class="tool-pct">72%</span></div>
+      <div class="tool-track"><div class="tool-fill" style="--w:72%"></div></div>
+    </div>
+  </div>
+</section>
+
 <!-- SERVICES -->
 <section id="services">
-  <div class="section-label">Services</div>
-  <h2 class="section-title">What I can do for you</h2>
-  <p class="section-sub">Comprehensive digital solutions tailored to bring your vision to life.</p>
+  <div class="section-label reveal">Services</div>
+  <h2 class="section-title reveal" style="transition-delay:.08s">What I can do for you</h2>
+  <p class="section-sub reveal" style="transition-delay:.16s">Comprehensive digital solutions tailored to bring your vision to life.</p>
 
   <div class="services-grid">
     <div class="svc-card reveal">
@@ -991,14 +1279,14 @@ footer strong { color: var(--green); font-weight: 600; }
 
 <!-- PORTFOLIO -->
 <section id="portfolio">
-  <div class="section-label">Portfolio</div>
-  <h2 class="section-title">Featured work</h2>
-  <p class="section-sub">A selection of recent projects showcasing expertise in web development and design.</p>
+  <div class="section-label reveal">Portfolio</div>
+  <h2 class="section-title reveal" style="transition-delay:.08s">Featured work</h2>
+  <p class="section-sub reveal" style="transition-delay:.16s">A selection of recent projects showcasing expertise in web development and design.</p>
 
   <div class="port-grid">
     <a href="https://premium-emporium.com/customer_login.php" class="port-link">
       <div class="port-card reveal">
-        <div class="port-thumb"><img src="img/2 - logo Super mart-02.jpg" alt="E-Commerce"></div>
+        <div class="port-thumb"><img src="img/super-mart.webp" alt="E-Commerce" width="640" height="640" loading="lazy" decoding="async"></div>
         <div class="port-body">
           <div class="port-cat">Web Development</div>
           <h3>E-Commerce Platform</h3>
@@ -1009,7 +1297,7 @@ footer strong { color: var(--green); font-weight: 600; }
     </a>
     <a href="https://premium-emporium.com/restaurant/customer/category.php" class="port-link">
       <div class="port-card reveal" style="transition-delay:0.08s">
-        <div class="port-thumb"><img src="img/2 - logo Super mart-02.jpg" alt="Restaurants"></div>
+        <div class="port-thumb"><img src="img/super-mart.webp" alt="Restaurants" width="640" height="640" loading="lazy" decoding="async"></div>
         <div class="port-body">
           <div class="port-cat">Web Development</div>
           <h3>Restaurants</h3>
@@ -1020,7 +1308,7 @@ footer strong { color: var(--green); font-weight: 600; }
     </a>
     <a href="https://premium-emporium.com/premium-emporium/public/index.php?category=Drinks" class="port-link">
       <div class="port-card reveal" style="transition-delay:0.16s">
-        <div class="port-thumb"><img src="img/Premium Emporium logo.jpg" alt="Wholesale"></div>
+        <div class="port-thumb"><img src="img/premium-emporium.webp" alt="Wholesale" width="640" height="640" loading="lazy" decoding="async"></div>
         <div class="port-body">
           <div class="port-cat">Web Development</div>
           <h3>Wholesale Website</h3>
@@ -1031,7 +1319,7 @@ footer strong { color: var(--green); font-weight: 600; }
     </a>
     <a href="https://hrms.space/" class="port-link">
       <div class="port-card reveal" style="transition-delay:0.24s">
-        <div class="port-thumb"><img src="img/hrms.png" alt="Ministry"></div>
+        <div class="port-thumb"><img src="img/hrms.webp" alt="Ministry" width="640" height="599" loading="lazy" decoding="async"></div>
         <div class="port-body">
           <div class="port-cat">Web Development</div>
           <h3>Ministry Website</h3>
@@ -1105,13 +1393,15 @@ footer strong { color: var(--green); font-weight: 600; }
 <script>
 /* ── PARTICLES ── */
 (function(){
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const canvas = document.getElementById('particles');
   const ctx = canvas.getContext('2d');
-  let dots = [];
+  let dots = [], raf = null, heroVisible = true;
   function resize(){ canvas.width = innerWidth; canvas.height = innerHeight; }
-  resize(); window.addEventListener('resize', resize);
+  resize();
+  addEventListener('resize', resize, {passive:true});
 
-  const count = window.innerWidth < 768 ? 40 : 80;
+  const count = innerWidth < 768 ? 40 : 80;
   for(let i=0;i<count;i++){
     dots.push({
       x: Math.random()*innerWidth, y: Math.random()*innerHeight,
@@ -1121,7 +1411,7 @@ footer strong { color: var(--green); font-weight: 600; }
     });
   }
 
-  function draw(){
+  function frame(move){
     ctx.clearRect(0,0,canvas.width,canvas.height);
     for(let i=0;i<dots.length;i++){
       for(let j=i+1;j<dots.length;j++){
@@ -1139,25 +1429,53 @@ footer strong { color: var(--green); font-weight: 600; }
     }
     dots.forEach(d=>{
       ctx.beginPath();
-      ctx.arc(d.x,d.y,d.r,0,Math.PI*2);
+      ctx.arc(d.x,d.y,d.r,0,6.283);
       ctx.fillStyle=`rgba(74,222,128,${d.a})`;
       ctx.fill();
-      d.x+=d.vx; d.y+=d.vy;
-      if(d.x<0||d.x>canvas.width) d.vx*=-1;
-      if(d.y<0||d.y>canvas.height) d.vy*=-1;
+      if(move){
+        d.x+=d.vx; d.y+=d.vy;
+        if(d.x<0||d.x>canvas.width) d.vx*=-1;
+        if(d.y<0||d.y>canvas.height) d.vy*=-1;
+      }
     });
-    requestAnimationFrame(draw);
   }
-  draw();
+
+  function loop(){ frame(true); raf = requestAnimationFrame(loop); }
+  function start(){ if(!raf) loop(); }
+  function stop(){ if(raf){ cancelAnimationFrame(raf); raf = null; } }
+
+  /* Static single frame for reduced-motion users — no animation loop */
+  if(reduce){ frame(false); return; }
+
+  /* Run only while the hero (canvas area) is on screen and the tab is visible */
+  function sync(){ (heroVisible && !document.hidden) ? start() : stop(); }
+  new IntersectionObserver(es=>{ heroVisible = es[0].isIntersecting; sync(); },{threshold:0})
+    .observe(document.getElementById('home'));
+  document.addEventListener('visibilitychange', sync);
+  start();
 })();
 
 /* ── NAV ── */
 const navbar = document.getElementById('navbar');
 const scrollTopBtn = document.getElementById('scrollTop');
+const scrollProgress = document.getElementById('scrollProgress');
 window.addEventListener('scroll',()=>{
   navbar.classList.toggle('scrolled', scrollY>10);
   scrollTopBtn.classList.toggle('visible', scrollY>400);
-});
+  const max = document.documentElement.scrollHeight - innerHeight;
+  scrollProgress.style.width = (max>0 ? scrollY/max*100 : 0) + '%';
+},{passive:true});
+
+/* ── SCROLLSPY — highlight the nav link of the section in view ── */
+const spyLinks = document.querySelectorAll('.nav-links a');
+const spy = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      spyLinks.forEach(a=>a.classList.toggle('active', a.getAttribute('href')==='#'+e.target.id));
+    }
+  });
+},{rootMargin:'-45% 0px -50% 0px'});
+document.querySelectorAll('section[id]').forEach(s=>spy.observe(s));
 
 /* ── MOBILE MENU ── */
 const toggle = document.getElementById('menuToggle');
@@ -1199,7 +1517,7 @@ const io = new IntersectionObserver(entries=>{
   entries.forEach(e=>{
     if(e.isIntersecting){
       e.target.classList.add('in');
-      e.target.querySelectorAll('.skill-fill').forEach(f=>f.classList.add('go'));
+      e.target.querySelectorAll('.skill-fill,.tool-fill').forEach(f=>f.classList.add('go'));
     }
   });
 },{threshold:0.1,rootMargin:'0px 0px -30px 0px'});
