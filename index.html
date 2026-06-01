@@ -831,6 +831,59 @@ a:focus-visible, button:focus-visible {
 }
 
 /* ══════════════════════════════════════
+   MOUSE-RELATIVE ANIMATIONS
+══════════════════════════════════════ */
+
+/* Hero spotlight — a soft green pool of light that follows the cursor */
+.hero::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(480px circle at var(--mx, 50%) var(--my, 42%),
+              rgba(74,222,128,0.13), transparent 55%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+  z-index: -1;
+}
+.hero.spot::after { opacity: 1; }
+
+/* 3D tilt cards + an inner light sheen that tracks the cursor */
+.tilt { will-change: transform; }
+.card-glow {
+  position: absolute; inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(200px circle at var(--gx, 50%) var(--gy, 50%),
+              rgba(74,222,128,0.12), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+  z-index: 3;
+}
+.tilt:hover .card-glow { opacity: 1; }
+
+/* Trailing cursor glow ring (sits on top of the native cursor) */
+.cursor-glow {
+  position: fixed; top: 0; left: 0;
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(74,222,128,0.55);
+  box-shadow: 0 0 18px rgba(74,222,128,0.35), inset 0 0 12px rgba(74,222,128,0.15);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.3s ease, width 0.25s ease, height 0.25s ease,
+              background 0.25s ease, border-color 0.25s ease;
+  will-change: transform;
+}
+.cursor-glow.show { opacity: 1; }
+.cursor-glow.grow {
+  width: 52px; height: 52px;
+  background: rgba(74,222,128,0.08);
+  border-color: rgba(74,222,128,0.85);
+}
+
+/* ══════════════════════════════════════
    RESPONSIVE — TABLET (≤1024px)
 ══════════════════════════════════════ */
 @media (max-width: 1024px) {
@@ -1027,6 +1080,9 @@ a:focus-visible, button:focus-visible {
 
 <!-- Particle Canvas -->
 <canvas id="particles"></canvas>
+
+<!-- Cursor glow ring -->
+<div class="cursor-glow" id="cursorGlow"></div>
 
 <!-- Scroll Progress Bar -->
 <div class="scroll-progress" id="scrollProgress"></div>
@@ -1394,9 +1450,11 @@ a:focus-visible, button:focus-visible {
 /* ── PARTICLES ── */
 (function(){
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
   const canvas = document.getElementById('particles');
   const ctx = canvas.getContext('2d');
   let dots = [], raf = null, heroVisible = true;
+  let mouse = { x: null, y: null, active: false };
   function resize(){ canvas.width = innerWidth; canvas.height = innerHeight; }
   resize();
   addEventListener('resize', resize, {passive:true});
@@ -1438,6 +1496,25 @@ a:focus-visible, button:focus-visible {
         if(d.y<0||d.y>canvas.height) d.vy*=-1;
       }
     });
+
+    /* Mouse reactivity — particles reach toward and gently part around the cursor */
+    if(mouse.active){
+      for(let i=0;i<dots.length;i++){
+        const d=dots[i];
+        const dx=d.x-mouse.x, dy=d.y-mouse.y;
+        const dist=Math.sqrt(dx*dx+dy*dy);
+        if(dist<170){
+          ctx.beginPath();
+          ctx.strokeStyle=`rgba(74,222,128,${0.18*(1-dist/170)})`;
+          ctx.lineWidth=0.8;
+          ctx.moveTo(d.x,d.y); ctx.lineTo(mouse.x,mouse.y); ctx.stroke();
+          if(move && dist>0.01){
+            const f=(1-dist/170)*0.6;
+            d.x+=(dx/dist)*f; d.y+=(dy/dist)*f;
+          }
+        }
+      }
+    }
   }
 
   function loop(){ frame(true); raf = requestAnimationFrame(loop); }
@@ -1446,6 +1523,11 @@ a:focus-visible, button:focus-visible {
 
   /* Static single frame for reduced-motion users — no animation loop */
   if(reduce){ frame(false); return; }
+
+  if(fine){
+    addEventListener('mousemove', e=>{ mouse.x=e.clientX; mouse.y=e.clientY; mouse.active=true; }, {passive:true});
+    addEventListener('mouseout', e=>{ if(!e.relatedTarget) mouse.active=false; }, {passive:true});
+  }
 
   /* Run only while the hero (canvas area) is on screen and the tab is visible */
   function sync(){ (heroVisible && !document.hidden) ? start() : stop(); }
@@ -1564,6 +1646,89 @@ function sendMsg(){
   alert(`Thank you ${name}! Your message has been received. I'll get back to you at ${email} soon.`);
   ['cname','cemail','csubject','cmessage'].forEach(id=>document.getElementById(id).value='');
 }
+
+/* ══════════════════════════════════════
+   MOUSE-RELATIVE INTERACTIONS
+   (desktop / fine-pointer only, and skipped for reduced-motion)
+══════════════════════════════════════ */
+(function(){
+  const FINE = matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!FINE || REDUCE) return;
+
+  /* 1 — Hero spotlight follows the cursor */
+  const hero = document.getElementById('home');
+  if(hero){
+    hero.addEventListener('mousemove', e=>{
+      const r = hero.getBoundingClientRect();
+      hero.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%');
+      hero.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%');
+      hero.classList.add('spot');
+    }, {passive:true});
+    hero.addEventListener('mouseleave', ()=> hero.classList.remove('spot'));
+  }
+
+  /* 2 — 3D tilt + inner light sheen on cards */
+  const TILT = 8; // max degrees
+  document.querySelectorAll('.tool-card, .svc-card, .port-card').forEach(card=>{
+    card.classList.add('tilt');
+    const glow = document.createElement('span');
+    glow.className = 'card-glow';
+    card.appendChild(glow);
+
+    card.addEventListener('mouseenter', ()=>{
+      card.style.transition = 'transform .08s linear, border-color .3s ease, box-shadow .3s ease';
+    });
+    card.addEventListener('mousemove', e=>{
+      const r = card.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width;   // 0 → 1
+      const py = (e.clientY - r.top) / r.height;   // 0 → 1
+      card.style.transform =
+        `perspective(900px) rotateX(${((0.5 - py) * TILT).toFixed(2)}deg) ` +
+        `rotateY(${((px - 0.5) * TILT).toFixed(2)}deg) translateY(-6px)`;
+      glow.style.setProperty('--gx', (px * 100).toFixed(1) + '%');
+      glow.style.setProperty('--gy', (py * 100).toFixed(1) + '%');
+    });
+    card.addEventListener('mouseleave', ()=>{
+      card.style.transition = 'transform .6s cubic-bezier(.22,1,.36,1), border-color .3s ease, box-shadow .3s ease';
+      card.style.transform = '';
+    });
+  });
+
+  /* 3 — Magnetic primary buttons */
+  document.querySelectorAll('.btn-green-lg, nav .btn-green').forEach(btn=>{
+    const S = 0.3; // pull strength
+    btn.addEventListener('mousemove', e=>{
+      const r = btn.getBoundingClientRect();
+      const x = (e.clientX - (r.left + r.width / 2)) * S;
+      const y = (e.clientY - (r.top + r.height / 2)) * S;
+      btn.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px)`;
+    });
+    btn.addEventListener('mouseleave', ()=> btn.style.transform = '');
+  });
+
+  /* 4 — Trailing cursor glow ring (lerp follow) */
+  const cg = document.getElementById('cursorGlow');
+  if(cg){
+    let cx = innerWidth / 2, cy = innerHeight / 2, tx = cx, ty = cy, shown = false;
+    addEventListener('mousemove', e=>{
+      tx = e.clientX; ty = e.clientY;
+      if(!shown){ cg.classList.add('show'); shown = true; }
+    }, {passive:true});
+    addEventListener('mouseout', e=>{ if(!e.relatedTarget){ cg.classList.remove('show'); shown = false; } });
+    (function follow(){
+      cx += (tx - cx) * 0.18;
+      cy += (ty - cy) * 0.18;
+      cg.style.transform = `translate(${cx.toFixed(1)}px, ${cy.toFixed(1)}px) translate(-50%, -50%)`;
+      requestAnimationFrame(follow);
+    })();
+    document.querySelectorAll('a, button, input, textarea, .tool-card, .svc-card, .port-card, .exp-card, .social-btn, .menu-toggle')
+      .forEach(el=>{
+        el.addEventListener('mouseenter', ()=> cg.classList.add('grow'));
+        el.addEventListener('mouseleave', ()=> cg.classList.remove('grow'));
+      });
+  }
+})();
 </script>
 </body>
 </html>
