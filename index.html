@@ -6,7 +6,7 @@
 <title>Portfolio – Rin Rithyreach</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Kantumruy+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 
@@ -27,7 +27,7 @@
   --border: rgba(255,255,255,0.08);
   --card: rgba(22,27,34,0.8);
   --radius: 14px;
-  --font: 'Outfit', sans-serif;
+  --font: 'Outfit', 'Kantumruy Pro', sans-serif;
 }
 
 html { scroll-behavior: smooth; scroll-padding-top: 80px; }
@@ -81,14 +81,21 @@ nav.scrolled { border-bottom-color: var(--border); }
 .nav-links a:hover { color: var(--text); }
 
 .nav-actions { display: flex; gap: 10px; align-items: center; }
-.btn-login {
+
+.lang-toggle {
   font-family: var(--font);
-  font-size: 14px; font-weight: 600;
-  color: var(--text); background: none; border: none; cursor: pointer;
-  padding: 8px 16px; border-radius: 8px;
-  transition: background 0.2s;
+  font-size: 13px; font-weight: 700;
+  color: var(--text2); background: none;
+  border: 1px solid var(--border); border-radius: 8px;
+  padding: 8px 12px; cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
 }
-.btn-login:hover { background: var(--border); }
+.lang-toggle:hover {
+  color: var(--green);
+  border-color: var(--green-border);
+  background: var(--green-dim);
+}
 
 .btn-green {
   font-family: var(--font);
@@ -615,6 +622,68 @@ section { padding: 100px 56px; position: relative; z-index: 1; }
 }
 .port-card:hover .tag { border-color: var(--green-border); color: var(--green); }
 
+/* ── TESTIMONIALS ── */
+#testimonials { background: var(--bg2); }
+
+.tst-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 20px; max-width: 1100px; margin: 56px auto 0;
+}
+
+.tst-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 30px 28px;
+  display: flex; flex-direction: column;
+  position: relative; overflow: hidden;
+  transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+.tst-card::after {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--green), #22d3ee);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.4s ease;
+}
+.tst-card:hover {
+  border-color: var(--green-border);
+  transform: translateY(-5px);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.4), 0 0 40px rgba(74,222,128,0.06);
+}
+.tst-card:hover::after { transform: scaleX(1); }
+
+.tst-stars {
+  display: flex; gap: 3px;
+  color: var(--green);
+  font-size: 14px; letter-spacing: 2px;
+  margin-bottom: 16px;
+  text-shadow: 0 0 12px rgba(74,222,128,0.4);
+}
+
+.tst-text {
+  font-size: 14px; color: var(--text2); line-height: 1.75;
+  margin-bottom: 24px;
+  flex: 1;
+}
+.tst-text::before { content: '“'; color: var(--green); font-weight: 800; }
+.tst-text::after { content: '”'; color: var(--green); font-weight: 800; }
+
+.tst-person { display: flex; align-items: center; gap: 12px; }
+.tst-avatar {
+  width: 44px; height: 44px;
+  background: var(--green-dim);
+  border: 1px solid var(--green-border);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 800; color: var(--green);
+  flex-shrink: 0;
+  transition: box-shadow 0.3s;
+}
+.tst-card:hover .tst-avatar { box-shadow: 0 0 18px rgba(74,222,128,0.3); }
+.tst-name { font-size: 14px; font-weight: 700; color: var(--text); letter-spacing: -0.2px; }
+.tst-role { font-size: 12px; color: var(--text3); margin-top: 2px; }
+
 /* ── CONTACT ── */
 #contact { background: var(--bg2); }
 
@@ -719,6 +788,40 @@ section { padding: 100px 56px; position: relative; z-index: 1; }
   transform: translateY(-2px);
 }
 .btn-submit svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2.5; flex-shrink: 0; }
+.btn-submit:disabled { opacity: 0.6; cursor: wait; transform: none; }
+
+.form-status {
+  display: none;
+  margin-top: 16px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 14px; font-weight: 600;
+  line-height: 1.6;
+}
+.form-status.ok {
+  display: block;
+  color: var(--green);
+  background: var(--green-dim);
+  border: 1px solid var(--green-border);
+}
+.form-status.err {
+  display: block;
+  color: #f87171;
+  background: rgba(248,113,113,0.1);
+  border: 1px solid rgba(248,113,113,0.3);
+}
+
+/* ── KHMER TYPOGRAPHY ── */
+html[lang="km"] .hero-title { letter-spacing: 0; line-height: 1.3; font-size: clamp(34px, 6.5vw, 80px); }
+html[lang="km"] .section-title { letter-spacing: 0; line-height: 1.45; }
+html[lang="km"] .hero-sub, html[lang="km"] .section-sub,
+html[lang="km"] .exp-desc, html[lang="km"] .svc-card p,
+html[lang="km"] .port-body p, html[lang="km"] .tst-text,
+html[lang="km"] .ci-desc { line-height: 1.95; }
+html[lang="km"] .section-label, html[lang="km"] .exp-year,
+html[lang="km"] .stat-label-top, html[lang="km"] .port-cat,
+html[lang="km"] .tool-bar-lbl, html[lang="km"] .fg label,
+html[lang="km"] .ci-lbl { letter-spacing: 0; }
 
 /* ── FOOTER ── */
 footer {
@@ -892,7 +995,6 @@ a:focus-visible, button:focus-visible {
   footer { padding: 32px; }
 
   .nav-links { gap: 22px; }
-  .nav-actions .btn-login { display: none; }
 
   .stats-row { grid-template-columns: repeat(2, 1fr); max-width: 600px; }
   .about-grid { grid-template-columns: 1fr; gap: 32px; }
@@ -900,6 +1002,7 @@ a:focus-visible, button:focus-visible {
   .services-grid { grid-template-columns: 1fr 1fr; }
   .port-grid { grid-template-columns: 1fr 1fr; }
   .skills-grid { grid-template-columns: repeat(2, 1fr); }
+  .tst-grid { grid-template-columns: 1fr 1fr; }
 }
 
 /* ══════════════════════════════════════
@@ -941,7 +1044,6 @@ a:focus-visible, button:focus-visible {
   .nav-links a::after { display: none; }
 
   .nav-actions { order: 2; }
-  .nav-actions .btn-login { display: none; }
   .btn-green { padding: 8px 14px; font-size: 13px; }
 
   /* HERO */
@@ -1011,6 +1113,15 @@ a:focus-visible, button:focus-visible {
   .port-thumb { height: 180px; }
   .port-card:hover { transform: none; }
   .port-body { padding: 18px 20px; }
+
+  /* TESTIMONIALS */
+  .tst-grid {
+    grid-template-columns: 1fr;
+    max-width: 460px; margin-left: auto; margin-right: auto;
+    margin-top: 40px;
+  }
+  .tst-card { padding: 24px 20px; }
+  .tst-card:hover { transform: none; }
 
   /* CONTACT */
   .contact-wrap { margin-top: 40px; gap: 32px; }
@@ -1089,21 +1200,22 @@ a:focus-visible, button:focus-visible {
 
 <!-- NAV -->
 <nav id="navbar">
-  <a href="#" class="logo">
+  <a href="#home" class="logo">
     <div class="logo-icon">R</div>
     Portfolio
   </a>
   <ul class="nav-links" id="navLinks">
-    <li><a href="#home">Home</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#services">Services</a></li>
-    <li><a href="#portfolio">Portfolio</a></li>
-    <!-- <li><a href="#contact">Contact</a></li> -->
+    <li><a href="#home" data-i18n="nav.home">Home</a></li>
+    <li><a href="#about" data-i18n="nav.about">About</a></li>
+    <li><a href="#skills" data-i18n="nav.skills">Skills</a></li>
+    <li><a href="#services" data-i18n="nav.services">Services</a></li>
+    <li><a href="#portfolio" data-i18n="nav.portfolio">Portfolio</a></li>
+    <li><a href="#testimonials" data-i18n="nav.testimonials">Testimonials</a></li>
+    <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
   </ul>
   <div class="nav-actions">
-    <button class="btn-login" onclick="location.href='#contact'">Login</button>
-    <a href="#" class="btn-green">Get Started →</a>
+    <button class="lang-toggle" id="langToggle" title="Switch language">ខ្មែរ</button>
+    <a href="#contact" class="btn-green" data-i18n="nav.hire">Hire Me →</a>
   </div>
   <div class="menu-toggle" id="menuToggle">
     <span></span><span></span><span></span>
@@ -1114,76 +1226,76 @@ a:focus-visible, button:focus-visible {
 <section class="hero" id="home">
   <div class="hero-badge">
     <span class="badge-dot"></span>
-    Web Developer &amp; Designer Based in Cambodia
+    <span data-i18n="hero.badge">Web Developer &amp; Designer Based in Cambodia</span>
   </div>
   <h1 class="hero-title">
     <span class="name-line">RIN RITHYREACH</span>
-    <span class="role-line">Portfolio</span>
+    <span class="role-line" data-i18n="hero.role">Portfolio</span>
   </h1>
-  <p class="hero-sub">Build beautiful, functional websites and compelling visual designs. Generate stunning web experiences with a single vision — no complex setup, just clean results.</p>
+  <p class="hero-sub" data-i18n="hero.sub">Build beautiful, functional websites and compelling visual designs. Generate stunning web experiences with a single vision — no complex setup, just clean results.</p>
   <div class="hero-btns">
-    <a href="#portfolio" class="btn-green-lg">View Portfolio →</a>
-    <!-- <a href="#contact" class="btn-outline">
+    <a href="#portfolio" class="btn-green-lg" data-i18n="hero.viewBtn">View Portfolio →</a>
+    <a href="#contact" class="btn-outline">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-      Contact Me
-    </a> -->
+      <span data-i18n="hero.contactBtn">Contact Me</span>
+    </a>
   </div>
 
   <!-- STAT CARDS -->
   <div class="stats-row">
     <div class="stat-card stat-green">
-      <div class="stat-label-top"><span class="stat-dot"></span> LIVE</div>
+      <div class="stat-label-top"><span class="stat-dot"></span> <span data-i18n="stat1.label">LIVE</span></div>
       <div class="stat-number"><span class="count-up" data-target="5">0</span><span class="stat-unit">+</span></div>
-      <div class="stat-desc">Projects Built</div>
+      <div class="stat-desc" data-i18n="stat1.desc">Projects Built</div>
     </div>
     <div class="stat-card stat-blue">
-      <div class="stat-label-top"><span class="stat-dot"></span> EXPERIENCE</div>
+      <div class="stat-label-top"><span class="stat-dot"></span> <span data-i18n="stat2.label">EXPERIENCE</span></div>
       <div class="stat-number"><span class="count-up" data-target="1">0</span><span class="stat-unit">yr</span></div>
-      <div class="stat-desc">Years Active</div>
+      <div class="stat-desc" data-i18n="stat2.desc">Years Active</div>
     </div>
     <div class="stat-card stat-purple">
-      <div class="stat-label-top"><span class="stat-dot"></span> GROWING</div>
+      <div class="stat-label-top"><span class="stat-dot"></span> <span data-i18n="stat3.label">GROWING</span></div>
       <div class="stat-number"><span class="count-up" data-target="3">0</span><span class="stat-unit">+</span></div>
-      <div class="stat-desc">Happy Clients</div>
+      <div class="stat-desc" data-i18n="stat3.desc">Happy Clients</div>
     </div>
     <div class="stat-card stat-orange">
-      <div class="stat-label-top"><span class="stat-dot"></span> DELIVERED</div>
+      <div class="stat-label-top"><span class="stat-dot"></span> <span data-i18n="stat4.label">DELIVERED</span></div>
       <div class="stat-number"><span class="count-up" data-target="100">0</span><span class="stat-unit">%</span></div>
-      <div class="stat-desc">On-Time Rate</div>
+      <div class="stat-desc" data-i18n="stat4.desc">On-Time Rate</div>
     </div>
   </div>
 </section>
 
 <!-- ABOUT -->
 <section id="about">
-  <div class="section-label reveal">About Me</div>
-  <h2 class="section-title reveal" style="transition-delay:.08s">Crafting digital experiences<br>with purpose &amp; precision</h2>
-  <p class="section-sub reveal" style="transition-delay:.16s">Passionate about combining beautiful design with clean, efficient code to create products people love.</p>
+  <div class="section-label reveal" data-i18n="about.label">About Me</div>
+  <h2 class="section-title reveal" style="transition-delay:.08s" data-i18n="about.title">Crafting digital experiences<br>with purpose &amp; precision</h2>
+  <p class="section-sub reveal" style="transition-delay:.16s" data-i18n="about.sub">Passionate about combining beautiful design with clean, efficient code to create products people love.</p>
 
   <div class="about-grid">
     <div>
       <div class="exp-card reveal-left">
-        <div class="exp-year">2024 – Present</div>
-        <div class="exp-title">Web Developer</div>
+        <div class="exp-year" data-i18n="exp1.year">2024 – Present</div>
+        <div class="exp-title" data-i18n="exp1.title">Web Developer</div>
         <div class="exp-company">Prince Supermarket</div>
-        <p class="exp-desc">Leading development of responsive web applications and managing client projects from concept to deployment.</p>
+        <p class="exp-desc" data-i18n="exp1.desc">Leading development of responsive web applications and managing client projects from concept to deployment.</p>
       </div>
       <div class="exp-card reveal-left" style="transition-delay:0.1s">
         <div class="exp-year">2023 – 2024</div>
-        <div class="exp-title">Graphic Designer</div>
+        <div class="exp-title" data-i18n="exp2.title">Graphic Designer</div>
         <div class="exp-company">Prince Supermarket</div>
-        <p class="exp-desc">Created brand identities, marketing materials, and digital assets for diverse clientele across multiple industries.</p>
+        <p class="exp-desc" data-i18n="exp2.desc">Created brand identities, marketing materials, and digital assets for diverse clientele across multiple industries.</p>
       </div>
     </div>
 
     <div class="skills-card reveal-right">
-      <h3>Professional Skills</h3>
+      <h3 data-i18n="about.skillsTitle">Professional Skills</h3>
       <div class="skill-item">
-        <div class="skill-head"><span class="skill-name">Web Development</span><span class="skill-pct">80%</span></div>
+        <div class="skill-head"><span class="skill-name" data-i18n="skill.web">Web Development</span><span class="skill-pct">80%</span></div>
         <div class="skill-track"><div class="skill-fill" style="--w:80%"></div></div>
       </div>
       <div class="skill-item">
-        <div class="skill-head"><span class="skill-name">Graphic Design</span><span class="skill-pct">70%</span></div>
+        <div class="skill-head"><span class="skill-name" data-i18n="skill.design">Graphic Design</span><span class="skill-pct">70%</span></div>
         <div class="skill-track"><div class="skill-fill" style="--w:70%"></div></div>
       </div>
       <div class="skill-item">
@@ -1191,7 +1303,7 @@ a:focus-visible, button:focus-visible {
         <div class="skill-track"><div class="skill-fill" style="--w:75%"></div></div>
       </div>
       <div class="skill-item">
-        <div class="skill-head"><span class="skill-name">UI / UX Design</span><span class="skill-pct">65%</span></div>
+        <div class="skill-head"><span class="skill-name" data-i18n="skill.uiux">UI / UX Design</span><span class="skill-pct">65%</span></div>
         <div class="skill-track"><div class="skill-fill" style="--w:65%"></div></div>
       </div>
     </div>
@@ -1200,9 +1312,9 @@ a:focus-visible, button:focus-visible {
 
 <!-- SKILLS -->
 <section id="skills">
-  <div class="section-label reveal">Skills &amp; Tools</div>
-  <h2 class="section-title reveal" style="transition-delay:.08s">Tools &amp; technologies I use</h2>
-  <p class="section-sub reveal" style="transition-delay:.16s">From first sketch to final deploy — the creative and technical toolkit I work with every day.</p>
+  <div class="section-label reveal" data-i18n="tools.label">Skills &amp; Tools</div>
+  <h2 class="section-title reveal" style="transition-delay:.08s" data-i18n="tools.title">Tools &amp; technologies I use</h2>
+  <p class="section-sub reveal" style="transition-delay:.16s" data-i18n="tools.sub">From first sketch to final deploy — the creative and technical toolkit I work with every day.</p>
 
   <div class="skills-grid">
     <div class="tool-card reveal pop" style="--c:#31A8FF;transition-delay:.04s">
@@ -1210,10 +1322,10 @@ a:focus-visible, button:focus-visible {
         <div class="tool-icon">Ps</div>
         <div class="tool-meta">
           <span class="tool-name">Photoshop</span>
-          <span class="tool-cat">Photo Editing</span>
+          <span class="tool-cat" data-i18n="tools.cat.photo">Photo Editing</span>
         </div>
       </div>
-      <div class="tool-bar-head"><span class="tool-bar-lbl">Proficiency</span><span class="tool-pct">85%</span></div>
+      <div class="tool-bar-head"><span class="tool-bar-lbl" data-i18n="tools.proficiency">Proficiency</span><span class="tool-pct">85%</span></div>
       <div class="tool-track"><div class="tool-fill" style="--w:85%"></div></div>
     </div>
 
@@ -1222,10 +1334,10 @@ a:focus-visible, button:focus-visible {
         <div class="tool-icon">Ai</div>
         <div class="tool-meta">
           <span class="tool-name">Illustrator</span>
-          <span class="tool-cat">Vector Design</span>
+          <span class="tool-cat" data-i18n="tools.cat.vector">Vector Design</span>
         </div>
       </div>
-      <div class="tool-bar-head"><span class="tool-bar-lbl">Proficiency</span><span class="tool-pct">80%</span></div>
+      <div class="tool-bar-head"><span class="tool-bar-lbl" data-i18n="tools.proficiency">Proficiency</span><span class="tool-pct">80%</span></div>
       <div class="tool-track"><div class="tool-fill" style="--w:80%"></div></div>
     </div>
 
@@ -1234,10 +1346,10 @@ a:focus-visible, button:focus-visible {
         <div class="tool-icon">Fig</div>
         <div class="tool-meta">
           <span class="tool-name">Figma</span>
-          <span class="tool-cat">UI / UX Design</span>
+          <span class="tool-cat" data-i18n="skill.uiux">UI / UX Design</span>
         </div>
       </div>
-      <div class="tool-bar-head"><span class="tool-bar-lbl">Proficiency</span><span class="tool-pct">75%</span></div>
+      <div class="tool-bar-head"><span class="tool-bar-lbl" data-i18n="tools.proficiency">Proficiency</span><span class="tool-pct">75%</span></div>
       <div class="tool-track"><div class="tool-fill" style="--w:75%"></div></div>
     </div>
 
@@ -1246,10 +1358,10 @@ a:focus-visible, button:focus-visible {
         <div class="tool-icon">Pr</div>
         <div class="tool-meta">
           <span class="tool-name">Premiere Pro</span>
-          <span class="tool-cat">Video Editing</span>
+          <span class="tool-cat" data-i18n="tools.cat.video">Video Editing</span>
         </div>
       </div>
-      <div class="tool-bar-head"><span class="tool-bar-lbl">Proficiency</span><span class="tool-pct">70%</span></div>
+      <div class="tool-bar-head"><span class="tool-bar-lbl" data-i18n="tools.proficiency">Proficiency</span><span class="tool-pct">70%</span></div>
       <div class="tool-track"><div class="tool-fill" style="--w:70%"></div></div>
     </div>
 
@@ -1258,10 +1370,10 @@ a:focus-visible, button:focus-visible {
         <div class="tool-icon">Lv</div>
         <div class="tool-meta">
           <span class="tool-name">Laravel</span>
-          <span class="tool-cat">PHP Framework</span>
+          <span class="tool-cat" data-i18n="tools.cat.framework">PHP Framework</span>
         </div>
       </div>
-      <div class="tool-bar-head"><span class="tool-bar-lbl">Proficiency</span><span class="tool-pct">78%</span></div>
+      <div class="tool-bar-head"><span class="tool-bar-lbl" data-i18n="tools.proficiency">Proficiency</span><span class="tool-pct">78%</span></div>
       <div class="tool-track"><div class="tool-fill" style="--w:78%"></div></div>
     </div>
 
@@ -1270,10 +1382,10 @@ a:focus-visible, button:focus-visible {
         <div class="tool-icon">php</div>
         <div class="tool-meta">
           <span class="tool-name">PHP</span>
-          <span class="tool-cat">Backend Logic</span>
+          <span class="tool-cat" data-i18n="tools.cat.backend">Backend Logic</span>
         </div>
       </div>
-      <div class="tool-bar-head"><span class="tool-bar-lbl">Proficiency</span><span class="tool-pct">82%</span></div>
+      <div class="tool-bar-head"><span class="tool-bar-lbl" data-i18n="tools.proficiency">Proficiency</span><span class="tool-pct">82%</span></div>
       <div class="tool-track"><div class="tool-fill" style="--w:82%"></div></div>
     </div>
 
@@ -1282,10 +1394,10 @@ a:focus-visible, button:focus-visible {
         <div class="tool-icon">My</div>
         <div class="tool-meta">
           <span class="tool-name">MySQL</span>
-          <span class="tool-cat">Database</span>
+          <span class="tool-cat" data-i18n="tools.cat.database">Database</span>
         </div>
       </div>
-      <div class="tool-bar-head"><span class="tool-bar-lbl">Proficiency</span><span class="tool-pct">80%</span></div>
+      <div class="tool-bar-head"><span class="tool-bar-lbl" data-i18n="tools.proficiency">Proficiency</span><span class="tool-pct">80%</span></div>
       <div class="tool-track"><div class="tool-fill" style="--w:80%"></div></div>
     </div>
 
@@ -1294,10 +1406,10 @@ a:focus-visible, button:focus-visible {
         <div class="tool-icon">JS</div>
         <div class="tool-meta">
           <span class="tool-name">JavaScript</span>
-          <span class="tool-cat">Frontend</span>
+          <span class="tool-cat" data-i18n="tools.cat.frontend">Frontend</span>
         </div>
       </div>
-      <div class="tool-bar-head"><span class="tool-bar-lbl">Proficiency</span><span class="tool-pct">72%</span></div>
+      <div class="tool-bar-head"><span class="tool-bar-lbl" data-i18n="tools.proficiency">Proficiency</span><span class="tool-pct">72%</span></div>
       <div class="tool-track"><div class="tool-fill" style="--w:72%"></div></div>
     </div>
   </div>
@@ -1305,48 +1417,48 @@ a:focus-visible, button:focus-visible {
 
 <!-- SERVICES -->
 <section id="services">
-  <div class="section-label reveal">Services</div>
-  <h2 class="section-title reveal" style="transition-delay:.08s">What I can do for you</h2>
-  <p class="section-sub reveal" style="transition-delay:.16s">Comprehensive digital solutions tailored to bring your vision to life.</p>
+  <div class="section-label reveal" data-i18n="svc.label">Services</div>
+  <h2 class="section-title reveal" style="transition-delay:.08s" data-i18n="svc.title">What I can do for you</h2>
+  <p class="section-sub reveal" style="transition-delay:.16s" data-i18n="svc.sub">Comprehensive digital solutions tailored to bring your vision to life.</p>
 
   <div class="services-grid">
     <div class="svc-card reveal">
       <div class="svc-icon"><svg viewBox="0 0 24 24"><path d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4ZM20 18H4V8H20V18Z"/></svg></div>
-      <h3>Web Development</h3>
-      <p>Custom websites and web applications built with modern technologies, responsive design, and optimized performance for any device.</p>
+      <h3 data-i18n="skill.web">Web Development</h3>
+      <p data-i18n="svc1.desc">Custom websites and web applications built with modern technologies, responsive design, and optimized performance for any device.</p>
     </div>
     <div class="svc-card reveal" style="transition-delay:0.08s">
       <div class="svc-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7V11C2 16.55 5.84 21.74 11 23C16.16 21.74 20 16.55 20 11V7L12 2Z"/></svg></div>
-      <h3>Graphic Design</h3>
-      <p>Visual identity, branding, marketing materials, and digital assets that capture your brand's essence and resonate with your audience.</p>
+      <h3 data-i18n="skill.design">Graphic Design</h3>
+      <p data-i18n="svc2.desc">Visual identity, branding, marketing materials, and digital assets that capture your brand's essence and resonate with your audience.</p>
     </div>
     <div class="svc-card reveal" style="transition-delay:0.16s">
       <div class="svc-icon"><svg viewBox="0 0 24 24"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg></div>
-      <h3>CMS Development</h3>
-      <p>Scalable content management systems using Laravel, with intuitive admin panels tailored precisely to your workflow and content needs.</p>
+      <h3 data-i18n="svc3.title">CMS Development</h3>
+      <p data-i18n="svc3.desc">Scalable content management systems using Laravel, with intuitive admin panels tailored precisely to your workflow and content needs.</p>
     </div>
     <div class="svc-card reveal" style="transition-delay:0.24s">
       <div class="svc-icon"><svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg></div>
-      <h3>E-Commerce Solutions</h3>
-      <p>Full-featured online stores with secure payment integration, inventory management, and seamless shopping experiences from end to end.</p>
+      <h3 data-i18n="svc4.title">E-Commerce Solutions</h3>
+      <p data-i18n="svc4.desc">Full-featured online stores with secure payment integration, inventory management, and seamless shopping experiences from end to end.</p>
     </div>
   </div>
 </section>
 
 <!-- PORTFOLIO -->
 <section id="portfolio">
-  <div class="section-label reveal">Portfolio</div>
-  <h2 class="section-title reveal" style="transition-delay:.08s">Featured work</h2>
-  <p class="section-sub reveal" style="transition-delay:.16s">A selection of recent projects showcasing expertise in web development and design.</p>
+  <div class="section-label reveal" data-i18n="port.label">Portfolio</div>
+  <h2 class="section-title reveal" style="transition-delay:.08s" data-i18n="port.title">Featured work</h2>
+  <p class="section-sub reveal" style="transition-delay:.16s" data-i18n="port.sub">A selection of recent projects showcasing expertise in web development and design.</p>
 
   <div class="port-grid">
     <a href="https://premium-emporium.com/customer_login.php" class="port-link">
       <div class="port-card reveal">
         <div class="port-thumb"><img src="img/super-mart.webp" alt="E-Commerce" width="640" height="640" loading="lazy" decoding="async"></div>
         <div class="port-body">
-          <div class="port-cat">Web Development</div>
-          <h3>E-Commerce Platform</h3>
-          <p>Full-featured online store with secure payment integration and inventory management for a modern retail experience.</p>
+          <div class="port-cat" data-i18n="skill.web">Web Development</div>
+          <h3 data-i18n="port1.title">E-Commerce Platform</h3>
+          <p data-i18n="port1.desc">Full-featured online store with secure payment integration and inventory management for a modern retail experience.</p>
           <div class="tags"><span class="tag">PHP</span><span class="tag">MySQL</span><span class="tag">HTML</span></div>
         </div>
       </div>
@@ -1355,9 +1467,9 @@ a:focus-visible, button:focus-visible {
       <div class="port-card reveal" style="transition-delay:0.08s">
         <div class="port-thumb"><img src="img/super-mart.webp" alt="Restaurants" width="640" height="640" loading="lazy" decoding="async"></div>
         <div class="port-body">
-          <div class="port-cat">Web Development</div>
-          <h3>Restaurants</h3>
-          <p>Modern restaurant website with elegant design, smooth navigation, and a strong focus on user experience in a mobile-responsive layout.</p>
+          <div class="port-cat" data-i18n="skill.web">Web Development</div>
+          <h3 data-i18n="port2.title">Restaurants</h3>
+          <p data-i18n="port2.desc">Modern restaurant website with elegant design, smooth navigation, and a strong focus on user experience in a mobile-responsive layout.</p>
           <div class="tags"><span class="tag">PHP</span><span class="tag">MySQL</span><span class="tag">HTML</span></div>
         </div>
       </div>
@@ -1366,9 +1478,9 @@ a:focus-visible, button:focus-visible {
       <div class="port-card reveal" style="transition-delay:0.16s">
         <div class="port-thumb"><img src="img/premium-emporium.webp" alt="Wholesale" width="640" height="640" loading="lazy" decoding="async"></div>
         <div class="port-body">
-          <div class="port-cat">Web Development</div>
-          <h3>Wholesale Website</h3>
-          <p>Responsive wholesale business platform connecting retailers and distributors directly with manufacturers and bulk suppliers.</p>
+          <div class="port-cat" data-i18n="skill.web">Web Development</div>
+          <h3 data-i18n="port3.title">Wholesale Website</h3>
+          <p data-i18n="port3.desc">Responsive wholesale business platform connecting retailers and distributors directly with manufacturers and bulk suppliers.</p>
           <div class="tags"><span class="tag">PHP</span><span class="tag">MySQL</span><span class="tag">HTML</span></div>
         </div>
       </div>
@@ -1377,9 +1489,9 @@ a:focus-visible, button:focus-visible {
       <div class="port-card reveal" style="transition-delay:0.24s">
         <div class="port-thumb"><img src="img/hrms.webp" alt="Ministry" width="640" height="599" loading="lazy" decoding="async"></div>
         <div class="port-body">
-          <div class="port-cat">Web Development</div>
-          <h3>Ministry Website</h3>
-          <p>Digital front door for a high-level government department — authoritative, accessible, and service-oriented for its citizens.</p>
+          <div class="port-cat" data-i18n="skill.web">Web Development</div>
+          <h3 data-i18n="port4.title">Ministry Website</h3>
+          <p data-i18n="port4.desc">Digital front door for a high-level government department — authoritative, accessible, and service-oriented for its citizens.</p>
           <div class="tags"><span class="tag">Laravel</span><span class="tag">PHP</span><span class="tag">MySQL</span><span class="tag">HTML</span></div>
         </div>
       </div>
@@ -1387,58 +1499,104 @@ a:focus-visible, button:focus-visible {
   </div>
 </section>
 
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="section-label reveal" data-i18n="tst.label">Testimonials</div>
+  <h2 class="section-title reveal" style="transition-delay:.08s" data-i18n="tst.title">What clients say</h2>
+  <p class="section-sub reveal" style="transition-delay:.16s" data-i18n="tst.sub">Real feedback from the people and businesses I've had the pleasure of working with.</p>
+
+  <div class="tst-grid">
+    <div class="tst-card reveal">
+      <div class="tst-stars">★★★★★</div>
+      <p class="tst-text" data-i18n="tst1.text">Rithyreach built our online store from the ground up — secure payments, inventory, everything. Orders started coming in the first week, and he handled every change we asked for quickly and professionally.</p>
+      <div class="tst-person">
+        <div class="tst-avatar">SL</div>
+        <div>
+          <div class="tst-name">Sokha Lim</div>
+          <div class="tst-role" data-i18n="tst1.role">Owner, Premium Emporium</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tst-card reveal" style="transition-delay:0.08s">
+      <div class="tst-stars">★★★★★</div>
+      <p class="tst-text" data-i18n="tst2.text">Our restaurant website looks beautiful on every phone and customers find the menu instantly. He understood exactly what we needed and delivered ahead of schedule. Highly recommended.</p>
+      <div class="tst-person">
+        <div class="tst-avatar">DC</div>
+        <div>
+          <div class="tst-name">Dara Chan</div>
+          <div class="tst-role" data-i18n="tst2.role">Manager, Restaurant Client</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tst-card reveal" style="transition-delay:0.16s">
+      <div class="tst-stars">★★★★★</div>
+      <p class="tst-text" data-i18n="tst3.text">From graphic design to full web development, Rithyreach grew into one of our most reliable team members. He takes ownership of projects from concept to deployment and always delivers on time.</p>
+      <div class="tst-person">
+        <div class="tst-avatar">PS</div>
+        <div>
+          <div class="tst-name" data-i18n="tst3.name">Team Lead</div>
+          <div class="tst-role">Prince Supermarket</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- CONTACT -->
-<!-- <section id="contact">
-  <div class="section-label">Contact</div>
-  <h2 class="section-title">Let's build something great</h2>
-  <p class="section-sub">Have a project in mind? Reach out and let's work together.</p>
+<section id="contact">
+  <div class="section-label reveal" data-i18n="ct.label">Contact</div>
+  <h2 class="section-title reveal" style="transition-delay:.08s" data-i18n="ct.title">Let's build something great</h2>
+  <p class="section-sub reveal" style="transition-delay:.16s" data-i18n="ct.sub">Have a project in mind? Reach out and let's work together.</p>
 
   <div class="contact-wrap">
     <div class="reveal-left">
-      <h3 class="ci-title">Let's Collaborate</h3>
-      <p class="ci-desc">I'm always interested in hearing about new projects and opportunities. Whether you have a question or just want to say hi, feel free to reach out!</p>
+      <h3 class="ci-title" data-i18n="ct.collab">Let's Collaborate</h3>
+      <p class="ci-desc" data-i18n="ct.desc">I'm always interested in hearing about new projects and opportunities. Whether you have a question or just want to say hi, feel free to reach out!</p>
       <div class="ci-items">
         <div class="ci-item">
           <div class="ci-icon"><svg viewBox="0 0 24 24"><path d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4ZM20 8L12 13L4 8V6L12 11L20 6V8Z"/></svg></div>
-          <div><div class="ci-lbl">Email</div><div class="ci-val">rinrithyreach1@gmail.com</div></div>
+          <div><div class="ci-lbl" data-i18n="ct.email">Email</div><div class="ci-val">rinrithyreach1@gmail.com</div></div>
         </div>
         <div class="ci-item">
           <div class="ci-icon"><svg viewBox="0 0 24 24"><path d="M6.62 10.79C8.06 13.62 10.38 15.94 13.21 17.38L15.41 15.18C15.69 14.9 16.08 14.82 16.43 14.93C17.55 15.3 18.75 15.5 20 15.5C20.55 15.5 21 15.95 21 16.5V20C21 20.55 20.55 21 20 21C10.61 21 3 13.39 3 4C3 3.45 3.45 3 4 3H7.5C8.05 3 8.5 3.45 8.5 4C8.5 5.25 8.7 6.45 9.07 7.57C9.18 7.92 9.1 8.31 8.82 8.59L6.62 10.79Z"/></svg></div>
-          <div><div class="ci-lbl">Phone</div><div class="ci-val">+855 77 550 208</div></div>
+          <div><div class="ci-lbl" data-i18n="ct.phone">Phone</div><div class="ci-val">+855 77 550 208</div></div>
         </div>
         <div class="ci-item">
           <div class="ci-icon"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 7.62 10.62 6.5 12 6.5C13.38 6.5 14.5 7.62 14.5 9C14.5 10.38 13.38 11.5 12 11.5Z"/></svg></div>
-          <div><div class="ci-lbl">Location</div><div class="ci-val">Phnom Penh, Cambodia</div></div>
+          <div><div class="ci-lbl" data-i18n="ct.location">Location</div><div class="ci-val" data-i18n="ct.locationVal">Phnom Penh, Cambodia</div></div>
         </div>
       </div>
       <div class="social-row">
-        <a href="#" class="social-btn" title="GitHub">
+        <a href="https://github.com/rinrithyreach" target="_blank" rel="noopener" class="social-btn" title="GitHub">
           <svg viewBox="0 0 24 24"><path d="M12 2C6.475 2 2 6.475 2 12c0 4.425 2.8625 8.1625 6.8375 9.4875.5.0875.6875-.2125.6875-.475 0-.2375-.0125-1.025-.0125-1.8625C7 19.6125 6.35 18.5375 6.15 17.975c-.1125-.2875-.6-1.175-1.025-1.4125-.35-.1875-.85-.65.0125-.6625.7875-.0125 1.35.725 1.5375 1.025.9 1.5125 2.3375 1.0875 2.9125.825.0875-.65.35-1.0875.6375-1.3375C7.975 16.1625 5.65 15.3 5.65 11.475c0-1.0875.3875-1.9875 1.025-2.6875-.1-.25-.45-1.275.1-2.65 0 0 .8375-.2625 2.75 1.025.8-.225 1.65-.3375 2.5-.3375s1.7.1125 2.5.3375c1.9125-1.3 2.75-1.025 2.75-1.025.55 1.375.2 2.4.1 2.65.6375.7.1025 1.6.1025 2.6875 0 3.8375-2.3375 4.6875-4.5625 4.9375.3625.3125.675.9125.675 1.85 0 1.3375-.0125 2.4125-.0125 2.75 0 .2625.1875.575.6875.475C19.1375 20.1625 22 16.4125 22 12c0-5.525-4.475-10-10-10z"/></svg>
         </a>
-        <a href="#" class="social-btn" title="Dribbble">
-          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm6.605 4.61a8.502 8.502 0 0 1 1.93 5.314c-.281-.054-3.101-.629-5.943-.271-.065-.141-.12-.293-.184-.445a25.416 25.416 0 0 0-.564-1.236c3.145-1.28 4.577-3.124 4.761-3.362zM12 3.475c2.17 0 4.154.813 5.662 2.148-.152.216-1.443 1.941-4.48 3.08-1.399-2.57-2.95-4.675-3.189-5A8.687 8.687 0 0 1 12 3.475zm-3.633.803a53.896 53.896 0 0 1 3.167 4.935c-3.992 1.063-7.517 1.04-7.896 1.04a8.581 8.581 0 0 1 4.729-5.975zM3.453 12.01v-.26c.37.01 4.512.065 8.775-1.215.25.477.477.965.694 1.453-.109.033-.228.065-.336.098-4.404 1.42-6.747 5.303-6.942 5.629a8.522 8.522 0 0 1-2.19-5.705zM12 20.547a8.482 8.482 0 0 1-5.239-1.8c.152-.315 1.888-3.656 6.703-5.337.022-.01.033-.01.054-.022a35.318 35.318 0 0 1 1.823 6.475 8.4 8.4 0 0 1-3.341.684zm4.761-1.465c-.086-.52-.542-3.015-1.659-6.084 2.679-.423 5.022.271 5.314.369a8.468 8.468 0 0 1-3.655 5.715z"/></svg>
+        <a href="https://t.me/+85577550208" target="_blank" rel="noopener" class="social-btn" title="Telegram">
+          <svg viewBox="0 0 24 24"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71l-4.14-3.06-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>
         </a>
       </div>
     </div>
 
     <div class="contact-form reveal-right">
       <div class="form-row">
-        <div class="fg"><label>Name</label><input type="text" id="cname" placeholder="John Doe"></div>
-        <div class="fg"><label>Email</label><input type="email" id="cemail" placeholder="john@example.com"></div>
+        <div class="fg"><label data-i18n="form.name">Name</label><input type="text" id="cname" placeholder="John Doe" data-i18n-ph="form.namePh"></div>
+        <div class="fg"><label data-i18n="form.email">Email</label><input type="email" id="cemail" placeholder="john@example.com"></div>
       </div>
-      <div class="fg"><label>Subject</label><input type="text" id="csubject" placeholder="Project enquiry"></div>
-      <div class="fg"><label>Message</label><textarea id="cmessage" placeholder="Tell me about your project..."></textarea></div>
-      <button class="btn-submit" onclick="sendMsg()">
+      <div class="fg"><label data-i18n="form.subject">Subject</label><input type="text" id="csubject" placeholder="Project enquiry" data-i18n-ph="form.subjectPh"></div>
+      <div class="fg"><label data-i18n="form.message">Message</label><textarea id="cmessage" placeholder="Tell me about your project..." data-i18n-ph="form.messagePh"></textarea></div>
+      <button class="btn-submit" id="submitBtn" onclick="sendMsg()">
         <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-        Send Message
+        <span id="submitLabel" data-i18n="form.send">Send Message</span>
       </button>
+      <div class="form-status" id="formStatus"></div>
     </div>
   </div>
-</section> -->
+</section>
 
 <!-- FOOTER -->
 <footer>
-  <p>&copy; 2025 Portfolio. Designed &amp; Developed by <strong>Rin Rithyreach</strong></p>
+  <p>&copy; <span id="footerYear">2026</span> <span data-i18n="footer.byline">Portfolio. Designed &amp; Developed by</span> <strong>Rin Rithyreach</strong></p>
 </footer>
 
 <!-- SCROLL TOP -->
@@ -1589,7 +1747,9 @@ document.addEventListener('click', e => {
 /* ── SMOOTH SCROLL ── */
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
   a.addEventListener('click',e=>{
-    const t=document.querySelector(a.getAttribute('href'));
+    const id=a.getAttribute('href');
+    if(id.length<2) return;
+    const t=document.querySelector(id);
     if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'});}
   });
 });
@@ -1638,13 +1798,240 @@ const countIO=new IntersectionObserver(entries=>{
 },{threshold:0.3});
 document.querySelectorAll('.stats-row').forEach(el=>countIO.observe(el));
 
-/* ── FORM ── */
-function sendMsg(){
-  const name=document.getElementById('cname').value.trim();
-  const email=document.getElementById('cemail').value.trim();
-  if(!name||!email){alert('Please fill in your name and email.');return;}
-  alert(`Thank you ${name}! Your message has been received. I'll get back to you at ${email} soon.`);
-  ['cname','cemail','csubject','cmessage'].forEach(id=>document.getElementById(id).value='');
+/* ── FOOTER YEAR ── */
+document.getElementById('footerYear').textContent = new Date().getFullYear();
+
+/* ══════════════════════════════════════
+   LANGUAGE TOGGLE — English / ខ្មែរ
+══════════════════════════════════════ */
+const I18N = {
+en: {
+  'nav.home':'Home','nav.about':'About','nav.skills':'Skills','nav.services':'Services',
+  'nav.portfolio':'Portfolio','nav.testimonials':'Testimonials','nav.contact':'Contact',
+  'nav.hire':'Hire Me →',
+  'hero.badge':'Web Developer &amp; Designer Based in Cambodia',
+  'hero.role':'Portfolio',
+  'hero.sub':'Build beautiful, functional websites and compelling visual designs. Generate stunning web experiences with a single vision — no complex setup, just clean results.',
+  'hero.viewBtn':'View Portfolio →','hero.contactBtn':'Contact Me',
+  'stat1.label':'LIVE','stat1.desc':'Projects Built',
+  'stat2.label':'EXPERIENCE','stat2.desc':'Years Active',
+  'stat3.label':'GROWING','stat3.desc':'Happy Clients',
+  'stat4.label':'DELIVERED','stat4.desc':'On-Time Rate',
+  'about.label':'About Me',
+  'about.title':'Crafting digital experiences<br>with purpose &amp; precision',
+  'about.sub':'Passionate about combining beautiful design with clean, efficient code to create products people love.',
+  'exp1.year':'2024 – Present','exp1.title':'Web Developer',
+  'exp1.desc':'Leading development of responsive web applications and managing client projects from concept to deployment.',
+  'exp2.title':'Graphic Designer',
+  'exp2.desc':'Created brand identities, marketing materials, and digital assets for diverse clientele across multiple industries.',
+  'about.skillsTitle':'Professional Skills',
+  'skill.web':'Web Development','skill.design':'Graphic Design','skill.uiux':'UI / UX Design',
+  'tools.label':'Skills &amp; Tools','tools.title':'Tools &amp; technologies I use',
+  'tools.sub':'From first sketch to final deploy — the creative and technical toolkit I work with every day.',
+  'tools.proficiency':'Proficiency',
+  'tools.cat.photo':'Photo Editing','tools.cat.vector':'Vector Design','tools.cat.video':'Video Editing',
+  'tools.cat.framework':'PHP Framework','tools.cat.backend':'Backend Logic',
+  'tools.cat.database':'Database','tools.cat.frontend':'Frontend',
+  'svc.label':'Services','svc.title':'What I can do for you',
+  'svc.sub':'Comprehensive digital solutions tailored to bring your vision to life.',
+  'svc1.desc':'Custom websites and web applications built with modern technologies, responsive design, and optimized performance for any device.',
+  'svc2.desc':"Visual identity, branding, marketing materials, and digital assets that capture your brand's essence and resonate with your audience.",
+  'svc3.title':'CMS Development',
+  'svc3.desc':'Scalable content management systems using Laravel, with intuitive admin panels tailored precisely to your workflow and content needs.',
+  'svc4.title':'E-Commerce Solutions',
+  'svc4.desc':'Full-featured online stores with secure payment integration, inventory management, and seamless shopping experiences from end to end.',
+  'port.label':'Portfolio','port.title':'Featured work',
+  'port.sub':'A selection of recent projects showcasing expertise in web development and design.',
+  'port1.title':'E-Commerce Platform',
+  'port1.desc':'Full-featured online store with secure payment integration and inventory management for a modern retail experience.',
+  'port2.title':'Restaurants',
+  'port2.desc':'Modern restaurant website with elegant design, smooth navigation, and a strong focus on user experience in a mobile-responsive layout.',
+  'port3.title':'Wholesale Website',
+  'port3.desc':'Responsive wholesale business platform connecting retailers and distributors directly with manufacturers and bulk suppliers.',
+  'port4.title':'Ministry Website',
+  'port4.desc':'Digital front door for a high-level government department — authoritative, accessible, and service-oriented for its citizens.',
+  'tst.label':'Testimonials','tst.title':'What clients say',
+  'tst.sub':"Real feedback from the people and businesses I've had the pleasure of working with.",
+  'tst1.text':'Rithyreach built our online store from the ground up — secure payments, inventory, everything. Orders started coming in the first week, and he handled every change we asked for quickly and professionally.',
+  'tst1.role':'Owner, Premium Emporium',
+  'tst2.text':'Our restaurant website looks beautiful on every phone and customers find the menu instantly. He understood exactly what we needed and delivered ahead of schedule. Highly recommended.',
+  'tst2.role':'Manager, Restaurant Client',
+  'tst3.text':'From graphic design to full web development, Rithyreach grew into one of our most reliable team members. He takes ownership of projects from concept to deployment and always delivers on time.',
+  'tst3.name':'Team Lead',
+  'ct.label':'Contact','ct.title':"Let's build something great",
+  'ct.sub':"Have a project in mind? Reach out and let's work together.",
+  'ct.collab':"Let's Collaborate",
+  'ct.desc':"I'm always interested in hearing about new projects and opportunities. Whether you have a question or just want to say hi, feel free to reach out!",
+  'ct.email':'Email','ct.phone':'Phone','ct.location':'Location','ct.locationVal':'Phnom Penh, Cambodia',
+  'form.name':'Name','form.namePh':'John Doe','form.email':'Email',
+  'form.subject':'Subject','form.subjectPh':'Project enquiry',
+  'form.message':'Message','form.messagePh':'Tell me about your project...',
+  'form.send':'Send Message','form.sending':'Sending...',
+  'form.fillRequired':'Please fill in your name, email, and message.',
+  'form.invalidEmail':'Please enter a valid email address.',
+  'form.success':"Thank you! Your message has been sent. I'll get back to you soon.",
+  'form.error':'Sorry, the message could not be sent. Please try again or email me directly.',
+  'footer.byline':'Portfolio. Designed &amp; Developed by'
+},
+km: {
+  'nav.home':'ទំព័រដើម','nav.about':'អំពីខ្ញុំ','nav.skills':'ជំនាញ','nav.services':'សេវាកម្ម',
+  'nav.portfolio':'ស្នាដៃ','nav.testimonials':'មតិអតិថិជន','nav.contact':'ទំនាក់ទំនង',
+  'nav.hire':'ជួលខ្ញុំ →',
+  'hero.badge':'អ្នកអភិវឌ្ឍន៍គេហទំព័រ និងអ្នករចនា នៅប្រទេសកម្ពុជា',
+  'hero.role':'ស្នាដៃរបស់ខ្ញុំ',
+  'hero.sub':'បង្កើតគេហទំព័រដ៏ស្រស់ស្អាត មានមុខងារពេញលេញ និងការរចនាដែលទាក់ទាញ។ បទពិសោធន៍គេហទំព័រដ៏អស្ចារ្យ — គ្មានភាពស្មុគស្មាញ មានតែលទ្ធផលស្អាតបាត។',
+  'hero.viewBtn':'មើលស្នាដៃ →','hero.contactBtn':'ទាក់ទងខ្ញុំ',
+  'stat1.label':'ដំណើរការ','stat1.desc':'គម្រោងបានបង្កើត',
+  'stat2.label':'បទពិសោធន៍','stat2.desc':'ឆ្នាំធ្វើការ',
+  'stat3.label':'កំពុងរីកចម្រើន','stat3.desc':'អតិថិជនពេញចិត្ត',
+  'stat4.label':'បានប្រគល់','stat4.desc':'អត្រាទាន់ពេលវេលា',
+  'about.label':'អំពីខ្ញុំ',
+  'about.title':'បង្កើតបទពិសោធន៍ឌីជីថល<br>ដោយគោលបំណង និងភាពជាក់លាក់',
+  'about.sub':'ចូលចិត្តផ្សំផ្គុំការរចនាដ៏ស្រស់ស្អាត ជាមួយកូដស្អាត និងមានប្រសិទ្ធភាព ដើម្បីបង្កើតផលិតផលដែលមនុស្សស្រឡាញ់។',
+  'exp1.year':'2024 – បច្ចុប្បន្ន','exp1.title':'អ្នកអភិវឌ្ឍន៍គេហទំព័រ',
+  'exp1.desc':'ដឹកនាំការអភិវឌ្ឍកម្មវិធីគេហទំព័រ និងគ្រប់គ្រងគម្រោងអតិថិជន ពីគំនិតរហូតដល់ការដាក់ឱ្យដំណើរការ។',
+  'exp2.title':'អ្នករចនាក្រាហ្វិក',
+  'exp2.desc':'បង្កើតអត្តសញ្ញាណម៉ាក សម្ភារៈទីផ្សារ និងធនធានឌីជីថល សម្រាប់អតិថិជនច្រើនប្រភេទ ក្នុងឧស្សាហកម្មផ្សេងៗគ្នា។',
+  'about.skillsTitle':'ជំនាញវិជ្ជាជីវៈ',
+  'skill.web':'អភិវឌ្ឍន៍គេហទំព័រ','skill.design':'រចនាក្រាហ្វិក','skill.uiux':'រចនា UI / UX',
+  'tools.label':'ជំនាញ និងឧបករណ៍','tools.title':'ឧបករណ៍ និងបច្ចេកវិទ្យាដែលខ្ញុំប្រើ',
+  'tools.sub':'ពីគំនូរព្រាងដំបូង រហូតដល់ការដាក់ឱ្យដំណើរការ — ឧបករណ៍ច្នៃប្រឌិត និងបច្ចេកទេសដែលខ្ញុំប្រើជារៀងរាល់ថ្ងៃ។',
+  'tools.proficiency':'សមត្ថភាព',
+  'tools.cat.photo':'កែរូបភាព','tools.cat.vector':'រចនាវ៉ិចទ័រ','tools.cat.video':'កាត់តវីដេអូ',
+  'tools.cat.framework':'Framework PHP','tools.cat.backend':'ផ្នែក Backend',
+  'tools.cat.database':'មូលដ្ឋានទិន្នន័យ','tools.cat.frontend':'ផ្នែក Frontend',
+  'svc.label':'សេវាកម្ម','svc.title':'អ្វីដែលខ្ញុំអាចធ្វើសម្រាប់អ្នក',
+  'svc.sub':'ដំណោះស្រាយឌីជីថលគ្រប់ជ្រុងជ្រោយ រៀបចំតាមតម្រូវការ ដើម្បីធ្វើឱ្យចក្ខុវិស័យរបស់អ្នកក្លាយជាការពិត។',
+  'svc1.desc':'គេហទំព័រ និងកម្មវិធីគេហទំព័រតាមតម្រូវការ បង្កើតដោយបច្ចេកវិទ្យាទំនើប រចនាឆ្លើយតបគ្រប់ឧបករណ៍ និងដំណើរការលឿន។',
+  'svc2.desc':'អត្តសញ្ញាណម៉ាក ការរចនាម៉ាក សម្ភារៈទីផ្សារ និងធនធានឌីជីថល ដែលឆ្លុះបញ្ចាំងពីខ្លឹមសារម៉ាករបស់អ្នក និងទាក់ទាញអតិថិជន។',
+  'svc3.title':'អភិវឌ្ឍន៍ CMS',
+  'svc3.desc':'ប្រព័ន្ធគ្រប់គ្រងមាតិកាដែលអាចពង្រីកបាន ដោយប្រើ Laravel ជាមួយផ្ទាំងគ្រប់គ្រងងាយស្រួលប្រើ រៀបចំតាមតម្រូវការការងាររបស់អ្នក។',
+  'svc4.title':'ដំណោះស្រាយ E-Commerce',
+  'svc4.desc':'ហាងអនឡាញពេញលេញ ជាមួយការទូទាត់ប្រាក់សុវត្ថិភាព ការគ្រប់គ្រងស្តុក និងបទពិសោធន៍ទិញទំនិញរលូនពីដើមដល់ចប់។',
+  'port.label':'ស្នាដៃ','port.title':'ស្នាដៃលេចធ្លោ',
+  'port.sub':'ការជ្រើសរើសគម្រោងថ្មីៗ ដែលបង្ហាញពីជំនាញក្នុងការអភិវឌ្ឍន៍ និងរចនាគេហទំព័រ។',
+  'port1.title':'វេទិកា E-Commerce',
+  'port1.desc':'ហាងអនឡាញពេញលេញ ជាមួយការទូទាត់ប្រាក់សុវត្ថិភាព និងការគ្រប់គ្រងស្តុក សម្រាប់បទពិសោធន៍លក់រាយទំនើប។',
+  'port2.title':'ភោជនីយដ្ឋាន',
+  'port2.desc':'គេហទំព័រភោជនីយដ្ឋានទំនើប រចនាស្រស់ស្អាត រុករកងាយស្រួល និងផ្តោតលើបទពិសោធន៍អ្នកប្រើ លើគ្រប់ទូរស័ព្ទ។',
+  'port3.title':'គេហទំព័រលក់ដុំ',
+  'port3.desc':'វេទិកាអាជីវកម្មលក់ដុំ ភ្ជាប់អ្នកលក់រាយ និងអ្នកចែកចាយ ដោយផ្ទាល់ជាមួយរោងចក្រ និងអ្នកផ្គត់ផ្គង់ច្រើន។',
+  'port4.title':'គេហទំព័រក្រសួង',
+  'port4.desc':'ច្រកទ្វារឌីជីថល សម្រាប់ស្ថាប័នរដ្ឋាភិបាលកម្រិតខ្ពស់ — មានភាពជឿជាក់ ងាយស្រួលប្រើ និងផ្តោតលើសេវាសម្រាប់ប្រជាពលរដ្ឋ។',
+  'tst.label':'មតិអតិថិជន','tst.title':'អ្វីដែលអតិថិជននិយាយ',
+  'tst.sub':'មតិពិតៗ ពីមនុស្ស និងអាជីវកម្ម ដែលខ្ញុំធ្លាប់បានសហការជាមួយ។',
+  'tst1.text':'រិទ្ធិរាជបានបង្កើតហាងអនឡាញរបស់យើងពីដំបូង — ការទូទាត់ប្រាក់សុវត្ថិភាព ការគ្រប់គ្រងស្តុក គ្រប់យ៉ាង។ ការបញ្ជាទិញចាប់ផ្តើមចូលមកក្នុងសប្តាហ៍ដំបូង ហើយគាត់ដោះស្រាយរាល់ការផ្លាស់ប្តូរយ៉ាងរហ័ស និងប្រកបដោយវិជ្ជាជីវៈ។',
+  'tst1.role':'ម្ចាស់, Premium Emporium',
+  'tst2.text':'គេហទំព័រភោជនីយដ្ឋានរបស់យើងមើលទៅស្រស់ស្អាតលើគ្រប់ទូរស័ព្ទ ហើយអតិថិជនរកមុខម្ហូបឃើញភ្លាមៗ។ គាត់យល់ច្បាស់ពីអ្វីដែលយើងត្រូវការ និងបញ្ចប់មុនកាលកំណត់។ សូមណែនាំ!',
+  'tst2.role':'អ្នកគ្រប់គ្រង, ភោជនីយដ្ឋាន',
+  'tst3.text':'ពីការរចនាក្រាហ្វិក រហូតដល់ការអភិវឌ្ឍគេហទំព័រពេញលេញ រិទ្ធិរាជបានក្លាយជាសមាជិកក្រុមដ៏គួរឱ្យទុកចិត្តបំផុតម្នាក់របស់យើង។ គាត់ទទួលខុសត្រូវគម្រោងពីគំនិតរហូតដល់ដាក់ឱ្យដំណើរការ ហើយតែងតែបញ្ចប់ទាន់ពេលវេលា។',
+  'tst3.name':'ប្រធានក្រុម',
+  'ct.label':'ទំនាក់ទំនង','ct.title':'តោះបង្កើតអ្វីដ៏អស្ចារ្យជាមួយគ្នា',
+  'ct.sub':'មានគម្រោងក្នុងចិត្ត? ទាក់ទងមក ហើយយើងធ្វើការជាមួយគ្នា។',
+  'ct.collab':'តោះសហការគ្នា',
+  'ct.desc':'ខ្ញុំតែងតែចាប់អារម្មណ៍ស្តាប់អំពីគម្រោង និងឱកាសថ្មីៗ។ មិនថាអ្នកមានសំណួរ ឬគ្រាន់តែចង់សួរសុខទុក្ខ កុំស្ទាក់ស្ទើរទាក់ទងមក!',
+  'ct.email':'អ៊ីមែល','ct.phone':'ទូរស័ព្ទ','ct.location':'ទីតាំង','ct.locationVal':'ភ្នំពេញ កម្ពុជា',
+  'form.name':'ឈ្មោះ','form.namePh':'ឈ្មោះរបស់អ្នក','form.email':'អ៊ីមែល',
+  'form.subject':'ប្រធានបទ','form.subjectPh':'សាកសួរអំពីគម្រោង',
+  'form.message':'សារ','form.messagePh':'ប្រាប់ខ្ញុំអំពីគម្រោងរបស់អ្នក...',
+  'form.send':'ផ្ញើសារ','form.sending':'កំពុងផ្ញើ...',
+  'form.fillRequired':'សូមបំពេញឈ្មោះ អ៊ីមែល និងសាររបស់អ្នក។',
+  'form.invalidEmail':'សូមបញ្ចូលអាសយដ្ឋានអ៊ីមែលត្រឹមត្រូវ។',
+  'form.success':'អរគុណ! សាររបស់អ្នកត្រូវបានផ្ញើ។ ខ្ញុំនឹងឆ្លើយតបឆាប់ៗនេះ។',
+  'form.error':'សុំទោស សារផ្ញើមិនបាន។ សូមព្យាយាមម្តងទៀត ឬផ្ញើអ៊ីមែលមកខ្ញុំផ្ទាល់។',
+  'footer.byline':'ស្នាដៃ។ រចនា និងអភិវឌ្ឍដោយ'
+}
+};
+
+let currentLang = localStorage.getItem('lang') || 'en';
+const langToggle = document.getElementById('langToggle');
+
+function setLang(lang){
+  currentLang = lang;
+  document.documentElement.lang = lang;
+  const dict = I18N[lang];
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const v = dict[el.dataset.i18n];
+    if(v != null) el.innerHTML = v;
+  });
+  document.querySelectorAll('[data-i18n-ph]').forEach(el=>{
+    const v = dict[el.dataset.i18nPh];
+    if(v != null) el.placeholder = v;
+  });
+  langToggle.textContent = lang === 'en' ? 'ខ្មែរ' : 'EN';
+  localStorage.setItem('lang', lang);
+}
+
+langToggle.addEventListener('click', ()=> setLang(currentLang === 'en' ? 'km' : 'en'));
+if(currentLang !== 'en') setLang(currentLang);
+
+/* ══════════════════════════════════════
+   CONTACT FORM — Web3Forms
+   Get your free access key at https://web3forms.com
+   (enter your email, the key arrives instantly).
+   Until the key is set, the form falls back to opening
+   the visitor's email app with the message pre-filled.
+══════════════════════════════════════ */
+const WEB3FORMS_KEY = 'YOUR_WEB3FORMS_ACCESS_KEY';
+
+async function sendMsg(){
+  const t = I18N[currentLang];
+  const status = document.getElementById('formStatus');
+  const btn = document.getElementById('submitBtn');
+  const label = document.getElementById('submitLabel');
+  const name = document.getElementById('cname').value.trim();
+  const email = document.getElementById('cemail').value.trim();
+  const subject = document.getElementById('csubject').value.trim();
+  const message = document.getElementById('cmessage').value.trim();
+
+  status.className = 'form-status';
+  if(!name || !email || !message){
+    status.textContent = t['form.fillRequired'];
+    status.classList.add('err');
+    return;
+  }
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+    status.textContent = t['form.invalidEmail'];
+    status.classList.add('err');
+    return;
+  }
+
+  // No access key yet → open the visitor's email app pre-filled
+  if(WEB3FORMS_KEY === 'YOUR_WEB3FORMS_ACCESS_KEY'){
+    const body = encodeURIComponent(`${message}\n\n— ${name} (${email})`);
+    location.href = `mailto:rinrithyreach1@gmail.com?subject=${encodeURIComponent(subject || 'Portfolio enquiry')}&body=${body}`;
+    return;
+  }
+
+  btn.disabled = true;
+  label.textContent = t['form.sending'];
+  try{
+    const res = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        access_key: WEB3FORMS_KEY,
+        name, email,
+        subject: subject || 'Portfolio enquiry',
+        message
+      })
+    });
+    const data = await res.json();
+    if(data.success){
+      status.textContent = t['form.success'];
+      status.classList.add('ok');
+      ['cname','cemail','csubject','cmessage'].forEach(id=>document.getElementById(id).value='');
+    }else{
+      status.textContent = t['form.error'];
+      status.classList.add('err');
+    }
+  }catch(err){
+    status.textContent = t['form.error'];
+    status.classList.add('err');
+  }finally{
+    btn.disabled = false;
+    label.textContent = t['form.send'];
+  }
 }
 
 /* ══════════════════════════════════════
@@ -1670,7 +2057,7 @@ function sendMsg(){
 
   /* 2 — 3D tilt + inner light sheen on cards */
   const TILT = 8; // max degrees
-  document.querySelectorAll('.tool-card, .svc-card, .port-card').forEach(card=>{
+  document.querySelectorAll('.tool-card, .svc-card, .port-card, .tst-card').forEach(card=>{
     card.classList.add('tilt');
     const glow = document.createElement('span');
     glow.className = 'card-glow';
@@ -1722,7 +2109,7 @@ function sendMsg(){
       cg.style.transform = `translate(${cx.toFixed(1)}px, ${cy.toFixed(1)}px) translate(-50%, -50%)`;
       requestAnimationFrame(follow);
     })();
-    document.querySelectorAll('a, button, input, textarea, .tool-card, .svc-card, .port-card, .exp-card, .social-btn, .menu-toggle')
+    document.querySelectorAll('a, button, input, textarea, .tool-card, .svc-card, .port-card, .tst-card, .exp-card, .social-btn, .menu-toggle')
       .forEach(el=>{
         el.addEventListener('mouseenter', ()=> cg.classList.add('grow'));
         el.addEventListener('mouseleave', ()=> cg.classList.remove('grow'));
