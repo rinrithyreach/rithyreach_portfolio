@@ -27,6 +27,7 @@
   --border: rgba(255,255,255,0.08);
   --card: rgba(22,27,34,0.8);
   --radius: 14px;
+  --container: 1100px;
   --font: 'Outfit', 'Kantumruy Pro', sans-serif;
 }
 
@@ -308,7 +309,11 @@ nav.scrolled { border-bottom-color: var(--border); }
 .stat-orange .stat-number { color: var(--orange); }
 
 /* ── SECTION BASE ── */
-section { padding: 100px 56px; position: relative; z-index: 1; }
+/* side padding grows on wide screens so headings line up with the centered grids */
+section {
+  padding: 100px max(56px, calc((100% - var(--container)) / 2));
+  position: relative; z-index: 1;
+}
 
 .section-label {
   display: inline-flex; align-items: center; gap: 8px;
@@ -343,7 +348,7 @@ section { padding: 100px 56px; position: relative; z-index: 1; }
 #about { background: var(--bg); }
 
 .about-grid {
-  max-width: 1100px; margin: 0 auto;
+  max-width: var(--container); margin: 0 auto;
   display: grid; grid-template-columns: 1fr 1fr;
   gap: 48px; align-items: start;
   margin-top: 56px;
@@ -429,7 +434,7 @@ section { padding: 100px 56px; position: relative; z-index: 1; }
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
-  max-width: 1100px;
+  max-width: var(--container);
   margin: 56px auto 0;
 }
 
@@ -508,7 +513,7 @@ section { padding: 100px 56px; position: relative; z-index: 1; }
 
 .services-grid {
   display: grid; grid-template-columns: repeat(2, 1fr);
-  gap: 20px; max-width: 1000px; margin: 56px auto 0;
+  gap: 20px; max-width: var(--container); margin: 56px auto 0;
 }
 
 .svc-card {
@@ -557,7 +562,7 @@ section { padding: 100px 56px; position: relative; z-index: 1; }
 
 .port-grid {
   display: grid; grid-template-columns: repeat(2, 1fr);
-  gap: 20px; max-width: 1100px; margin: 56px auto 0;
+  gap: 20px; max-width: var(--container); margin: 56px auto 0;
 }
 
 .port-link { text-decoration: none; display: block; }
@@ -627,7 +632,7 @@ section { padding: 100px 56px; position: relative; z-index: 1; }
 
 .tst-grid {
   display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 20px; max-width: 1100px; margin: 56px auto 0;
+  gap: 20px; max-width: var(--container); margin: 56px auto 0;
 }
 
 .tst-card {
@@ -688,7 +693,7 @@ section { padding: 100px 56px; position: relative; z-index: 1; }
 #contact { background: var(--bg2); }
 
 .contact-wrap {
-  max-width: 1000px; margin: 56px auto 0;
+  max-width: var(--container); margin: 56px auto 0;
   display: grid; grid-template-columns: 1fr 1.2fr;
   gap: 56px; align-items: start;
 }
@@ -1507,6 +1512,17 @@ a:focus-visible, button:focus-visible {
         </div>
       </div>
     </a>
+    <a href="https://rinrithyreach.github.io/imageup/" class="port-link">
+      <div class="port-card reveal" style="transition-delay:0.4s">
+        <div class="port-thumb"><img src="img/imageup.webp" alt="ImageUp AI" width="640" height="400" loading="lazy" decoding="async"></div>
+        <div class="port-body">
+          <div class="port-cat" data-i18n="port6.cat">Tool</div>
+          <h3 data-i18n="port6.title">Image Upscaler</h3>
+          <p data-i18n="port6.desc">ImageUp AI enlarges photos 2×, 4× or 8× with a Real-ESRGAN model that runs entirely in the browser, so images never leave your device.</p>
+          <div class="tags"><span class="tag">JavaScript</span><span class="tag">ONNX Runtime</span><span class="tag">WebGPU</span></div>
+        </div>
+      </div>
+    </a>
   </div>
 </section>
 
@@ -1863,6 +1879,8 @@ en: {
   'port4.desc':'Digital front door for a high-level government department — authoritative, accessible, and service-oriented for its citizens.',
   'port5.title':'Student Management System',
   'port5.desc':'Streamlined platform for managing student records, tracking academic progress, and searching the student directory with ease.',
+  'port6.cat':'Tool','port6.title':'Image Upscaler',
+  'port6.desc':'ImageUp AI enlarges photos 2×, 4× or 8× with a Real-ESRGAN model that runs entirely in the browser, so images never leave your device.',
   'tst.label':'Testimonials','tst.title':'What clients say',
   'tst.sub':"Real feedback from the people and businesses I've had the pleasure of working with.",
   'tst1.text':'Rithyreach built our online store from the ground up — secure payments, inventory, everything. Orders started coming in the first week, and he handled every change we asked for quickly and professionally.',
@@ -1933,6 +1951,8 @@ km: {
   'port4.desc':'ច្រកទ្វារឌីជីថល សម្រាប់ស្ថាប័នរដ្ឋាភិបាលកម្រិតខ្ពស់ — មានភាពជឿជាក់ ងាយស្រួលប្រើ និងផ្តោតលើសេវាសម្រាប់ប្រជាពលរដ្ឋ។',
   'port5.title':'ប្រព័ន្ធគ្រប់គ្រងនិស្សិត',
   'port5.desc':'វេទិកាសម្រាប់គ្រប់គ្រងកំណត់ត្រានិស្សិត តាមដានវឌ្ឍនភាពសិក្សា និងស្វែងរកព័ត៌មាននិស្សិត យ៉ាងងាយស្រួល។',
+  'port6.cat':'ឧបករណ៍','port6.title':'កម្មវិធីពង្រីករូបភាព',
+  'port6.desc':'ImageUp AI ពង្រីករូបភាព 2×, 4× ឬ 8× ដោយប្រើម៉ូដែល Real-ESRGAN ដែលដំណើរការផ្ទាល់ក្នុងកម្មវិធីរុករក ដូច្នេះរូបភាពមិនចេញពីឧបករណ៍របស់អ្នកឡើយ។',
   'tst.label':'មតិអតិថិជន','tst.title':'អ្វីដែលអតិថិជននិយាយ',
   'tst.sub':'មតិពិតៗ ពីមនុស្ស និងអាជីវកម្ម ដែលខ្ញុំធ្លាប់បានសហការជាមួយ។',
   'tst1.text':'រិទ្ធិរាជបានបង្កើតហាងអនឡាញរបស់យើងពីដំបូង — ការទូទាត់ប្រាក់សុវត្ថិភាព ការគ្រប់គ្រងស្តុក គ្រប់យ៉ាង។ ការបញ្ជាទិញចាប់ផ្តើមចូលមកក្នុងសប្តាហ៍ដំបូង ហើយគាត់ដោះស្រាយរាល់ការផ្លាស់ប្តូរយ៉ាងរហ័ស និងប្រកបដោយវិជ្ជាជីវៈ។',
