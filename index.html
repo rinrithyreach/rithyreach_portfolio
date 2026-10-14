@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Portfolio – Rin Rithyreach</title>
+<link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="img/favicon-192.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Kantumruy+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -350,7 +353,7 @@ section {
 .about-grid {
   max-width: var(--container); margin: 0 auto;
   display: grid; grid-template-columns: 1fr 1fr;
-  gap: 48px; align-items: start;
+  gap: 20px;
   margin-top: 56px;
 }
 
@@ -359,7 +362,6 @@ section {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 28px 32px;
-  margin-bottom: 16px;
   position: relative;
   overflow: hidden;
   transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
@@ -389,43 +391,7 @@ section {
 .exp-title { font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 3px; letter-spacing: -0.3px; }
 .exp-company { font-size: 13px; color: var(--text3); margin-bottom: 10px; }
 .exp-desc { font-size: 14px; color: var(--text2); line-height: 1.65; }
-
-/* Skills */
-.skills-card {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 32px;
-}
-.skills-card h3 {
-  font-size: 18px; font-weight: 700;
-  color: var(--text); margin-bottom: 28px; letter-spacing: -0.3px;
-}
-
-.skill-item { margin-bottom: 22px; }
-.skill-item:last-child { margin-bottom: 0; }
-.skill-head { display: flex; justify-content: space-between; margin-bottom: 8px; }
-.skill-name { font-size: 14px; font-weight: 600; color: var(--text); }
-.skill-pct {
-  font-size: 12px; font-weight: 700; color: var(--green);
-  background: var(--green-dim);
-  border: 1px solid var(--green-border);
-  padding: 2px 8px; border-radius: 6px;
-}
-.skill-track {
-  height: 5px;
-  background: rgba(255,255,255,0.06);
-  border-radius: 100px; overflow: hidden;
-}
-.skill-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--green) 0%, #22d3ee 100%);
-  border-radius: 100px;
-  width: 0;
-  transition: width 1.4s cubic-bezier(0.4,0,0.2,1);
-  box-shadow: 0 0 12px rgba(74,222,128,0.4);
-}
-.skill-fill.go { width: var(--w); }
+.exp-title + .exp-desc { margin-top: 10px; }
 
 /* ── SKILLS / TOOLS ── */
 #skills { background: var(--bg2); }
@@ -435,8 +401,20 @@ section {
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
   max-width: var(--container);
-  margin: 56px auto 0;
+  margin: 32px auto 0;
 }
+
+.tools-more { display: flex; margin-top: 28px; }
+.tools-more svg { transition: transform 0.3s ease; }
+.tools-more [aria-expanded="true"] svg { transform: rotate(180deg); }
+
+/* collapsible: script animates the height between 0 and the measured content height */
+.tools-panel {
+  height: 0; overflow: hidden;
+  transition: height 0.5s cubic-bezier(0.4,0,0.2,1);
+}
+.tools-panel.settled { height: auto; overflow: visible; } /* open and at rest: card hover effects may spill out */
+.tools-panel-inner { display: flow-root; }
 
 .tool-card {
   background: var(--bg);
@@ -627,68 +605,6 @@ section {
 }
 .port-card:hover .tag { border-color: var(--green-border); color: var(--green); }
 
-/* ── TESTIMONIALS ── */
-#testimonials { background: var(--bg2); }
-
-.tst-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 20px; max-width: var(--container); margin: 56px auto 0;
-}
-
-.tst-card {
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 30px 28px;
-  display: flex; flex-direction: column;
-  position: relative; overflow: hidden;
-  transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
-}
-.tst-card::after {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0; height: 3px;
-  background: linear-gradient(90deg, var(--green), #22d3ee);
-  transform: scaleX(0); transform-origin: left;
-  transition: transform 0.4s ease;
-}
-.tst-card:hover {
-  border-color: var(--green-border);
-  transform: translateY(-5px);
-  box-shadow: 0 16px 48px rgba(0,0,0,0.4), 0 0 40px rgba(74,222,128,0.06);
-}
-.tst-card:hover::after { transform: scaleX(1); }
-
-.tst-stars {
-  display: flex; gap: 3px;
-  color: var(--green);
-  font-size: 14px; letter-spacing: 2px;
-  margin-bottom: 16px;
-  text-shadow: 0 0 12px rgba(74,222,128,0.4);
-}
-
-.tst-text {
-  font-size: 14px; color: var(--text2); line-height: 1.75;
-  margin-bottom: 24px;
-  flex: 1;
-}
-.tst-text::before { content: '“'; color: var(--green); font-weight: 800; }
-.tst-text::after { content: '”'; color: var(--green); font-weight: 800; }
-
-.tst-person { display: flex; align-items: center; gap: 12px; }
-.tst-avatar {
-  width: 44px; height: 44px;
-  background: var(--green-dim);
-  border: 1px solid var(--green-border);
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 14px; font-weight: 800; color: var(--green);
-  flex-shrink: 0;
-  transition: box-shadow 0.3s;
-}
-.tst-card:hover .tst-avatar { box-shadow: 0 0 18px rgba(74,222,128,0.3); }
-.tst-name { font-size: 14px; font-weight: 700; color: var(--text); letter-spacing: -0.2px; }
-.tst-role { font-size: 12px; color: var(--text3); margin-top: 2px; }
-
 /* ── CONTACT ── */
 #contact { background: var(--bg2); }
 
@@ -821,7 +737,7 @@ html[lang="km"] .hero-title { letter-spacing: 0; line-height: 1.3; font-size: cl
 html[lang="km"] .section-title { letter-spacing: 0; line-height: 1.45; }
 html[lang="km"] .hero-sub, html[lang="km"] .section-sub,
 html[lang="km"] .exp-desc, html[lang="km"] .svc-card p,
-html[lang="km"] .port-body p, html[lang="km"] .tst-text,
+html[lang="km"] .port-body p,
 html[lang="km"] .ci-desc { line-height: 1.95; }
 html[lang="km"] .section-label, html[lang="km"] .exp-year,
 html[lang="km"] .stat-label-top, html[lang="km"] .port-cat,
@@ -868,9 +784,6 @@ footer strong { color: var(--green); font-weight: 600; }
 .reveal-left.in { opacity: 1; transform: translateX(0); }
 .reveal-right { opacity: 0; transform: translateX(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
 .reveal-right.in { opacity: 1; transform: translateX(0); }
-
-.reveal.pop { transform: scale(0.92); }
-.reveal.pop.in { transform: scale(1); }
 
 /* ══════════════════════════════════════
    ENHANCED INTERACTIONS & ANIMATIONS
@@ -920,7 +833,8 @@ footer strong { color: var(--green); font-weight: 600; }
 }
 .btn-green:hover::before, .btn-green-lg:hover::before { left: 150%; }
 
-/* Press feedback */
+/* Press feedback — replaces the browser's own tap flash on touch screens */
+.btn-green, .btn-green-lg, .btn-outline, .scroll-top { -webkit-tap-highlight-color: transparent; }
 .btn-green:active, .btn-green-lg:active, .btn-outline:active, .scroll-top:active { transform: scale(0.95); }
 
 /* Card title accent on hover */
@@ -1002,12 +916,10 @@ a:focus-visible, button:focus-visible {
   .nav-links { gap: 22px; }
 
   .stats-row { grid-template-columns: repeat(2, 1fr); max-width: 600px; }
-  .about-grid { grid-template-columns: 1fr; gap: 32px; }
   .contact-wrap { grid-template-columns: 1fr; gap: 40px; }
   .services-grid { grid-template-columns: 1fr 1fr; }
   .port-grid { grid-template-columns: 1fr 1fr; }
   .skills-grid { grid-template-columns: repeat(2, 1fr); }
-  .tst-grid { grid-template-columns: 1fr 1fr; }
 }
 
 /* ══════════════════════════════════════
@@ -1086,15 +998,16 @@ a:focus-visible, button:focus-visible {
   /* SECTIONS */
   section { padding: 72px 20px; }
   .section-title { letter-spacing: -0.5px; }
+  /* slide up, not sideways — a 28px sideways offset pokes past the 20px page padding */
+  .reveal-left, .reveal-right { transform: translateY(28px); }
 
   /* ABOUT */
-  .about-grid { margin-top: 40px; gap: 24px; }
+  .about-grid { grid-template-columns: 1fr; margin-top: 40px; gap: 16px; }
   .exp-card { padding: 22px 20px; }
   .exp-card:hover { transform: none; } /* disable slide on mobile */
-  .skills-card { padding: 24px 20px; }
 
   /* SKILLS / TOOLS */
-  .skills-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 40px; }
+  .skills-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 24px; }
   .tool-card { padding: 20px 16px; }
   .tool-card:hover { transform: none; }
   .tool-head { gap: 12px; margin-bottom: 16px; }
@@ -1118,15 +1031,6 @@ a:focus-visible, button:focus-visible {
   .port-thumb { height: 180px; }
   .port-card:hover { transform: none; }
   .port-body { padding: 18px 20px; }
-
-  /* TESTIMONIALS */
-  .tst-grid {
-    grid-template-columns: 1fr;
-    max-width: 460px; margin-left: auto; margin-right: auto;
-    margin-top: 40px;
-  }
-  .tst-card { padding: 24px 20px; }
-  .tst-card:hover { transform: none; }
 
   /* CONTACT */
   .contact-wrap { margin-top: 40px; gap: 32px; }
@@ -1158,7 +1062,6 @@ a:focus-visible, button:focus-visible {
 
   .section-title { font-size: clamp(22px, 7vw, 32px); }
   .exp-card { padding: 18px 16px; }
-  .skills-card { padding: 20px 16px; }
   .skills-grid { grid-template-columns: 1fr; }
   .svc-card { padding: 24px 18px; }
   .contact-form { padding: 20px 16px; }
@@ -1215,7 +1118,6 @@ a:focus-visible, button:focus-visible {
     <li><a href="#skills" data-i18n="nav.skills">Skills</a></li>
     <li><a href="#services" data-i18n="nav.services">Services</a></li>
     <li><a href="#portfolio" data-i18n="nav.portfolio">Portfolio</a></li>
-    <li><a href="#testimonials" data-i18n="nav.testimonials">Testimonials</a></li>
     <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
   </ul>
   <div class="nav-actions">
@@ -1255,7 +1157,7 @@ a:focus-visible, button:focus-visible {
     </div>
     <div class="stat-card stat-blue">
       <div class="stat-label-top"><span class="stat-dot"></span> <span data-i18n="stat2.label">EXPERIENCE</span></div>
-      <div class="stat-number"><span class="count-up" data-target="1">0</span><span class="stat-unit">yr</span></div>
+      <div class="stat-number"><span class="count-up" data-target="2">0</span><span class="stat-unit">yrs</span></div>
       <div class="stat-desc" data-i18n="stat2.desc">Years Active</div>
     </div>
     <div class="stat-card stat-purple">
@@ -1278,39 +1180,16 @@ a:focus-visible, button:focus-visible {
   <p class="section-sub reveal" style="transition-delay:.16s" data-i18n="about.sub">Passionate about combining beautiful design with clean, efficient code to create products people love.</p>
 
   <div class="about-grid">
-    <div>
-      <div class="exp-card reveal-left">
-        <div class="exp-year" data-i18n="exp1.year">2024 – Present</div>
-        <div class="exp-title" data-i18n="exp1.title">Web Developer</div>
-        <div class="exp-company">Prince Supermarket</div>
-        <p class="exp-desc" data-i18n="exp1.desc">Leading development of responsive web applications and managing client projects from concept to deployment.</p>
-      </div>
-      <div class="exp-card reveal-left" style="transition-delay:0.1s">
-        <div class="exp-year">2023 – 2024</div>
-        <div class="exp-title" data-i18n="exp2.title">Graphic Designer</div>
-        <div class="exp-company">Prince Supermarket</div>
-        <p class="exp-desc" data-i18n="exp2.desc">Created brand identities, marketing materials, and digital assets for diverse clientele across multiple industries.</p>
-      </div>
+    <div class="exp-card reveal-left">
+      <div class="exp-year" data-i18n="exp1.year">2026 – Present</div>
+      <div class="exp-title" data-i18n="exp1.title">Marketing</div>
+      <p class="exp-desc" data-i18n="exp1.desc">Planning marketing campaigns and creating promotional content to promote products and grow the brand's audience.</p>
     </div>
-
-    <div class="skills-card reveal-right">
-      <h3 data-i18n="about.skillsTitle">Professional Skills</h3>
-      <div class="skill-item">
-        <div class="skill-head"><span class="skill-name" data-i18n="skill.web">Web Development</span><span class="skill-pct">80%</span></div>
-        <div class="skill-track"><div class="skill-fill" style="--w:80%"></div></div>
-      </div>
-      <div class="skill-item">
-        <div class="skill-head"><span class="skill-name" data-i18n="skill.design">Graphic Design</span><span class="skill-pct">70%</span></div>
-        <div class="skill-track"><div class="skill-fill" style="--w:70%"></div></div>
-      </div>
-      <div class="skill-item">
-        <div class="skill-head"><span class="skill-name">Laravel / PHP</span><span class="skill-pct">75%</span></div>
-        <div class="skill-track"><div class="skill-fill" style="--w:75%"></div></div>
-      </div>
-      <div class="skill-item">
-        <div class="skill-head"><span class="skill-name" data-i18n="skill.uiux">UI / UX Design</span><span class="skill-pct">65%</span></div>
-        <div class="skill-track"><div class="skill-fill" style="--w:65%"></div></div>
-      </div>
+    <div class="exp-card reveal-right" style="transition-delay:0.1s">
+      <div class="exp-year">2024 – 2025</div>
+      <div class="exp-title" data-i18n="exp2.title">Web Developer &amp; Graphic Designer</div>
+      <div class="exp-company">Prince Supermarket</div>
+      <p class="exp-desc" data-i18n="exp2.desc">Built responsive web applications from concept to deployment, and created brand identities, marketing materials, and digital assets.</p>
     </div>
   </div>
 </section>
@@ -1321,101 +1200,160 @@ a:focus-visible, button:focus-visible {
   <h2 class="section-title reveal" style="transition-delay:.08s" data-i18n="tools.title">Tools &amp; technologies I use</h2>
   <p class="section-sub reveal" style="transition-delay:.16s" data-i18n="tools.sub">From first sketch to final deploy — the creative and technical toolkit I work with every day.</p>
 
-  <div class="skills-grid">
-    <div class="tool-card reveal pop" style="--c:#31A8FF;transition-delay:.04s">
-      <div class="tool-head">
-        <div class="tool-icon">Ps</div>
-        <div class="tool-meta">
-          <span class="tool-name">Photoshop</span>
-          <span class="tool-cat" data-i18n="tools.cat.photo">Photo Editing</span>
-        </div>
-      </div>
-      <div class="tool-bar-head"><span class="tool-bar-lbl" data-i18n="tools.proficiency">Proficiency</span><span class="tool-pct">85%</span></div>
-      <div class="tool-track"><div class="tool-fill" style="--w:85%"></div></div>
-    </div>
+  <div class="tools-more reveal" style="transition-delay:.24s">
+    <button class="btn-outline" id="toolsToggle" type="button" aria-expanded="false" aria-controls="toolsPanel">
+      <span data-i18n="tools.showAll">Show all tools</span>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+  </div>
 
-    <div class="tool-card reveal pop" style="--c:#FF9A00;transition-delay:.08s">
-      <div class="tool-head">
-        <div class="tool-icon">Ai</div>
-        <div class="tool-meta">
-          <span class="tool-name">Illustrator</span>
-          <span class="tool-cat" data-i18n="tools.cat.vector">Vector Design</span>
+  <div class="tools-panel" id="toolsPanel">
+    <div class="tools-panel-inner">
+      <div class="skills-grid">
+        <div class="tool-card" style="--c:#31A8FF">
+          <div class="tool-head">
+            <div class="tool-icon">Ps</div>
+            <div class="tool-meta">
+              <span class="tool-name">Photoshop</span>
+              <span class="tool-cat" data-i18n="tools.cat.photo">Photo Editing</span>
+            </div>
+          </div>
+          <div class="tool-bar-head"><span class="tool-bar-lbl" data-i18n="tools.proficiency">Proficiency</span><span class="tool-pct">85%</span></div>
+          <div class="tool-track"><div class="tool-fill" style="--w:85%"></div></div>
         </div>
-      </div>
-      <div class="tool-bar-head"><span class="tool-bar-lbl" data-i18n="tools.proficiency">Proficiency</span><span class="tool-pct">80%</span></div>
-      <div class="tool-track"><div class="tool-fill" style="--w:80%"></div></div>
-    </div>
 
-    <div class="tool-card reveal pop" style="--c:#F24E1E;transition-delay:.12s">
-      <div class="tool-head">
-        <div class="tool-icon">Fig</div>
-        <div class="tool-meta">
-          <span class="tool-name">Figma</span>
-          <span class="tool-cat" data-i18n="skill.uiux">UI / UX Design</span>
+        <div class="tool-card" style="--c:#FF9A00">
+          <div class="tool-head">
+            <div class="tool-icon">Ai</div>
+            <div class="tool-meta">
+              <span class="tool-name">Illustrator</span>
+              <span class="tool-cat" data-i18n="tools.cat.vector">Vector Design</span>
+            </div>
+          </div>
+          <div class="tool-bar-head"><span class="tool-bar-lbl" data-i18n="tools.proficiency">Proficiency</span><span class="tool-pct">80%</span></div>
+          <div class="tool-track"><div class="tool-fill" style="--w:80%"></div></div>
         </div>
-      </div>
-      <div class="tool-bar-head"><span class="tool-bar-lbl" data-i18n="tools.proficiency">Proficiency</span><span class="tool-pct">75%</span></div>
-      <div class="tool-track"><div class="tool-fill" style="--w:75%"></div></div>
-    </div>
 
-    <div class="tool-card reveal pop" style="--c:#B388FF;transition-delay:.16s">
-      <div class="tool-head">
-        <div class="tool-icon">Pr</div>
-        <div class="tool-meta">
-          <span class="tool-name">Premiere Pro</span>
-          <span class="tool-cat" data-i18n="tools.cat.video">Video Editing</span>
+        <div class="tool-card" style="--c:#F24E1E">
+          <div class="tool-head">
+            <div class="tool-icon">Fig</div>
+            <div class="tool-meta">
+              <span class="tool-name">Figma</span>
+              <span class="tool-cat" data-i18n="skill.uiux">UI / UX Design</span>
+            </div>
+          </div>
+          <div class="tool-bar-head"><span class="tool-bar-lbl" data-i18n="tools.proficiency">Proficiency</span><span class="tool-pct">75%</span></div>
+          <div class="tool-track"><div class="tool-fill" style="--w:75%"></div></div>
         </div>
-      </div>
-      <div class="tool-bar-head"><span class="tool-bar-lbl" data-i18n="tools.proficiency">Proficiency</span><span class="tool-pct">70%</span></div>
-      <div class="tool-track"><div class="tool-fill" style="--w:70%"></div></div>
-    </div>
 
-    <div class="tool-card reveal pop" style="--c:#FF2D20;transition-delay:.2s">
-      <div class="tool-head">
-        <div class="tool-icon">Lv</div>
-        <div class="tool-meta">
-          <span class="tool-name">Laravel</span>
-          <span class="tool-cat" data-i18n="tools.cat.framework">PHP Framework</span>
+        <div class="tool-card" style="--c:#B388FF">
+          <div class="tool-head">
+            <div class="tool-icon">Pr</div>
+            <div class="tool-meta">
+              <span class="tool-name">Premiere Pro</span>
+              <span class="tool-cat" data-i18n="tools.cat.video">Video Editing</span>
+            </div>
+          </div>
+          <div class="tool-bar-head"><span class="tool-bar-lbl" data-i18n="tools.proficiency">Proficiency</span><span class="tool-pct">70%</span></div>
+          <div class="tool-track"><div class="tool-fill" style="--w:70%"></div></div>
         </div>
-      </div>
-      <div class="tool-bar-head"><span class="tool-bar-lbl" data-i18n="tools.proficiency">Proficiency</span><span class="tool-pct">78%</span></div>
-      <div class="tool-track"><div class="tool-fill" style="--w:78%"></div></div>
-    </div>
 
-    <div class="tool-card reveal pop" style="--c:#8B92D9;transition-delay:.24s">
-      <div class="tool-head">
-        <div class="tool-icon">php</div>
-        <div class="tool-meta">
-          <span class="tool-name">PHP</span>
-          <span class="tool-cat" data-i18n="tools.cat.backend">Backend Logic</span>
+        <div class="tool-card" style="--c:#FF2D20">
+          <div class="tool-head">
+            <div class="tool-icon">Lv</div>
+            <div class="tool-meta">
+              <span class="tool-name">Laravel</span>
+              <span class="tool-cat" data-i18n="tools.cat.framework">PHP Framework</span>
+            </div>
+          </div>
+          <div class="tool-bar-head"><span class="tool-bar-lbl" data-i18n="tools.proficiency">Proficiency</span><span class="tool-pct">78%</span></div>
+          <div class="tool-track"><div class="tool-fill" style="--w:78%"></div></div>
         </div>
-      </div>
-      <div class="tool-bar-head"><span class="tool-bar-lbl" data-i18n="tools.proficiency">Proficiency</span><span class="tool-pct">82%</span></div>
-      <div class="tool-track"><div class="tool-fill" style="--w:82%"></div></div>
-    </div>
 
-    <div class="tool-card reveal pop" style="--c:#00A8C5;transition-delay:.28s">
-      <div class="tool-head">
-        <div class="tool-icon">My</div>
-        <div class="tool-meta">
-          <span class="tool-name">MySQL</span>
-          <span class="tool-cat" data-i18n="tools.cat.database">Database</span>
+        <div class="tool-card" style="--c:#8B92D9">
+          <div class="tool-head">
+            <div class="tool-icon">php</div>
+            <div class="tool-meta">
+              <span class="tool-name">PHP</span>
+              <span class="tool-cat" data-i18n="tools.cat.backend">Backend Logic</span>
+            </div>
+          </div>
+          <div class="tool-bar-head"><span class="tool-bar-lbl" data-i18n="tools.proficiency">Proficiency</span><span class="tool-pct">82%</span></div>
+          <div class="tool-track"><div class="tool-fill" style="--w:82%"></div></div>
         </div>
-      </div>
-      <div class="tool-bar-head"><span class="tool-bar-lbl" data-i18n="tools.proficiency">Proficiency</span><span class="tool-pct">80%</span></div>
-      <div class="tool-track"><div class="tool-fill" style="--w:80%"></div></div>
-    </div>
 
-    <div class="tool-card reveal pop" style="--c:#F7DF1E;transition-delay:.32s">
-      <div class="tool-head">
-        <div class="tool-icon">JS</div>
-        <div class="tool-meta">
-          <span class="tool-name">JavaScript</span>
-          <span class="tool-cat" data-i18n="tools.cat.frontend">Frontend</span>
+        <div class="tool-card" style="--c:#00A8C5">
+          <div class="tool-head">
+            <div class="tool-icon">My</div>
+            <div class="tool-meta">
+              <span class="tool-name">MySQL</span>
+              <span class="tool-cat" data-i18n="tools.cat.database">Database</span>
+            </div>
+          </div>
+          <div class="tool-bar-head"><span class="tool-bar-lbl" data-i18n="tools.proficiency">Proficiency</span><span class="tool-pct">80%</span></div>
+          <div class="tool-track"><div class="tool-fill" style="--w:80%"></div></div>
+        </div>
+
+        <div class="tool-card" style="--c:#F7DF1E">
+          <div class="tool-head">
+            <div class="tool-icon">JS</div>
+            <div class="tool-meta">
+              <span class="tool-name">JavaScript</span>
+              <span class="tool-cat" data-i18n="tools.cat.frontend">Frontend</span>
+            </div>
+          </div>
+          <div class="tool-bar-head"><span class="tool-bar-lbl" data-i18n="tools.proficiency">Proficiency</span><span class="tool-pct">72%</span></div>
+          <div class="tool-track"><div class="tool-fill" style="--w:72%"></div></div>
+        </div>
+
+        <div class="tool-card" style="--c:#61DAFB">
+          <div class="tool-head">
+            <div class="tool-icon">Re</div>
+            <div class="tool-meta">
+              <span class="tool-name">React</span>
+              <span class="tool-cat" data-i18n="tools.cat.uilib">UI Library</span>
+            </div>
+          </div>
+          <div class="tool-bar-head"><span class="tool-bar-lbl" data-i18n="tools.proficiency">Proficiency</span><span class="tool-pct">60%</span></div>
+          <div class="tool-track"><div class="tool-fill" style="--w:60%"></div></div>
+        </div>
+
+        <div class="tool-card" style="--c:#42B883">
+          <div class="tool-head">
+            <div class="tool-icon">Vue</div>
+            <div class="tool-meta">
+              <span class="tool-name">Vue</span>
+              <span class="tool-cat" data-i18n="tools.cat.jsframework">JS Framework</span>
+            </div>
+          </div>
+          <div class="tool-bar-head"><span class="tool-bar-lbl" data-i18n="tools.proficiency">Proficiency</span><span class="tool-pct">65%</span></div>
+          <div class="tool-track"><div class="tool-fill" style="--w:65%"></div></div>
+        </div>
+
+        <div class="tool-card" style="--c:#D9A441">
+          <div class="tool-head">
+            <div class="tool-icon">Nv</div>
+            <div class="tool-meta">
+              <span class="tool-name">Navicat</span>
+              <span class="tool-cat" data-i18n="tools.cat.dbtool">Database Tool</span>
+            </div>
+          </div>
+          <div class="tool-bar-head"><span class="tool-bar-lbl" data-i18n="tools.proficiency">Proficiency</span><span class="tool-pct">70%</span></div>
+          <div class="tool-track"><div class="tool-fill" style="--w:70%"></div></div>
+        </div>
+
+        <div class="tool-card" style="--c:#29B6F6">
+          <div class="tool-head">
+            <div class="tool-icon">Fl</div>
+            <div class="tool-meta">
+              <span class="tool-name">Flutter</span>
+              <span class="tool-cat" data-i18n="tools.cat.mobile">Mobile Apps</span>
+            </div>
+          </div>
+          <div class="tool-bar-head"><span class="tool-bar-lbl" data-i18n="tools.proficiency">Proficiency</span><span class="tool-pct">50%</span></div>
+          <div class="tool-track"><div class="tool-fill" style="--w:50%"></div></div>
         </div>
       </div>
-      <div class="tool-bar-head"><span class="tool-bar-lbl" data-i18n="tools.proficiency">Proficiency</span><span class="tool-pct">72%</span></div>
-      <div class="tool-track"><div class="tool-fill" style="--w:72%"></div></div>
     </div>
   </div>
 </section>
@@ -1537,51 +1475,6 @@ a:focus-visible, button:focus-visible {
   </div>
 </section>
 
-<!-- TESTIMONIALS -->
-<section id="testimonials">
-  <div class="section-label reveal" data-i18n="tst.label">Testimonials</div>
-  <h2 class="section-title reveal" style="transition-delay:.08s" data-i18n="tst.title">What clients say</h2>
-  <p class="section-sub reveal" style="transition-delay:.16s" data-i18n="tst.sub">Real feedback from the people and businesses I've had the pleasure of working with.</p>
-
-  <div class="tst-grid">
-    <div class="tst-card reveal">
-      <div class="tst-stars">★★★★★</div>
-      <p class="tst-text" data-i18n="tst1.text">Rithyreach built our online store from the ground up — secure payments, inventory, everything. Orders started coming in the first week, and he handled every change we asked for quickly and professionally.</p>
-      <div class="tst-person">
-        <div class="tst-avatar">SL</div>
-        <div>
-          <div class="tst-name">Sokha Lim</div>
-          <div class="tst-role" data-i18n="tst1.role">Owner, Premium Emporium</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="tst-card reveal" style="transition-delay:0.08s">
-      <div class="tst-stars">★★★★★</div>
-      <p class="tst-text" data-i18n="tst2.text">Our restaurant website looks beautiful on every phone and customers find the menu instantly. He understood exactly what we needed and delivered ahead of schedule. Highly recommended.</p>
-      <div class="tst-person">
-        <div class="tst-avatar">DC</div>
-        <div>
-          <div class="tst-name">Dara Chan</div>
-          <div class="tst-role" data-i18n="tst2.role">Manager, Restaurant Client</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="tst-card reveal" style="transition-delay:0.16s">
-      <div class="tst-stars">★★★★★</div>
-      <p class="tst-text" data-i18n="tst3.text">From graphic design to full web development, Rithyreach grew into one of our most reliable team members. He takes ownership of projects from concept to deployment and always delivers on time.</p>
-      <div class="tst-person">
-        <div class="tst-avatar">PS</div>
-        <div>
-          <div class="tst-name" data-i18n="tst3.name">Team Lead</div>
-          <div class="tst-role">Prince Supermarket</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- CONTACT -->
 <section id="contact">
   <div class="section-label reveal" data-i18n="ct.label">Contact</div>
@@ -1618,8 +1511,8 @@ a:focus-visible, button:focus-visible {
 
     <div class="contact-form reveal-right">
       <div class="form-row">
-        <div class="fg"><label data-i18n="form.name">Name</label><input type="text" id="cname" placeholder="John Doe" data-i18n-ph="form.namePh"></div>
-        <div class="fg"><label data-i18n="form.email">Email</label><input type="email" id="cemail" placeholder="john@example.com"></div>
+        <div class="fg"><label data-i18n="form.name">Name</label><input type="text" id="cname" placeholder="Username" data-i18n-ph="form.namePh"></div>
+        <div class="fg"><label data-i18n="form.email">Email</label><input type="email" id="cemail" placeholder="username@gmail.com"></div>
       </div>
       <div class="fg"><label data-i18n="form.subject">Subject</label><input type="text" id="csubject" placeholder="Project enquiry" data-i18n-ph="form.subjectPh"></div>
       <div class="fg"><label data-i18n="form.message">Message</label><textarea id="cmessage" placeholder="Tell me about your project..." data-i18n-ph="form.messagePh"></textarea></div>
@@ -1797,20 +1690,13 @@ const io = new IntersectionObserver(entries=>{
   entries.forEach(e=>{
     if(e.isIntersecting){
       e.target.classList.add('in');
-      e.target.querySelectorAll('.skill-fill,.tool-fill').forEach(f=>f.classList.add('go'));
+      e.target.querySelectorAll('.tool-fill').forEach(f=>f.classList.add('go'));
     }
   });
 },{threshold:0.1,rootMargin:'0px 0px -30px 0px'});
 
-document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el=>io.observe(el));
-
-const skillCard = document.querySelector('.skills-card');
-if(skillCard){
-  const sio=new IntersectionObserver(e=>{
-    if(e[0].isIntersecting) skillCard.querySelectorAll('.skill-fill').forEach(f=>f.classList.add('go'));
-  },{threshold:0.2});
-  sio.observe(skillCard);
-}
+// tool cards are watched too, only so their bars fill when they come into view
+document.querySelectorAll('.reveal,.reveal-left,.reveal-right,.tool-card').forEach(el=>io.observe(el));
 
 /* ── COUNT UP ── */
 function countUp(el){
@@ -1845,7 +1731,7 @@ document.getElementById('footerYear').textContent = new Date().getFullYear();
 const I18N = {
 en: {
   'nav.home':'Home','nav.about':'About','nav.skills':'Skills','nav.services':'Services',
-  'nav.portfolio':'Portfolio','nav.testimonials':'Testimonials','nav.contact':'Contact',
+  'nav.portfolio':'Portfolio','nav.contact':'Contact',
   'nav.hire':'Hire Me →',
   'hero.badge':'Web Developer &amp; Designer Based in Cambodia',
   'hero.role':'Portfolio',
@@ -1858,18 +1744,20 @@ en: {
   'about.label':'About Me',
   'about.title':'Crafting digital experiences<br>with purpose &amp; precision',
   'about.sub':'Passionate about combining beautiful design with clean, efficient code to create products people love.',
-  'exp1.year':'2024 – Present','exp1.title':'Web Developer',
-  'exp1.desc':'Leading development of responsive web applications and managing client projects from concept to deployment.',
-  'exp2.title':'Graphic Designer',
-  'exp2.desc':'Created brand identities, marketing materials, and digital assets for diverse clientele across multiple industries.',
-  'about.skillsTitle':'Professional Skills',
+  'exp1.year':'2026 – Present','exp1.title':'Marketing',
+  'exp1.desc':"Planning marketing campaigns and creating promotional content to promote products and grow the brand's audience.",
+  'exp2.title':'Web Developer &amp; Graphic Designer',
+  'exp2.desc':'Built responsive web applications from concept to deployment, and created brand identities, marketing materials, and digital assets.',
   'skill.web':'Web Development','skill.design':'Graphic Design','skill.uiux':'UI / UX Design',
   'tools.label':'Skills &amp; Tools','tools.title':'Tools &amp; technologies I use',
   'tools.sub':'From first sketch to final deploy — the creative and technical toolkit I work with every day.',
   'tools.proficiency':'Proficiency',
+  'tools.showAll':'Show all tools','tools.hide':'Hide tools',
   'tools.cat.photo':'Photo Editing','tools.cat.vector':'Vector Design','tools.cat.video':'Video Editing',
   'tools.cat.framework':'PHP Framework','tools.cat.backend':'Backend Logic',
   'tools.cat.database':'Database','tools.cat.frontend':'Frontend',
+  'tools.cat.uilib':'UI Library','tools.cat.jsframework':'JS Framework','tools.cat.dbtool':'Database Tool',
+  'tools.cat.mobile':'Mobile Apps',
   'svc.label':'Services','svc.title':'What I can do for you',
   'svc.sub':'Comprehensive digital solutions tailored to bring your vision to life.',
   'svc1.desc':'Custom websites and web applications built with modern technologies, responsive design, and optimized performance for any device.',
@@ -1894,20 +1782,12 @@ en: {
   'port6.desc':'Browser chess on a 3D board — share one device with a friend, play against the computer, or create a room and play online on two devices.',
   'port7.cat':'Tool','port7.title':'Image Upscaler',
   'port7.desc':'ImageUp AI enlarges photos 2×, 4× or 8× with a Real-ESRGAN model that runs entirely in the browser, so images never leave your device.',
-  'tst.label':'Testimonials','tst.title':'What clients say',
-  'tst.sub':"Real feedback from the people and businesses I've had the pleasure of working with.",
-  'tst1.text':'Rithyreach built our online store from the ground up — secure payments, inventory, everything. Orders started coming in the first week, and he handled every change we asked for quickly and professionally.',
-  'tst1.role':'Owner, Premium Emporium',
-  'tst2.text':'Our restaurant website looks beautiful on every phone and customers find the menu instantly. He understood exactly what we needed and delivered ahead of schedule. Highly recommended.',
-  'tst2.role':'Manager, Restaurant Client',
-  'tst3.text':'From graphic design to full web development, Rithyreach grew into one of our most reliable team members. He takes ownership of projects from concept to deployment and always delivers on time.',
-  'tst3.name':'Team Lead',
   'ct.label':'Contact','ct.title':"Let's build something great",
   'ct.sub':"Have a project in mind? Reach out and let's work together.",
   'ct.collab':"Let's Collaborate",
   'ct.desc':"I'm always interested in hearing about new projects and opportunities. Whether you have a question or just want to say hi, feel free to reach out!",
   'ct.email':'Email','ct.phone':'Phone','ct.location':'Location','ct.locationVal':'Phnom Penh, Cambodia',
-  'form.name':'Name','form.namePh':'John Doe','form.email':'Email',
+  'form.name':'Name','form.namePh':'Username','form.email':'Email',
   'form.subject':'Subject','form.subjectPh':'Project enquiry',
   'form.message':'Message','form.messagePh':'Tell me about your project...',
   'form.send':'Send Message','form.sending':'Sending...',
@@ -1919,7 +1799,7 @@ en: {
 },
 km: {
   'nav.home':'ទំព័រដើម','nav.about':'អំពីខ្ញុំ','nav.skills':'ជំនាញ','nav.services':'សេវាកម្ម',
-  'nav.portfolio':'ស្នាដៃ','nav.testimonials':'មតិអតិថិជន','nav.contact':'ទំនាក់ទំនង',
+  'nav.portfolio':'ស្នាដៃ','nav.contact':'ទំនាក់ទំនង',
   'nav.hire':'ជួលខ្ញុំ →',
   'hero.badge':'អ្នកអភិវឌ្ឍន៍គេហទំព័រ និងអ្នករចនា នៅប្រទេសកម្ពុជា',
   'hero.role':'ស្នាដៃរបស់ខ្ញុំ',
@@ -1932,18 +1812,20 @@ km: {
   'about.label':'អំពីខ្ញុំ',
   'about.title':'បង្កើតបទពិសោធន៍ឌីជីថល<br>ដោយគោលបំណង និងភាពជាក់លាក់',
   'about.sub':'ចូលចិត្តផ្សំផ្គុំការរចនាដ៏ស្រស់ស្អាត ជាមួយកូដស្អាត និងមានប្រសិទ្ធភាព ដើម្បីបង្កើតផលិតផលដែលមនុស្សស្រឡាញ់។',
-  'exp1.year':'2024 – បច្ចុប្បន្ន','exp1.title':'អ្នកអភិវឌ្ឍន៍គេហទំព័រ',
-  'exp1.desc':'ដឹកនាំការអភិវឌ្ឍកម្មវិធីគេហទំព័រ និងគ្រប់គ្រងគម្រោងអតិថិជន ពីគំនិតរហូតដល់ការដាក់ឱ្យដំណើរការ។',
-  'exp2.title':'អ្នករចនាក្រាហ្វិក',
-  'exp2.desc':'បង្កើតអត្តសញ្ញាណម៉ាក សម្ភារៈទីផ្សារ និងធនធានឌីជីថល សម្រាប់អតិថិជនច្រើនប្រភេទ ក្នុងឧស្សាហកម្មផ្សេងៗគ្នា។',
-  'about.skillsTitle':'ជំនាញវិជ្ជាជីវៈ',
+  'exp1.year':'2026 – បច្ចុប្បន្ន','exp1.title':'ផ្នែកទីផ្សារ',
+  'exp1.desc':'រៀបចំយុទ្ធនាការទីផ្សារ និងបង្កើតមាតិកាផ្សព្វផ្សាយ ដើម្បីផ្សព្វផ្សាយផលិតផល និងពង្រីកចំនួនអតិថិជនរបស់ម៉ាក។',
+  'exp2.title':'អ្នកអភិវឌ្ឍន៍គេហទំព័រ និងអ្នករចនាក្រាហ្វិក',
+  'exp2.desc':'អភិវឌ្ឍកម្មវិធីគេហទំព័រ ពីគំនិតរហូតដល់ការដាក់ឱ្យដំណើរការ និងបង្កើតអត្តសញ្ញាណម៉ាក សម្ភារៈទីផ្សារ និងធនធានឌីជីថល។',
   'skill.web':'អភិវឌ្ឍន៍គេហទំព័រ','skill.design':'រចនាក្រាហ្វិក','skill.uiux':'រចនា UI / UX',
   'tools.label':'ជំនាញ និងឧបករណ៍','tools.title':'ឧបករណ៍ និងបច្ចេកវិទ្យាដែលខ្ញុំប្រើ',
   'tools.sub':'ពីគំនូរព្រាងដំបូង រហូតដល់ការដាក់ឱ្យដំណើរការ — ឧបករណ៍ច្នៃប្រឌិត និងបច្ចេកទេសដែលខ្ញុំប្រើជារៀងរាល់ថ្ងៃ។',
   'tools.proficiency':'សមត្ថភាព',
+  'tools.showAll':'បង្ហាញឧបករណ៍ទាំងអស់','tools.hide':'លាក់ឧបករណ៍',
   'tools.cat.photo':'កែរូបភាព','tools.cat.vector':'រចនាវ៉ិចទ័រ','tools.cat.video':'កាត់តវីដេអូ',
   'tools.cat.framework':'Framework PHP','tools.cat.backend':'ផ្នែក Backend',
   'tools.cat.database':'មូលដ្ឋានទិន្នន័យ','tools.cat.frontend':'ផ្នែក Frontend',
+  'tools.cat.uilib':'បណ្ណាល័យ UI','tools.cat.jsframework':'Framework JS','tools.cat.dbtool':'ឧបករណ៍មូលដ្ឋានទិន្នន័យ',
+  'tools.cat.mobile':'កម្មវិធីទូរស័ព្ទ',
   'svc.label':'សេវាកម្ម','svc.title':'អ្វីដែលខ្ញុំអាចធ្វើសម្រាប់អ្នក',
   'svc.sub':'ដំណោះស្រាយឌីជីថលគ្រប់ជ្រុងជ្រោយ រៀបចំតាមតម្រូវការ ដើម្បីធ្វើឱ្យចក្ខុវិស័យរបស់អ្នកក្លាយជាការពិត។',
   'svc1.desc':'គេហទំព័រ និងកម្មវិធីគេហទំព័រតាមតម្រូវការ បង្កើតដោយបច្ចេកវិទ្យាទំនើប រចនាឆ្លើយតបគ្រប់ឧបករណ៍ និងដំណើរការលឿន។',
@@ -1968,14 +1850,6 @@ km: {
   'port6.desc':'ហ្គេមអុកលើក្តារ 3D ក្នុងកម្មវិធីរុករក — លេងជាមួយមិត្តភក្តិលើឧបករណ៍តែមួយ លេងជាមួយកុំព្យូទ័រ ឬបង្កើតបន្ទប់ដើម្បីលេងអនឡាញលើឧបករណ៍ពីរ។',
   'port7.cat':'ឧបករណ៍','port7.title':'កម្មវិធីពង្រីករូបភាព',
   'port7.desc':'ImageUp AI ពង្រីករូបភាព 2×, 4× ឬ 8× ដោយប្រើម៉ូដែល Real-ESRGAN ដែលដំណើរការផ្ទាល់ក្នុងកម្មវិធីរុករក ដូច្នេះរូបភាពមិនចេញពីឧបករណ៍របស់អ្នកឡើយ។',
-  'tst.label':'មតិអតិថិជន','tst.title':'អ្វីដែលអតិថិជននិយាយ',
-  'tst.sub':'មតិពិតៗ ពីមនុស្ស និងអាជីវកម្ម ដែលខ្ញុំធ្លាប់បានសហការជាមួយ។',
-  'tst1.text':'រិទ្ធិរាជបានបង្កើតហាងអនឡាញរបស់យើងពីដំបូង — ការទូទាត់ប្រាក់សុវត្ថិភាព ការគ្រប់គ្រងស្តុក គ្រប់យ៉ាង។ ការបញ្ជាទិញចាប់ផ្តើមចូលមកក្នុងសប្តាហ៍ដំបូង ហើយគាត់ដោះស្រាយរាល់ការផ្លាស់ប្តូរយ៉ាងរហ័ស និងប្រកបដោយវិជ្ជាជីវៈ។',
-  'tst1.role':'ម្ចាស់, Premium Emporium',
-  'tst2.text':'គេហទំព័រភោជនីយដ្ឋានរបស់យើងមើលទៅស្រស់ស្អាតលើគ្រប់ទូរស័ព្ទ ហើយអតិថិជនរកមុខម្ហូបឃើញភ្លាមៗ។ គាត់យល់ច្បាស់ពីអ្វីដែលយើងត្រូវការ និងបញ្ចប់មុនកាលកំណត់។ សូមណែនាំ!',
-  'tst2.role':'អ្នកគ្រប់គ្រង, ភោជនីយដ្ឋាន',
-  'tst3.text':'ពីការរចនាក្រាហ្វិក រហូតដល់ការអភិវឌ្ឍគេហទំព័រពេញលេញ រិទ្ធិរាជបានក្លាយជាសមាជិកក្រុមដ៏គួរឱ្យទុកចិត្តបំផុតម្នាក់របស់យើង។ គាត់ទទួលខុសត្រូវគម្រោងពីគំនិតរហូតដល់ដាក់ឱ្យដំណើរការ ហើយតែងតែបញ្ចប់ទាន់ពេលវេលា។',
-  'tst3.name':'ប្រធានក្រុម',
   'ct.label':'ទំនាក់ទំនង','ct.title':'តោះបង្កើតអ្វីដ៏អស្ចារ្យជាមួយគ្នា',
   'ct.sub':'មានគម្រោងក្នុងចិត្ត? ទាក់ទងមក ហើយយើងធ្វើការជាមួយគ្នា។',
   'ct.collab':'តោះសហការគ្នា',
@@ -2015,6 +1889,29 @@ function setLang(lang){
 langToggle.addEventListener('click', ()=> setLang(currentLang === 'en' ? 'km' : 'en'));
 if(currentLang !== 'en') setLang(currentLang);
 
+/* ── TOOLS — hidden until the toggle opens them ── */
+const toolsPanel = document.getElementById('toolsPanel');
+const toolsToggle = document.getElementById('toolsToggle');
+let toolsTimer;
+toolsToggle.addEventListener('click', ()=>{
+  const open = toolsToggle.getAttribute('aria-expanded') !== 'true';
+  const label = toolsToggle.querySelector('span');
+  toolsToggle.setAttribute('aria-expanded', open);
+  label.dataset.i18n = open ? 'tools.hide' : 'tools.showAll';
+  label.innerHTML = I18N[currentLang][label.dataset.i18n];
+
+  // "auto" can't be animated, so pin the current height in px, then go to the target height in px
+  clearTimeout(toolsTimer);
+  toolsPanel.style.height = toolsPanel.offsetHeight + 'px';
+  toolsPanel.classList.remove('settled');
+  toolsPanel.offsetHeight; // flush, so the transition starts from the pinned height
+  toolsPanel.style.height = (open ? toolsPanel.scrollHeight : 0) + 'px';
+  toolsTimer = setTimeout(()=>{
+    toolsPanel.classList.toggle('settled', open);
+    toolsPanel.style.height = '';
+  }, 550);
+});
+
 /* ══════════════════════════════════════
    CONTACT FORM — Web3Forms
    Get your free access key at https://web3forms.com
@@ -2022,7 +1919,7 @@ if(currentLang !== 'en') setLang(currentLang);
    Until the key is set, the form falls back to opening
    the visitor's email app with the message pre-filled.
 ══════════════════════════════════════ */
-const WEB3FORMS_KEY = 'YOUR_WEB3FORMS_ACCESS_KEY';
+const WEB3FORMS_KEY = '4d7566fe-5c2d-474c-a2b8-db214c399531';
 
 async function sendMsg(){
   const t = I18N[currentLang];
@@ -2107,7 +2004,7 @@ async function sendMsg(){
 
   /* 2 — 3D tilt + inner light sheen on cards */
   const TILT = 8; // max degrees
-  document.querySelectorAll('.tool-card, .svc-card, .port-card, .tst-card').forEach(card=>{
+  document.querySelectorAll('.tool-card, .svc-card, .port-card').forEach(card=>{
     card.classList.add('tilt');
     const glow = document.createElement('span');
     glow.className = 'card-glow';
@@ -2159,7 +2056,7 @@ async function sendMsg(){
       cg.style.transform = `translate(${cx.toFixed(1)}px, ${cy.toFixed(1)}px) translate(-50%, -50%)`;
       requestAnimationFrame(follow);
     })();
-    document.querySelectorAll('a, button, input, textarea, .tool-card, .svc-card, .port-card, .tst-card, .exp-card, .social-btn, .menu-toggle')
+    document.querySelectorAll('a, button, input, textarea, .tool-card, .svc-card, .port-card, .exp-card, .social-btn, .menu-toggle')
       .forEach(el=>{
         el.addEventListener('mouseenter', ()=> cg.classList.add('grow'));
         el.addEventListener('mouseleave', ()=> cg.classList.remove('grow'));
