@@ -82,7 +82,7 @@ nav.scrolled { border-bottom-color: var(--border); }
   color: var(--text2); text-decoration: none;
   transition: color 0.2s;
 }
-.nav-links a:hover { color: var(--text); }
+@media (hover: hover) { .nav-links a:hover { color: var(--text); } }
 
 .nav-actions { display: flex; gap: 10px; align-items: center; }
 
@@ -95,10 +95,12 @@ nav.scrolled { border-bottom-color: var(--border); }
   white-space: nowrap;
   transition: all 0.2s;
 }
-.lang-toggle:hover {
-  color: var(--green);
-  border-color: var(--green-border);
-  background: var(--green-dim);
+@media (hover: hover) {
+  .lang-toggle:hover {
+    color: var(--green);
+    border-color: var(--green-border);
+    background: var(--green-dim);
+  }
 }
 
 .btn-green {
@@ -112,10 +114,12 @@ nav.scrolled { border-bottom-color: var(--border); }
   box-shadow: 0 4px 16px rgba(74,222,128,0.3);
   white-space: nowrap;
 }
-.btn-green:hover {
-  background: #22c55e;
-  box-shadow: 0 6px 24px rgba(74,222,128,0.45);
-  transform: translateY(-1px);
+@media (hover: hover) {
+  .btn-green:hover {
+    background: #22c55e;
+    box-shadow: 0 6px 24px rgba(74,222,128,0.45);
+    transform: translateY(-1px);
+  }
 }
 
 .menu-toggle {
@@ -131,7 +135,7 @@ nav.scrolled { border-bottom-color: var(--border); }
 /* ── HERO ── */
 .hero {
   min-height: 100vh;
-  min-height: 100dvh;
+  min-height: 100svh; /* svh, not dvh: dvh resizes the hero as the phone's toolbar hides, shoving the page while scrolling */
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
   text-align: center;
@@ -224,10 +228,12 @@ nav.scrolled { border-bottom-color: var(--border); }
   transition: all 0.2s;
   white-space: nowrap;
 }
-.btn-outline:hover {
-  border-color: rgba(255,255,255,0.2);
-  background: rgba(255,255,255,0.05);
-  transform: translateY(-1px);
+@media (hover: hover) {
+  .btn-outline:hover {
+    border-color: rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.05);
+    transform: translateY(-1px);
+  }
 }
 
 .btn-green-lg {
@@ -241,10 +247,12 @@ nav.scrolled { border-bottom-color: var(--border); }
   box-shadow: 0 4px 20px rgba(74,222,128,0.35);
   white-space: nowrap;
 }
-.btn-green-lg:hover {
-  background: #22c55e;
-  box-shadow: 0 8px 32px rgba(74,222,128,0.5);
-  transform: translateY(-2px);
+@media (hover: hover) {
+  .btn-green-lg:hover {
+    background: #22c55e;
+    box-shadow: 0 8px 32px rgba(74,222,128,0.5);
+    transform: translateY(-2px);
+  }
 }
 
 /* ── STAT CARDS ── */
@@ -275,8 +283,8 @@ nav.scrolled { border-bottom-color: var(--border); }
   background: linear-gradient(135deg, rgba(74,222,128,0.04) 0%, transparent 60%);
   opacity: 0; transition: opacity 0.3s;
 }
-.stat-card:hover { background: var(--bg3); }
-.stat-card:hover::before { opacity: 1; }
+@media (hover: hover) { .stat-card:hover { background: var(--bg3); } }
+@media (hover: hover) { .stat-card:hover::before { opacity: 1; } }
 
 .stat-label-top {
   display: flex; align-items: center; justify-content: center; gap: 6px;
@@ -338,6 +346,7 @@ section {
   line-height: 1.15;
   margin-bottom: 14px;
   color: var(--text);
+  text-wrap: balance; /* no single word stranded on the last line */
 }
 
 .section-sub {
@@ -376,12 +385,14 @@ section {
   transition: transform 0.35s ease;
   border-radius: 0 2px 2px 0;
 }
-.exp-card:hover {
-  border-color: var(--green-border);
-  transform: translateX(6px);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.3), -4px 0 24px rgba(74,222,128,0.06);
+@media (hover: hover) {
+  .exp-card:hover {
+    border-color: var(--green-border);
+    transform: translateX(6px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3), -4px 0 24px rgba(74,222,128,0.06);
+  }
 }
-.exp-card:hover::before { transform: scaleY(1); }
+@media (hover: hover) { .exp-card:hover::before { transform: scaleY(1); } }
 
 .exp-year {
   font-size: 11px; font-weight: 700;
@@ -405,6 +416,7 @@ section {
 }
 
 .tools-more { display: flex; margin-top: 28px; }
+.tools-more .btn-outline { backdrop-filter: none; } /* it sits on a solid background; blur here only costs repaints */
 .tools-more svg { transition: transform 0.3s ease; }
 .tools-more [aria-expanded="true"] svg { transform: rotate(180deg); }
 
@@ -432,12 +444,14 @@ section {
   transform: scaleX(0); transform-origin: left;
   transition: transform 0.4s ease;
 }
-.tool-card:hover {
-  border-color: color-mix(in srgb, var(--c) 45%, transparent);
-  transform: translateY(-5px);
-  box-shadow: 0 16px 44px rgba(0,0,0,0.45);
+@media (hover: hover) {
+  .tool-card:hover {
+    border-color: color-mix(in srgb, var(--c) 45%, transparent);
+    transform: translateY(-5px);
+    box-shadow: 0 16px 44px rgba(0,0,0,0.45);
+  }
 }
-.tool-card:hover::after { transform: scaleX(1); }
+@media (hover: hover) { .tool-card:hover::after { transform: scaleX(1); } }
 
 .tool-head { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
 
@@ -452,8 +466,10 @@ section {
   flex-shrink: 0;
   transition: box-shadow 0.3s;
 }
-.tool-card:hover .tool-icon {
-  box-shadow: 0 0 22px color-mix(in srgb, var(--c) 30%, transparent);
+@media (hover: hover) {
+  .tool-card:hover .tool-icon {
+    box-shadow: 0 0 22px color-mix(in srgb, var(--c) 30%, transparent);
+  }
 }
 
 .tool-meta { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
@@ -510,12 +526,14 @@ section {
   transition: transform 0.4s ease;
   border-radius: 0 0 var(--radius) var(--radius);
 }
-.svc-card:hover {
-  border-color: var(--green-border);
-  transform: translateY(-5px);
-  box-shadow: 0 16px 48px rgba(0,0,0,0.4), 0 0 40px rgba(74,222,128,0.06);
+@media (hover: hover) {
+  .svc-card:hover {
+    border-color: var(--green-border);
+    transform: translateY(-5px);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.4), 0 0 40px rgba(74,222,128,0.06);
+  }
 }
-.svc-card:hover::after { transform: scaleX(1); }
+@media (hover: hover) { .svc-card:hover::after { transform: scaleX(1); } }
 
 .svc-icon {
   width: 52px; height: 52px;
@@ -526,9 +544,11 @@ section {
   margin-bottom: 20px;
   transition: background 0.3s, box-shadow 0.3s;
 }
-.svc-card:hover .svc-icon {
-  background: rgba(74,222,128,0.18);
-  box-shadow: 0 0 24px rgba(74,222,128,0.2);
+@media (hover: hover) {
+  .svc-card:hover .svc-icon {
+    background: rgba(74,222,128,0.18);
+    box-shadow: 0 0 24px rgba(74,222,128,0.2);
+  }
 }
 .svc-icon svg { width: 24px; height: 24px; fill: var(--green); }
 
@@ -552,10 +572,12 @@ section {
   overflow: hidden;
   transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
 }
-.port-card:hover {
-  border-color: var(--green-border);
-  transform: translateY(-5px);
-  box-shadow: 0 16px 48px rgba(0,0,0,0.5), 0 0 40px rgba(74,222,128,0.06);
+@media (hover: hover) {
+  .port-card:hover {
+    border-color: var(--green-border);
+    transform: translateY(-5px);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.5), 0 0 40px rgba(74,222,128,0.06);
+  }
 }
 
 .port-thumb {
@@ -576,7 +598,7 @@ section {
   transition: transform 0.4s ease;
   position: relative; z-index: 1;
 }
-.port-card:hover .port-thumb img { transform: scale(1.06); }
+@media (hover: hover) { .port-card:hover .port-thumb img { transform: scale(1.06); } }
 
 .port-body { padding: 20px 24px; }
 .port-cat {
@@ -603,7 +625,7 @@ section {
   padding: 4px 10px; border-radius: 6px;
   transition: border-color 0.2s, color 0.2s;
 }
-.port-card:hover .tag { border-color: var(--green-border); color: var(--green); }
+@media (hover: hover) { .port-card:hover .tag { border-color: var(--green-border); color: var(--green); } }
 
 /* ── CONTACT ── */
 #contact { background: var(--bg2); }
@@ -626,9 +648,11 @@ section {
   border-radius: 12px;
   transition: border-color 0.3s, box-shadow 0.3s;
 }
-.ci-item:hover {
-  border-color: var(--green-border);
-  box-shadow: 0 0 20px rgba(74,222,128,0.06);
+@media (hover: hover) {
+  .ci-item:hover {
+    border-color: var(--green-border);
+    box-shadow: 0 0 20px rgba(74,222,128,0.06);
+  }
 }
 .ci-icon {
   width: 42px; height: 42px;
@@ -637,7 +661,7 @@ section {
   display: flex; align-items: center; justify-content: center; flex-shrink: 0;
   transition: background 0.3s, box-shadow 0.3s;
 }
-.ci-item:hover .ci-icon { background: rgba(74,222,128,0.18); box-shadow: 0 0 16px rgba(74,222,128,0.2); }
+@media (hover: hover) { .ci-item:hover .ci-icon { background: rgba(74,222,128,0.18); box-shadow: 0 0 16px rgba(74,222,128,0.2); } }
 .ci-icon svg { width: 20px; height: 20px; fill: var(--green); }
 .ci-lbl { font-size: 11px; color: var(--text3); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; }
 .ci-val { font-size: 13px; font-weight: 600; color: var(--text); word-break: break-all; }
@@ -652,12 +676,14 @@ section {
   transition: all 0.25s;
 }
 .social-btn svg { width: 20px; height: 20px; fill: currentColor; }
-.social-btn:hover {
-  background: var(--green-dim);
-  border-color: var(--green-border);
-  color: var(--green);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(74,222,128,0.15);
+@media (hover: hover) {
+  .social-btn:hover {
+    background: var(--green-dim);
+    border-color: var(--green-border);
+    color: var(--green);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(74,222,128,0.15);
+  }
 }
 
 /* Form */
@@ -703,10 +729,12 @@ section {
   transition: all 0.25s;
   box-shadow: 0 4px 20px rgba(74,222,128,0.3);
 }
-.btn-submit:hover {
-  background: #22c55e;
-  box-shadow: 0 8px 32px rgba(74,222,128,0.45);
-  transform: translateY(-2px);
+@media (hover: hover) {
+  .btn-submit:hover {
+    background: #22c55e;
+    box-shadow: 0 8px 32px rgba(74,222,128,0.45);
+    transform: translateY(-2px);
+  }
 }
 .btn-submit svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2.5; flex-shrink: 0; }
 .btn-submit:disabled { opacity: 0.6; cursor: wait; transform: none; }
@@ -767,10 +795,12 @@ footer strong { color: var(--green); font-weight: 600; }
   box-shadow: 0 4px 20px rgba(74,222,128,0.15);
 }
 .scroll-top.visible { opacity: 1; visibility: visible; }
-.scroll-top:hover {
-  background: var(--green); color: var(--bg);
-  box-shadow: 0 8px 28px rgba(74,222,128,0.35);
-  transform: translateY(-2px);
+@media (hover: hover) {
+  .scroll-top:hover {
+    background: var(--green); color: var(--bg);
+    box-shadow: 0 8px 28px rgba(74,222,128,0.35);
+    transform: translateY(-2px);
+  }
 }
 .scroll-top svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2.5; }
 
@@ -809,15 +839,17 @@ footer strong { color: var(--green); font-weight: 600; }
   transform: scaleX(0); transform-origin: right;
   transition: transform 0.3s ease;
 }
-.nav-links a:hover::after,
 .nav-links a.active::after { transform: scaleX(1); transform-origin: left; }
+@media (hover: hover) { .nav-links a:hover::after { transform: scaleX(1); transform-origin: left; } }
 .nav-links a.active { color: var(--text); }
 
 /* Logo interaction */
 .logo-icon { transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s; }
-.logo:hover .logo-icon {
-  transform: rotate(-10deg) scale(1.1);
-  box-shadow: 0 6px 22px rgba(34,197,94,0.6);
+@media (hover: hover) {
+  .logo:hover .logo-icon {
+    transform: rotate(-10deg) scale(1.1);
+    box-shadow: 0 6px 22px rgba(34,197,94,0.6);
+  }
 }
 
 /* Shine sweep across primary buttons */
@@ -831,20 +863,29 @@ footer strong { color: var(--green); font-weight: 600; }
   transition: left 0.6s ease;
   pointer-events: none;
 }
-.btn-green:hover::before, .btn-green-lg:hover::before { left: 150%; }
+@media (hover: hover) { .btn-green:hover::before, .btn-green-lg:hover::before { left: 150%; } }
 
 /* Press feedback — replaces the browser's own tap flash on touch screens */
-.btn-green, .btn-green-lg, .btn-outline, .scroll-top { -webkit-tap-highlight-color: transparent; }
+html { -webkit-tap-highlight-color: transparent; }
 .btn-green:active, .btn-green-lg:active, .btn-outline:active, .scroll-top:active { transform: scale(0.95); }
+
+/* Touch screens get no hover looks (a tap would leave them stuck on); show a brief press cue instead */
+@media (hover: none) {
+  .port-link:active .port-card, .social-btn:active, .lang-toggle:active { border-color: var(--green-border); }
+  .social-btn:active, .lang-toggle:active, .nav-links a:active { color: var(--green); }
+  .btn-submit:active { transform: scale(0.98); }
+}
 
 /* Card title accent on hover */
 .port-body h3, .svc-card h3 { transition: color 0.25s ease; }
-.port-card:hover .port-body h3,
-.svc-card:hover h3 { color: var(--green); }
+@media (hover: hover) {
+  .port-card:hover .port-body h3,
+  .svc-card:hover h3 { color: var(--green); }
+}
 
 /* Service icon springs on hover */
 .svc-icon { transition: background 0.3s, box-shadow 0.3s, transform 0.35s cubic-bezier(0.34,1.56,0.64,1); }
-.svc-card:hover .svc-icon { transform: translateY(-4px) rotate(-8deg); }
+@media (hover: hover) { .svc-card:hover .svc-icon { transform: translateY(-4px) rotate(-8deg); } }
 
 /* Keyboard focus visibility */
 a:focus-visible, button:focus-visible {
@@ -881,7 +922,7 @@ a:focus-visible, button:focus-visible {
   pointer-events: none;
   z-index: 3;
 }
-.tilt:hover .card-glow { opacity: 1; }
+@media (hover: hover) { .tilt:hover .card-glow { opacity: 1; } }
 
 /* Trailing cursor glow ring (sits on top of the native cursor) */
 .cursor-glow {
@@ -931,36 +972,38 @@ a:focus-visible, button:focus-visible {
   .logo-icon { width: 30px; height: 30px; font-size: 14px; }
   .logo { font-size: 16px; gap: 8px; }
 
-  .menu-toggle { display: flex; order: 3; }
+  /* padding enlarges the tap area; the negative margin keeps the icon on the page edge */
+  .menu-toggle { display: flex; order: 3; padding: 12px 6px; margin-right: -6px; }
 
   .nav-links {
     position: fixed;
-    top: 64px; right: -100%;
+    top: 64px; right: 0;
     width: 75%; max-width: 280px;
     height: calc(100vh - 64px);
     height: calc(100dvh - 64px);
-    background: rgba(22,27,34,0.98);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
+    background: var(--bg2); /* solid: no page text ghosting through, and no blur to repaint while it slides */
     border-left: 1px solid var(--border);
     flex-direction: column;
     padding: 28px 24px;
     gap: 0;
-    transition: right 0.35s cubic-bezier(0.4,0,0.2,1);
+    /* slides with transform (no layout work per frame); hidden when closed so it can't be tapped or scrolled to */
+    transform: translateX(100%);
+    visibility: hidden;
+    transition: transform 0.35s cubic-bezier(0.4,0,0.2,1), visibility 0.35s;
     overflow-y: auto;
   }
-  .nav-links.active { right: 0; }
+  .nav-links.active { transform: translateX(0); visibility: visible; }
   .nav-links li { border-bottom: 1px solid var(--border); }
   .nav-links a {
     padding: 16px 0; display: block;
     font-size: 16px; font-weight: 600;
     color: var(--text2);
   }
-  .nav-links a:hover { color: var(--green); }
+  @media (hover: hover) { .nav-links a:hover { color: var(--green); } }
   .nav-links a.active { color: var(--green); }
   .nav-links a::after { display: none; }
 
-  .nav-actions { order: 2; }
+  .nav-actions { order: 2; margin-left: auto; } /* sit beside the menu icon, not adrift mid-bar */
   .btn-green { padding: 8px 14px; font-size: 13px; }
 
   /* HERO */
@@ -996,56 +1039,71 @@ a:focus-visible, button:focus-visible {
   .stat-desc { font-size: 10px; }
 
   /* SECTIONS */
-  section { padding: 72px 20px; }
+  section { padding: 60px 20px; }
   .section-title { letter-spacing: -0.5px; }
+  .section-sub { font-size: 15px; }
   /* slide up, not sideways — a 28px sideways offset pokes past the 20px page padding */
   .reveal-left, .reveal-right { transform: translateY(28px); }
+  /* narrow desktop windows: cards do not lift on hover (touch screens get no hover looks at all) */
+  @media (hover: hover) {
+    .exp-card:hover, .tool-card:hover, .svc-card:hover, .port-card:hover { transform: none; }
+  }
 
   /* ABOUT */
   .about-grid { grid-template-columns: 1fr; margin-top: 40px; gap: 16px; }
   .exp-card { padding: 22px 20px; }
-  .exp-card:hover { transform: none; } /* disable slide on mobile */
 
   /* SKILLS / TOOLS */
+  .tools-more .btn-outline { max-width: none; }
   .skills-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 24px; }
   .tool-card { padding: 20px 16px; }
-  .tool-card:hover { transform: none; }
   .tool-head { gap: 12px; margin-bottom: 16px; }
   .tool-icon { width: 44px; height: 44px; }
 
   /* SERVICES */
-  .services-grid {
-    grid-template-columns: 1fr;
-    max-width: 460px; margin-left: auto; margin-right: auto;
-    margin-top: 40px;
-  }
-  .svc-card { padding: 28px 24px; }
-  .svc-card:hover { transform: none; }
+  .services-grid { grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 40px; }
+  .svc-card { padding: 22px 18px; }
+  .svc-icon { width: 44px; height: 44px; margin-bottom: 16px; }
+  .svc-icon svg { width: 20px; height: 20px; }
+  .svc-card h3 { font-size: 16px; margin-bottom: 8px; }
+  .svc-card p { font-size: 13px; line-height: 1.6; }
 
   /* PORTFOLIO */
-  .port-grid {
-    grid-template-columns: 1fr;
-    max-width: 460px; margin-left: auto; margin-right: auto;
-    margin-top: 40px;
-  }
-  .port-thumb { height: 180px; }
-  .port-card:hover { transform: none; }
-  .port-body { padding: 18px 20px; }
+  .port-grid { grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 40px; }
+  .port-card { height: 100%; } /* both cards in a row end at the same line */
+  .port-thumb { height: 120px; }
+  .port-thumb img { max-width: 64%; max-height: 76%; }
+  .port-body { padding: 14px 14px 16px; }
+  .port-cat { font-size: 10px; letter-spacing: 0.6px; margin-bottom: 6px; }
+  .port-body h3 { font-size: 15px; margin-bottom: 6px; }
+  .port-body p { font-size: 12.5px; line-height: 1.55; margin-bottom: 12px; -webkit-line-clamp: 4; line-clamp: 4; }
+  .tags { gap: 6px; }
+  .tag { font-size: 10px; padding: 3px 7px; }
 
   /* CONTACT */
   .contact-wrap { margin-top: 40px; gap: 32px; }
+  .ci-title { font-size: 22px; }
+  .ci-desc { font-size: 14px; margin-bottom: 24px; }
   .contact-form { padding: 24px 20px; }
   .form-row { grid-template-columns: 1fr; gap: 0; }
-  .ci-val { font-size: 12px; }
+  .fg input, .fg textarea { font-size: 16px; } /* under 16px, iOS Safari zooms the page on focus */
+  /* email on a full row (the address is long); phone and location share the next row, icon above text */
+  .ci-items { display: grid; grid-template-columns: 1fr 1fr; margin-bottom: 24px; }
   .ci-item { padding: 14px 14px; gap: 12px; }
+  .ci-item:first-child { grid-column: 1 / -1; }
+  .ci-item:not(:first-child) { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .ci-val { font-size: 12px; word-break: normal; overflow-wrap: anywhere; } /* wrap at spaces before splitting a word */
   .ci-icon { width: 38px; height: 38px; }
 
   /* FOOTER */
   footer { padding: 28px 20px; }
   footer p { font-size: 13px; }
 
-  /* SCROLL TOP */
-  .scroll-top { bottom: 20px; right: 20px; width: 40px; height: 40px; }
+  /* the cursor ring is a desktop effect; never show it in the phone layout */
+  .cursor-glow { display: none; }
+
+  /* SCROLL TOP — solid here, since on a phone it floats over text rather than the page margin */
+  .scroll-top { bottom: 20px; right: 20px; width: 40px; height: 40px; background: #142a24; }
 }
 
 /* ══════════════════════════════════════
@@ -1061,9 +1119,25 @@ a:focus-visible, button:focus-visible {
   .stat-unit { font-size: 16px; }
 
   .section-title { font-size: clamp(22px, 7vw, 32px); }
+  html[lang="km"] .section-title { font-size: clamp(20px, 6vw, 28px); } /* Khmer runs wider; keeps the last word off its own line */
   .exp-card { padding: 18px 16px; }
-  .skills-grid { grid-template-columns: 1fr; }
-  .svc-card { padding: 24px 18px; }
+  /* tools stay two per row; the card is tightened so names still fit */
+  .skills-grid { gap: 12px; }
+  .tool-card { padding: 14px 12px; }
+  .tool-head { gap: 10px; margin-bottom: 14px; }
+  .tool-icon { width: 36px; height: 36px; border-radius: 10px; font-size: 13px; }
+  .tool-name { font-size: 14px; }
+  .tool-cat { font-size: 10.5px; }
+  .tool-pct { font-size: 13px; }
+  .services-grid { gap: 12px; }
+  .svc-card { padding: 18px 14px; }
+  .svc-card h3 { font-size: 15px; }
+  .svc-card p { font-size: 12.5px; }
+  .port-grid { gap: 12px; }
+  .port-thumb { height: 104px; }
+  .port-body { padding: 12px 12px 14px; }
+  .port-body h3 { font-size: 14px; }
+  .port-body p { font-size: 12px; }
   .contact-form { padding: 20px 16px; }
 
   .social-row { gap: 8px; }
@@ -1079,6 +1153,11 @@ a:focus-visible, button:focus-visible {
   .stat-card { padding: 14px 8px; }
   .stat-number { font-size: 22px; }
   .stat-label-top { display: none; }
+}
+
+/* too narrow for two tool cards side by side */
+@media (max-width: 340px) {
+  .skills-grid { grid-template-columns: 1fr; }
 }
 
 /* ══════════════════════════════════════
@@ -1614,7 +1693,12 @@ a:focus-visible, button:focus-visible {
   if(reduce){ frame(false); return; }
 
   if(fine){
-    addEventListener('mousemove', e=>{ mouse.x=e.clientX; mouse.y=e.clientY; mouse.active=true; }, {passive:true});
+    // pointer events, so a tap (which also fires mouse events) is never taken for the cursor
+    addEventListener('pointermove', e=>{
+      if(e.pointerType!=='mouse'){ mouse.active=false; return; }
+      mouse.x=e.clientX; mouse.y=e.clientY; mouse.active=true;
+    }, {passive:true});
+    addEventListener('pointerdown', e=>{ if(e.pointerType!=='mouse') mouse.active=false; }, {passive:true});
     addEventListener('mouseout', e=>{ if(!e.relatedTarget) mouse.active=false; }, {passive:true});
   }
 
@@ -1637,16 +1721,24 @@ window.addEventListener('scroll',()=>{
   scrollProgress.style.width = (max>0 ? scrollY/max*100 : 0) + '%';
 },{passive:true});
 
-/* ── SCROLLSPY — highlight the nav link of the section in view ── */
+/* ── SCROLLSPY — highlight the nav link of the section at the top of the screen ── */
 const spyLinks = document.querySelectorAll('.nav-links a');
-const spy = new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){
-      spyLinks.forEach(a=>a.classList.toggle('active', a.getAttribute('href')==='#'+e.target.id));
-    }
-  });
-},{rootMargin:'-45% 0px -50% 0px'});
-document.querySelectorAll('section[id]').forEach(s=>spy.observe(s));
+const spySections = [...document.querySelectorAll('section[id]')];
+const SPY_LINE = 180; // px from the top; nav links scroll a section to 80px, so it is always past this line
+let spyQueued = false;
+function spy(){
+  spyQueued = false;
+  // the last section whose top has passed the line — works however short the section is
+  let current = spySections[0];
+  spySections.forEach(s=>{ if(s.getBoundingClientRect().top <= SPY_LINE) current = s; });
+  // at the very bottom the last section wins, even if it is too short to reach the line
+  if(innerHeight + scrollY >= document.documentElement.scrollHeight - 2) current = spySections[spySections.length-1];
+  spyLinks.forEach(a=>a.classList.toggle('active', a.getAttribute('href')==='#'+current.id));
+}
+function queueSpy(){ if(!spyQueued){ spyQueued = true; requestAnimationFrame(spy); } }
+addEventListener('scroll', queueSpy, {passive:true});
+addEventListener('resize', queueSpy, {passive:true});
+spy();
 
 /* ── MOBILE MENU ── */
 const toggle = document.getElementById('menuToggle');
@@ -1983,23 +2075,29 @@ async function sendMsg(){
 
 /* ══════════════════════════════════════
    MOUSE-RELATIVE INTERACTIONS
-   (desktop / fine-pointer only, and skipped for reduced-motion)
+   (a real mouse on a desktop-width screen only, and skipped for reduced-motion)
 ══════════════════════════════════════ */
 (function(){
   const FINE = matchMedia('(hover: hover) and (pointer: fine)').matches;
   const REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
   if(!FINE || REDUCE) return;
 
+  // The check above runs once at load, and a tap also fires mouse events — so everything below
+  // listens to pointer events and ignores whatever is not a mouse on a desktop-width screen.
+  const narrow = matchMedia('(max-width: 768px)');
+  const byMouse = e => e.pointerType === 'mouse' && !narrow.matches;
+
   /* 1 — Hero spotlight follows the cursor */
   const hero = document.getElementById('home');
   if(hero){
-    hero.addEventListener('mousemove', e=>{
+    hero.addEventListener('pointermove', e=>{
+      if(!byMouse(e)) return;
       const r = hero.getBoundingClientRect();
       hero.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%');
       hero.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%');
       hero.classList.add('spot');
     }, {passive:true});
-    hero.addEventListener('mouseleave', ()=> hero.classList.remove('spot'));
+    hero.addEventListener('pointerleave', ()=> hero.classList.remove('spot'));
   }
 
   /* 2 — 3D tilt + inner light sheen on cards */
@@ -2010,10 +2108,12 @@ async function sendMsg(){
     glow.className = 'card-glow';
     card.appendChild(glow);
 
-    card.addEventListener('mouseenter', ()=>{
+    card.addEventListener('pointerenter', e=>{
+      if(!byMouse(e)) return;
       card.style.transition = 'transform .08s linear, border-color .3s ease, box-shadow .3s ease';
     });
-    card.addEventListener('mousemove', e=>{
+    card.addEventListener('pointermove', e=>{
+      if(!byMouse(e)) return;
       const r = card.getBoundingClientRect();
       const px = (e.clientX - r.left) / r.width;   // 0 → 1
       const py = (e.clientY - r.top) / r.height;   // 0 → 1
@@ -2023,7 +2123,8 @@ async function sendMsg(){
       glow.style.setProperty('--gx', (px * 100).toFixed(1) + '%');
       glow.style.setProperty('--gy', (py * 100).toFixed(1) + '%');
     });
-    card.addEventListener('mouseleave', ()=>{
+    card.addEventListener('pointerleave', ()=>{
+      if(!card.style.transform) return; // never tilted (touch, or a narrow screen)
       card.style.transition = 'transform .6s cubic-bezier(.22,1,.36,1), border-color .3s ease, box-shadow .3s ease';
       card.style.transform = '';
     });
@@ -2032,34 +2133,47 @@ async function sendMsg(){
   /* 3 — Magnetic primary buttons */
   document.querySelectorAll('.btn-green-lg, nav .btn-green').forEach(btn=>{
     const S = 0.3; // pull strength
-    btn.addEventListener('mousemove', e=>{
+    btn.addEventListener('pointermove', e=>{
+      if(!byMouse(e)) return;
       const r = btn.getBoundingClientRect();
       const x = (e.clientX - (r.left + r.width / 2)) * S;
       const y = (e.clientY - (r.top + r.height / 2)) * S;
       btn.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px)`;
     });
-    btn.addEventListener('mouseleave', ()=> btn.style.transform = '');
+    btn.addEventListener('pointerleave', ()=> btn.style.transform = '');
   });
 
   /* 4 — Trailing cursor glow ring (lerp follow) */
   const cg = document.getElementById('cursorGlow');
   if(cg){
-    let cx = innerWidth / 2, cy = innerHeight / 2, tx = cx, ty = cy, shown = false;
-    addEventListener('mousemove', e=>{
-      tx = e.clientX; ty = e.clientY;
-      if(!shown){ cg.classList.add('show'); shown = true; }
-    }, {passive:true});
-    addEventListener('mouseout', e=>{ if(!e.relatedTarget){ cg.classList.remove('show'); shown = false; } });
-    (function follow(){
+    let cx = 0, cy = 0, tx = 0, ty = 0, shown = false, raf = null;
+    const follow = ()=>{
       cx += (tx - cx) * 0.18;
       cy += (ty - cy) * 0.18;
       cg.style.transform = `translate(${cx.toFixed(1)}px, ${cy.toFixed(1)}px) translate(-50%, -50%)`;
-      requestAnimationFrame(follow);
-    })();
+      raf = requestAnimationFrame(follow);
+    };
+    const hide = ()=>{
+      if(!shown) return;
+      shown = false;
+      cg.classList.remove('show', 'grow');
+      cancelAnimationFrame(raf);
+    };
+    addEventListener('pointermove', e=>{
+      if(!byMouse(e)) return hide();
+      tx = e.clientX; ty = e.clientY;
+      if(shown) return;
+      shown = true;
+      cx = tx; cy = ty; // appear at the cursor instead of flying in from elsewhere
+      cg.classList.add('show');
+      follow();
+    }, {passive:true});
+    addEventListener('pointerdown', e=>{ if(!byMouse(e)) hide(); }, {passive:true}); // a tap or pen takes over
+    addEventListener('mouseout', e=>{ if(!e.relatedTarget) hide(); });
     document.querySelectorAll('a, button, input, textarea, .tool-card, .svc-card, .port-card, .exp-card, .social-btn, .menu-toggle')
       .forEach(el=>{
-        el.addEventListener('mouseenter', ()=> cg.classList.add('grow'));
-        el.addEventListener('mouseleave', ()=> cg.classList.remove('grow'));
+        el.addEventListener('pointerenter', e=>{ if(byMouse(e)) cg.classList.add('grow'); });
+        el.addEventListener('pointerleave', ()=> cg.classList.remove('grow'));
       });
   }
 })();
