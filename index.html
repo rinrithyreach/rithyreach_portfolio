@@ -843,6 +843,70 @@ footer strong { color: var(--green); font-weight: 600; }
 @media (hover: hover) { .nav-links a:hover::after { transform: scaleX(1); transform-origin: left; } }
 .nav-links a.active { color: var(--text); }
 
+/* Projects dropdown — opens a short list of links, there is no Projects section */
+.nav-drop { position: relative; }
+.nav-drop-btn {
+  font-family: var(--font);
+  font-size: 14px; font-weight: 500;
+  color: var(--text2); background: none; border: none;
+  padding: 0; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 4px;
+  position: relative;
+  transition: color 0.2s;
+}
+.nav-drop-btn svg { transition: transform 0.3s ease; }
+.nav-drop.open .nav-drop-btn { color: var(--text); }
+.nav-drop.open .nav-drop-btn svg { transform: rotate(180deg); }
+.nav-drop-btn::after {
+  content: '';
+  position: absolute; left: 0; bottom: -5px;
+  width: 100%; height: 2px;
+  background: var(--green); border-radius: 2px;
+  transform: scaleX(0); transform-origin: right;
+  transition: transform 0.3s ease;
+}
+.nav-drop.open .nav-drop-btn::after { transform: scaleX(1); transform-origin: left; }
+
+.nav-drop-menu {
+  position: absolute; top: calc(100% + 18px); left: 50%;
+  width: 250px;
+  list-style: none;
+  padding: 8px;
+  background: var(--bg2);
+  border: 1px solid var(--border); border-radius: var(--radius);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.45);
+  opacity: 0; visibility: hidden;
+  transform: translate(-50%, -6px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+}
+.nav-drop-menu::before { /* bridges the gap so the mouse can travel from the button to the list */
+  content: '';
+  position: absolute; left: 0; right: 0; top: -19px; height: 19px;
+}
+.nav-drop.open .nav-drop-menu { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
+.nav-links .nav-drop-menu a {
+  display: flex; align-items: center; gap: 12px;
+  padding: 8px 10px; border-radius: 10px;
+  transition: background 0.2s;
+}
+.nav-links .nav-drop-menu a::after { content: none; }
+.nav-drop-menu img {
+  width: 40px; height: 40px; flex-shrink: 0;
+  object-fit: cover;
+  border-radius: 9px; border: 1px solid var(--border);
+  background: var(--bg3);
+}
+.nd-text { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }
+.nd-title { font-size: 14px; font-weight: 600; color: var(--text); }
+.nd-cat { font-size: 12px; font-weight: 500; color: var(--text3); }
+.nd-go { flex-shrink: 0; color: var(--text3); transition: color 0.2s, transform 0.2s; }
+@media (hover: hover) {
+  .nav-drop-btn:hover { color: var(--text); }
+  .nav-drop-btn:hover::after { transform: scaleX(1); transform-origin: left; }
+  .nav-links .nav-drop-menu a:hover { background: var(--green-dim); }
+  .nav-drop-menu a:hover .nd-go { color: var(--green); transform: translate(2px, -2px); }
+}
+
 /* Logo interaction */
 .logo-icon { transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s; }
 @media (hover: hover) {
@@ -872,7 +936,8 @@ html { -webkit-tap-highlight-color: transparent; }
 /* Touch screens get no hover looks (a tap would leave them stuck on); show a brief press cue instead */
 @media (hover: none) {
   .port-link:active .port-card, .social-btn:active, .lang-toggle:active { border-color: var(--green-border); }
-  .social-btn:active, .lang-toggle:active, .nav-links a:active { color: var(--green); }
+  .social-btn:active, .lang-toggle:active, .nav-links a:active, .nav-drop-btn:active { color: var(--green); }
+  .nav-links .nav-drop-menu a:active { background: var(--green-dim); }
   .btn-submit:active { transform: scale(0.98); }
 }
 
@@ -963,6 +1028,15 @@ a:focus-visible, button:focus-visible {
   .skills-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
+/* Narrow tablets: tighten the bar so all seven links fit beside the logo and buttons */
+@media (max-width: 920px) {
+  nav { padding: 0 24px; }
+  .nav-links { gap: 16px; }
+  .nav-links a, .nav-drop-btn { font-size: 13px; }
+  .lang-toggle { padding: 7px 10px; }
+  .btn-green { padding: 8px 14px; font-size: 13px; }
+}
+
 /* ══════════════════════════════════════
    RESPONSIVE — MOBILE (≤768px)
 ══════════════════════════════════════ */
@@ -993,7 +1067,7 @@ a:focus-visible, button:focus-visible {
     overflow-y: auto;
   }
   .nav-links.active { transform: translateX(0); visibility: visible; }
-  .nav-links li { border-bottom: 1px solid var(--border); }
+  .nav-links > li { border-bottom: 1px solid var(--border); }
   .nav-links a {
     padding: 16px 0; display: block;
     font-size: 16px; font-weight: 600;
@@ -1002,6 +1076,27 @@ a:focus-visible, button:focus-visible {
   @media (hover: hover) { .nav-links a:hover { color: var(--green); } }
   .nav-links a.active { color: var(--green); }
   .nav-links a::after { display: none; }
+
+  /* Projects opens in place, as an accordion under its row */
+  .nav-drop-btn {
+    width: 100%; justify-content: space-between;
+    padding: 16px 0;
+    font-size: 16px; font-weight: 600;
+  }
+  .nav-drop-btn::after { display: none; }
+  .nav-drop.open .nav-drop-btn { color: var(--green); }
+  .nav-drop-menu {
+    position: static; width: auto;
+    padding: 0;
+    background: none; border: none; border-radius: 0; box-shadow: none;
+    opacity: 1; transform: none;
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.3s ease, visibility 0.3s;
+  }
+  .nav-drop-menu::before { display: none; }
+  .nav-drop.open .nav-drop-menu { max-height: 180px; transform: none; }
+  .nav-drop-menu li:last-child { padding-bottom: 10px; }
+  .nav-links .nav-drop-menu a { padding: 8px 8px; font-size: 15px; }
 
   .nav-actions { order: 2; margin-left: auto; } /* sit beside the menu icon, not adrift mid-bar */
   .btn-green { padding: 8px 14px; font-size: 13px; }
@@ -1197,6 +1292,24 @@ a:focus-visible, button:focus-visible {
     <li><a href="#skills" data-i18n="nav.skills">Skills</a></li>
     <li><a href="#services" data-i18n="nav.services">Services</a></li>
     <li><a href="#portfolio" data-i18n="nav.portfolio">Portfolio</a></li>
+    <li class="nav-drop" id="projDrop">
+      <button class="nav-drop-btn" id="projBtn" type="button" aria-expanded="false" aria-controls="projMenu">
+        <span data-i18n="nav.projects">Projects</span>
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <ul class="nav-drop-menu" id="projMenu">
+        <li><a href="https://rinrithyreach.github.io/chess/">
+          <img src="img/chess.webp?v=2" alt="" width="40" height="40" loading="lazy" decoding="async">
+          <span class="nd-text"><span class="nd-title" data-i18n="proj.chess">Chess Game</span><span class="nd-cat" data-i18n="proj.chess.cat">Game</span></span>
+          <svg class="nd-go" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg>
+        </a></li>
+        <li><a href="https://rinrithyreach.github.io/imageup/">
+          <img src="img/imageup.webp" alt="" width="40" height="40" loading="lazy" decoding="async">
+          <span class="nd-text"><span class="nd-title" data-i18n="proj.imageup">Image Upscaler</span><span class="nd-cat" data-i18n="proj.imageup.cat">Tool</span></span>
+          <svg class="nd-go" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg>
+        </a></li>
+      </ul>
+    </li>
     <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
   </ul>
   <div class="nav-actions">
@@ -1529,28 +1642,6 @@ a:focus-visible, button:focus-visible {
         </div>
       </div>
     </a>
-    <a href="https://rinrithyreach.github.io/chess/" class="port-link">
-      <div class="port-card reveal" style="transition-delay:0.4s">
-        <div class="port-thumb"><img src="img/chess.webp?v=2" alt="Chess" width="640" height="502" loading="lazy" decoding="async"></div>
-        <div class="port-body">
-          <div class="port-cat" data-i18n="port6.cat">Game</div>
-          <h3 data-i18n="port6.title">Chess Game</h3>
-          <p data-i18n="port6.desc">Browser chess on a 3D board — share one device with a friend, play against the computer, or create a room and play online on two devices.</p>
-          <div class="tags"><span class="tag">JavaScript</span><span class="tag">Firebase</span><span class="tag">CSS</span></div>
-        </div>
-      </div>
-    </a>
-    <a href="https://rinrithyreach.github.io/imageup/" class="port-link">
-      <div class="port-card reveal" style="transition-delay:0.48s">
-        <div class="port-thumb"><img src="img/imageup.webp" alt="ImageUp AI" width="640" height="400" loading="lazy" decoding="async"></div>
-        <div class="port-body">
-          <div class="port-cat" data-i18n="port7.cat">Tool</div>
-          <h3 data-i18n="port7.title">Image Upscaler</h3>
-          <p data-i18n="port7.desc">ImageUp AI enlarges photos 2×, 4× or 8× with a Real-ESRGAN model that runs entirely in the browser, so images never leave your device.</p>
-          <div class="tags"><span class="tag">JavaScript</span><span class="tag">ONNX Runtime</span><span class="tag">WebGPU</span></div>
-        </div>
-      </div>
-    </a>
   </div>
 </section>
 
@@ -1722,7 +1813,7 @@ window.addEventListener('scroll',()=>{
 },{passive:true});
 
 /* ── SCROLLSPY — highlight the nav link of the section at the top of the screen ── */
-const spyLinks = document.querySelectorAll('.nav-links a');
+const spyLinks = document.querySelectorAll('.nav-links a[href^="#"]');
 const spySections = [...document.querySelectorAll('section[id]')];
 const SPY_LINE = 180; // px from the top; nav links scroll a section to 80px, so it is always past this line
 let spyQueued = false;
@@ -1766,6 +1857,32 @@ document.addEventListener('click', e => {
     document.body.style.overflow = '';
   }
 });
+
+/* ── PROJECTS DROPDOWN ── */
+const projDrop = document.getElementById('projDrop');
+const projBtn = document.getElementById('projBtn');
+const navNarrow = matchMedia('(max-width: 768px)');
+let projTimer, projPointer = '';
+function setProj(open){
+  clearTimeout(projTimer);
+  projDrop.classList.toggle('open', open);
+  projBtn.setAttribute('aria-expanded', open);
+}
+// a mouse opens it by hovering; leaving closes it after a short grace period
+const projHover = e => e.pointerType === 'mouse' && !navNarrow.matches;
+projDrop.addEventListener('pointerenter', e=>{ if(projHover(e)) setProj(true); });
+projDrop.addEventListener('pointerleave', e=>{ if(projHover(e)){ clearTimeout(projTimer); projTimer = setTimeout(()=>setProj(false), 150); } });
+projBtn.addEventListener('pointerdown', e=>{ projPointer = e.pointerType; });
+// taps and the keyboard toggle it; a mouse click keeps the hovered list open instead of shutting it
+projBtn.addEventListener('click', e=>{
+  const mouseClick = e.detail > 0 && projPointer === 'mouse' && !navNarrow.matches;
+  setProj(mouseClick || !projDrop.classList.contains('open'));
+});
+document.addEventListener('click', e=>{ if(!projDrop.contains(e.target)) setProj(false); });
+document.addEventListener('keydown', e=>{
+  if(e.key === 'Escape' && projDrop.classList.contains('open')){ setProj(false); projBtn.focus(); }
+});
+projDrop.addEventListener('focusout', e=>{ if(!projDrop.contains(e.relatedTarget)) setProj(false); });
 
 /* ── SMOOTH SCROLL ── */
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
@@ -1823,7 +1940,9 @@ document.getElementById('footerYear').textContent = new Date().getFullYear();
 const I18N = {
 en: {
   'nav.home':'Home','nav.about':'About','nav.skills':'Skills','nav.services':'Services',
-  'nav.portfolio':'Portfolio','nav.contact':'Contact',
+  'nav.portfolio':'Portfolio','nav.projects':'Projects','nav.contact':'Contact',
+  'proj.chess':'Chess Game','proj.chess.cat':'Game',
+  'proj.imageup':'Image Upscaler','proj.imageup.cat':'Tool',
   'nav.hire':'Hire Me →',
   'hero.badge':'Web Developer &amp; Designer Based in Cambodia',
   'hero.role':'Portfolio',
@@ -1870,10 +1989,6 @@ en: {
   'port4.desc':'Digital front door for a high-level government department — authoritative, accessible, and service-oriented for its citizens.',
   'port5.title':'Student Management System',
   'port5.desc':'Streamlined platform for managing student records, tracking academic progress, and searching the student directory with ease.',
-  'port6.cat':'Game','port6.title':'Chess Game',
-  'port6.desc':'Browser chess on a 3D board — share one device with a friend, play against the computer, or create a room and play online on two devices.',
-  'port7.cat':'Tool','port7.title':'Image Upscaler',
-  'port7.desc':'ImageUp AI enlarges photos 2×, 4× or 8× with a Real-ESRGAN model that runs entirely in the browser, so images never leave your device.',
   'ct.label':'Contact','ct.title':"Let's build something great",
   'ct.sub':"Have a project in mind? Reach out and let's work together.",
   'ct.collab':"Let's Collaborate",
@@ -1891,7 +2006,9 @@ en: {
 },
 km: {
   'nav.home':'ទំព័រដើម','nav.about':'អំពីខ្ញុំ','nav.skills':'ជំនាញ','nav.services':'សេវាកម្ម',
-  'nav.portfolio':'ស្នាដៃ','nav.contact':'ទំនាក់ទំនង',
+  'nav.portfolio':'ស្នាដៃ','nav.projects':'គម្រោង','nav.contact':'ទំនាក់ទំនង',
+  'proj.chess':'ហ្គេមអុក','proj.chess.cat':'ហ្គេម',
+  'proj.imageup':'កម្មវិធីពង្រីករូបភាព','proj.imageup.cat':'ឧបករណ៍',
   'nav.hire':'ជួលខ្ញុំ →',
   'hero.badge':'អ្នកអភិវឌ្ឍន៍គេហទំព័រ និងអ្នករចនា នៅប្រទេសកម្ពុជា',
   'hero.role':'ស្នាដៃរបស់ខ្ញុំ',
@@ -1938,10 +2055,6 @@ km: {
   'port4.desc':'ច្រកទ្វារឌីជីថល សម្រាប់ស្ថាប័នរដ្ឋាភិបាលកម្រិតខ្ពស់ — មានភាពជឿជាក់ ងាយស្រួលប្រើ និងផ្តោតលើសេវាសម្រាប់ប្រជាពលរដ្ឋ។',
   'port5.title':'ប្រព័ន្ធគ្រប់គ្រងនិស្សិត',
   'port5.desc':'វេទិកាសម្រាប់គ្រប់គ្រងកំណត់ត្រានិស្សិត តាមដានវឌ្ឍនភាពសិក្សា និងស្វែងរកព័ត៌មាននិស្សិត យ៉ាងងាយស្រួល។',
-  'port6.cat':'ហ្គេម','port6.title':'ហ្គេមអុក',
-  'port6.desc':'ហ្គេមអុកលើក្តារ 3D ក្នុងកម្មវិធីរុករក — លេងជាមួយមិត្តភក្តិលើឧបករណ៍តែមួយ លេងជាមួយកុំព្យូទ័រ ឬបង្កើតបន្ទប់ដើម្បីលេងអនឡាញលើឧបករណ៍ពីរ។',
-  'port7.cat':'ឧបករណ៍','port7.title':'កម្មវិធីពង្រីករូបភាព',
-  'port7.desc':'ImageUp AI ពង្រីករូបភាព 2×, 4× ឬ 8× ដោយប្រើម៉ូដែល Real-ESRGAN ដែលដំណើរការផ្ទាល់ក្នុងកម្មវិធីរុករក ដូច្នេះរូបភាពមិនចេញពីឧបករណ៍របស់អ្នកឡើយ។',
   'ct.label':'ទំនាក់ទំនង','ct.title':'តោះបង្កើតអ្វីដ៏អស្ចារ្យជាមួយគ្នា',
   'ct.sub':'មានគម្រោងក្នុងចិត្ត? ទាក់ទងមក ហើយយើងធ្វើការជាមួយគ្នា។',
   'ct.collab':'តោះសហការគ្នា',
