@@ -404,104 +404,6 @@ section {
 .exp-desc { font-size: 14px; color: var(--text2); line-height: 1.65; }
 .exp-title + .exp-desc { margin-top: 10px; }
 
-/* ── SKILLS / TOOLS ── */
-#skills { background: var(--bg2); }
-
-.skills-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-  max-width: var(--container);
-  margin: 32px auto 0;
-}
-
-.tools-more { display: flex; margin-top: 28px; }
-.tools-more .btn-outline { backdrop-filter: none; } /* it sits on a solid background; blur here only costs repaints */
-.tools-more svg { transition: transform 0.3s ease; }
-.tools-more [aria-expanded="true"] svg { transform: rotate(180deg); }
-
-/* collapsible: script animates the height between 0 and the measured content height */
-.tools-panel {
-  height: 0; overflow: hidden;
-  transition: height 0.5s cubic-bezier(0.4,0,0.2,1);
-}
-.tools-panel.settled { height: auto; overflow: visible; } /* open and at rest: card hover effects may spill out */
-.tools-panel-inner { display: flow-root; }
-
-.tool-card {
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 26px 24px;
-  position: relative;
-  overflow: hidden;
-  transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
-}
-.tool-card::after {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0; height: 3px;
-  background: var(--c);
-  transform: scaleX(0); transform-origin: left;
-  transition: transform 0.4s ease;
-}
-@media (hover: hover) {
-  .tool-card:hover {
-    border-color: color-mix(in srgb, var(--c) 45%, transparent);
-    transform: translateY(-5px);
-    box-shadow: 0 16px 44px rgba(0,0,0,0.45);
-  }
-}
-@media (hover: hover) { .tool-card:hover::after { transform: scaleX(1); } }
-
-.tool-head { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
-
-.tool-icon {
-  width: 48px; height: 48px;
-  border-radius: 12px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 16px; font-weight: 800; letter-spacing: -0.5px;
-  color: var(--c);
-  background: color-mix(in srgb, var(--c) 14%, transparent);
-  border: 1px solid color-mix(in srgb, var(--c) 32%, transparent);
-  flex-shrink: 0;
-  transition: box-shadow 0.3s;
-}
-@media (hover: hover) {
-  .tool-card:hover .tool-icon {
-    box-shadow: 0 0 22px color-mix(in srgb, var(--c) 30%, transparent);
-  }
-}
-
-.tool-meta { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
-.tool-name { font-size: 15px; font-weight: 700; color: var(--text); letter-spacing: -0.3px; }
-.tool-cat { font-size: 11px; font-weight: 500; color: var(--text3); }
-
-.tool-bar-head {
-  display: flex; justify-content: space-between; align-items: baseline;
-  margin-bottom: 8px;
-}
-.tool-bar-lbl {
-  font-size: 10px; font-weight: 700; color: var(--text3);
-  text-transform: uppercase; letter-spacing: 0.8px;
-}
-.tool-pct { font-size: 14px; font-weight: 800; color: var(--c); }
-
-.tool-track {
-  height: 6px;
-  background: rgba(255,255,255,0.06);
-  border-radius: 100px;
-  overflow: hidden;
-}
-.tool-fill {
-  height: 100%;
-  width: 0;
-  border-radius: 100px;
-  background: var(--c);
-  box-shadow: 0 0 12px color-mix(in srgb, var(--c) 45%, transparent);
-  transition: width 1.4s cubic-bezier(0.4,0,0.2,1);
-}
-.tool-fill.go { width: var(--w); }
-
 /* ── SERVICES ── */
 #services { background: var(--bg2); }
 
@@ -769,7 +671,7 @@ html[lang="km"] .port-body p,
 html[lang="km"] .ci-desc { line-height: 1.95; }
 html[lang="km"] .section-label, html[lang="km"] .exp-year,
 html[lang="km"] .stat-label-top, html[lang="km"] .port-cat,
-html[lang="km"] .tool-bar-lbl, html[lang="km"] .fg label,
+html[lang="km"] .fg label,
 html[lang="km"] .ci-lbl { letter-spacing: 0; }
 
 /* ── FOOTER ── */
@@ -1025,10 +927,9 @@ a:focus-visible, button:focus-visible {
   .contact-wrap { grid-template-columns: 1fr; gap: 40px; }
   .services-grid { grid-template-columns: 1fr 1fr; }
   .port-grid { grid-template-columns: 1fr 1fr; }
-  .skills-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
-/* Narrow tablets: tighten the bar so all seven links fit beside the logo and buttons */
+/* Narrow tablets: tighten the bar so all six links fit beside the logo and buttons */
 @media (max-width: 920px) {
   nav { padding: 0 24px; }
   .nav-links { gap: 16px; }
@@ -1141,19 +1042,12 @@ a:focus-visible, button:focus-visible {
   .reveal-left, .reveal-right { transform: translateY(28px); }
   /* narrow desktop windows: cards do not lift on hover (touch screens get no hover looks at all) */
   @media (hover: hover) {
-    .exp-card:hover, .tool-card:hover, .svc-card:hover, .port-card:hover { transform: none; }
+    .exp-card:hover, .svc-card:hover, .port-card:hover { transform: none; }
   }
 
   /* ABOUT */
   .about-grid { grid-template-columns: 1fr; margin-top: 40px; gap: 16px; }
   .exp-card { padding: 22px 20px; }
-
-  /* SKILLS / TOOLS */
-  .tools-more .btn-outline { max-width: none; }
-  .skills-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 24px; }
-  .tool-card { padding: 20px 16px; }
-  .tool-head { gap: 12px; margin-bottom: 16px; }
-  .tool-icon { width: 44px; height: 44px; }
 
   /* SERVICES */
   .services-grid { grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 40px; }
@@ -1216,14 +1110,6 @@ a:focus-visible, button:focus-visible {
   .section-title { font-size: clamp(22px, 7vw, 32px); }
   html[lang="km"] .section-title { font-size: clamp(20px, 6vw, 28px); } /* Khmer runs wider; keeps the last word off its own line */
   .exp-card { padding: 18px 16px; }
-  /* tools stay two per row; the card is tightened so names still fit */
-  .skills-grid { gap: 12px; }
-  .tool-card { padding: 14px 12px; }
-  .tool-head { gap: 10px; margin-bottom: 14px; }
-  .tool-icon { width: 36px; height: 36px; border-radius: 10px; font-size: 13px; }
-  .tool-name { font-size: 14px; }
-  .tool-cat { font-size: 10.5px; }
-  .tool-pct { font-size: 13px; }
   .services-grid { gap: 12px; }
   .svc-card { padding: 18px 14px; }
   .svc-card h3 { font-size: 15px; }
@@ -1248,11 +1134,6 @@ a:focus-visible, button:focus-visible {
   .stat-card { padding: 14px 8px; }
   .stat-number { font-size: 22px; }
   .stat-label-top { display: none; }
-}
-
-/* too narrow for two tool cards side by side */
-@media (max-width: 340px) {
-  .skills-grid { grid-template-columns: 1fr; }
 }
 
 /* ══════════════════════════════════════
@@ -1289,7 +1170,6 @@ a:focus-visible, button:focus-visible {
   <ul class="nav-links" id="navLinks">
     <li><a href="#home" data-i18n="nav.home">Home</a></li>
     <li><a href="#about" data-i18n="nav.about">About</a></li>
-    <li><a href="#skills" data-i18n="nav.skills">Skills</a></li>
     <li><a href="#services" data-i18n="nav.services">Services</a></li>
     <li><a href="#portfolio" data-i18n="nav.portfolio">Portfolio</a></li>
     <li class="nav-drop" id="projDrop">
@@ -1387,170 +1267,6 @@ a:focus-visible, button:focus-visible {
       <div class="exp-title" data-i18n="exp2.title">Web Developer &amp; Graphic Designer</div>
       <div class="exp-company">Prince Supermarket</div>
       <p class="exp-desc" data-i18n="exp2.desc">Built responsive web applications from concept to deployment, and created brand identities, marketing materials, and digital assets.</p>
-    </div>
-  </div>
-</section>
-
-<!-- SKILLS -->
-<section id="skills">
-  <div class="section-label reveal" data-i18n="tools.label">Skills &amp; Tools</div>
-  <h2 class="section-title reveal" style="transition-delay:.08s" data-i18n="tools.title">Tools &amp; technologies I use</h2>
-  <p class="section-sub reveal" style="transition-delay:.16s" data-i18n="tools.sub">From first sketch to final deploy — the creative and technical toolkit I work with every day.</p>
-
-  <div class="tools-more reveal" style="transition-delay:.24s">
-    <button class="btn-outline" id="toolsToggle" type="button" aria-expanded="false" aria-controls="toolsPanel">
-      <span data-i18n="tools.showAll">Show all tools</span>
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-    </button>
-  </div>
-
-  <div class="tools-panel" id="toolsPanel">
-    <div class="tools-panel-inner">
-      <div class="skills-grid">
-        <div class="tool-card" style="--c:#31A8FF">
-          <div class="tool-head">
-            <div class="tool-icon">Ps</div>
-            <div class="tool-meta">
-              <span class="tool-name">Photoshop</span>
-              <span class="tool-cat" data-i18n="tools.cat.photo">Photo Editing</span>
-            </div>
-          </div>
-          <div class="tool-bar-head"><span class="tool-bar-lbl" data-i18n="tools.proficiency">Proficiency</span><span class="tool-pct">85%</span></div>
-          <div class="tool-track"><div class="tool-fill" style="--w:85%"></div></div>
-        </div>
-
-        <div class="tool-card" style="--c:#FF9A00">
-          <div class="tool-head">
-            <div class="tool-icon">Ai</div>
-            <div class="tool-meta">
-              <span class="tool-name">Illustrator</span>
-              <span class="tool-cat" data-i18n="tools.cat.vector">Vector Design</span>
-            </div>
-          </div>
-          <div class="tool-bar-head"><span class="tool-bar-lbl" data-i18n="tools.proficiency">Proficiency</span><span class="tool-pct">80%</span></div>
-          <div class="tool-track"><div class="tool-fill" style="--w:80%"></div></div>
-        </div>
-
-        <div class="tool-card" style="--c:#F24E1E">
-          <div class="tool-head">
-            <div class="tool-icon">Fig</div>
-            <div class="tool-meta">
-              <span class="tool-name">Figma</span>
-              <span class="tool-cat" data-i18n="skill.uiux">UI / UX Design</span>
-            </div>
-          </div>
-          <div class="tool-bar-head"><span class="tool-bar-lbl" data-i18n="tools.proficiency">Proficiency</span><span class="tool-pct">75%</span></div>
-          <div class="tool-track"><div class="tool-fill" style="--w:75%"></div></div>
-        </div>
-
-        <div class="tool-card" style="--c:#B388FF">
-          <div class="tool-head">
-            <div class="tool-icon">Pr</div>
-            <div class="tool-meta">
-              <span class="tool-name">Premiere Pro</span>
-              <span class="tool-cat" data-i18n="tools.cat.video">Video Editing</span>
-            </div>
-          </div>
-          <div class="tool-bar-head"><span class="tool-bar-lbl" data-i18n="tools.proficiency">Proficiency</span><span class="tool-pct">70%</span></div>
-          <div class="tool-track"><div class="tool-fill" style="--w:70%"></div></div>
-        </div>
-
-        <div class="tool-card" style="--c:#FF2D20">
-          <div class="tool-head">
-            <div class="tool-icon">Lv</div>
-            <div class="tool-meta">
-              <span class="tool-name">Laravel</span>
-              <span class="tool-cat" data-i18n="tools.cat.framework">PHP Framework</span>
-            </div>
-          </div>
-          <div class="tool-bar-head"><span class="tool-bar-lbl" data-i18n="tools.proficiency">Proficiency</span><span class="tool-pct">78%</span></div>
-          <div class="tool-track"><div class="tool-fill" style="--w:78%"></div></div>
-        </div>
-
-        <div class="tool-card" style="--c:#8B92D9">
-          <div class="tool-head">
-            <div class="tool-icon">php</div>
-            <div class="tool-meta">
-              <span class="tool-name">PHP</span>
-              <span class="tool-cat" data-i18n="tools.cat.backend">Backend Logic</span>
-            </div>
-          </div>
-          <div class="tool-bar-head"><span class="tool-bar-lbl" data-i18n="tools.proficiency">Proficiency</span><span class="tool-pct">82%</span></div>
-          <div class="tool-track"><div class="tool-fill" style="--w:82%"></div></div>
-        </div>
-
-        <div class="tool-card" style="--c:#00A8C5">
-          <div class="tool-head">
-            <div class="tool-icon">My</div>
-            <div class="tool-meta">
-              <span class="tool-name">MySQL</span>
-              <span class="tool-cat" data-i18n="tools.cat.database">Database</span>
-            </div>
-          </div>
-          <div class="tool-bar-head"><span class="tool-bar-lbl" data-i18n="tools.proficiency">Proficiency</span><span class="tool-pct">80%</span></div>
-          <div class="tool-track"><div class="tool-fill" style="--w:80%"></div></div>
-        </div>
-
-        <div class="tool-card" style="--c:#F7DF1E">
-          <div class="tool-head">
-            <div class="tool-icon">JS</div>
-            <div class="tool-meta">
-              <span class="tool-name">JavaScript</span>
-              <span class="tool-cat" data-i18n="tools.cat.frontend">Frontend</span>
-            </div>
-          </div>
-          <div class="tool-bar-head"><span class="tool-bar-lbl" data-i18n="tools.proficiency">Proficiency</span><span class="tool-pct">72%</span></div>
-          <div class="tool-track"><div class="tool-fill" style="--w:72%"></div></div>
-        </div>
-
-        <div class="tool-card" style="--c:#61DAFB">
-          <div class="tool-head">
-            <div class="tool-icon">Re</div>
-            <div class="tool-meta">
-              <span class="tool-name">React</span>
-              <span class="tool-cat" data-i18n="tools.cat.uilib">UI Library</span>
-            </div>
-          </div>
-          <div class="tool-bar-head"><span class="tool-bar-lbl" data-i18n="tools.proficiency">Proficiency</span><span class="tool-pct">60%</span></div>
-          <div class="tool-track"><div class="tool-fill" style="--w:60%"></div></div>
-        </div>
-
-        <div class="tool-card" style="--c:#42B883">
-          <div class="tool-head">
-            <div class="tool-icon">Vue</div>
-            <div class="tool-meta">
-              <span class="tool-name">Vue</span>
-              <span class="tool-cat" data-i18n="tools.cat.jsframework">JS Framework</span>
-            </div>
-          </div>
-          <div class="tool-bar-head"><span class="tool-bar-lbl" data-i18n="tools.proficiency">Proficiency</span><span class="tool-pct">65%</span></div>
-          <div class="tool-track"><div class="tool-fill" style="--w:65%"></div></div>
-        </div>
-
-        <div class="tool-card" style="--c:#D9A441">
-          <div class="tool-head">
-            <div class="tool-icon">Nv</div>
-            <div class="tool-meta">
-              <span class="tool-name">Navicat</span>
-              <span class="tool-cat" data-i18n="tools.cat.dbtool">Database Tool</span>
-            </div>
-          </div>
-          <div class="tool-bar-head"><span class="tool-bar-lbl" data-i18n="tools.proficiency">Proficiency</span><span class="tool-pct">70%</span></div>
-          <div class="tool-track"><div class="tool-fill" style="--w:70%"></div></div>
-        </div>
-
-        <div class="tool-card" style="--c:#29B6F6">
-          <div class="tool-head">
-            <div class="tool-icon">Fl</div>
-            <div class="tool-meta">
-              <span class="tool-name">Flutter</span>
-              <span class="tool-cat" data-i18n="tools.cat.mobile">Mobile Apps</span>
-            </div>
-          </div>
-          <div class="tool-bar-head"><span class="tool-bar-lbl" data-i18n="tools.proficiency">Proficiency</span><span class="tool-pct">50%</span></div>
-          <div class="tool-track"><div class="tool-fill" style="--w:50%"></div></div>
-        </div>
-      </div>
     </div>
   </div>
 </section>
@@ -1902,15 +1618,11 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
 /* ── REVEAL ON SCROLL ── */
 const io = new IntersectionObserver(entries=>{
   entries.forEach(e=>{
-    if(e.isIntersecting){
-      e.target.classList.add('in');
-      e.target.querySelectorAll('.tool-fill').forEach(f=>f.classList.add('go'));
-    }
+    if(e.isIntersecting) e.target.classList.add('in');
   });
 },{threshold:0.1,rootMargin:'0px 0px -30px 0px'});
 
-// tool cards are watched too, only so their bars fill when they come into view
-document.querySelectorAll('.reveal,.reveal-left,.reveal-right,.tool-card').forEach(el=>io.observe(el));
+document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el=>io.observe(el));
 
 /* ── COUNT UP ── */
 function countUp(el){
@@ -1944,7 +1656,7 @@ document.getElementById('footerYear').textContent = new Date().getFullYear();
 ══════════════════════════════════════ */
 const I18N = {
 en: {
-  'nav.home':'Home','nav.about':'About','nav.skills':'Skills','nav.services':'Services',
+  'nav.home':'Home','nav.about':'About','nav.services':'Services',
   'nav.portfolio':'Portfolio','nav.projects':'Projects','nav.contact':'Contact',
   'proj.chess':'Chess Game','proj.chess.cat':'Game',
   'proj.imageup':'Image Upscaler','proj.imageup.cat':'Tool',
@@ -1965,16 +1677,7 @@ en: {
   'exp1.desc':"Planning marketing campaigns and creating promotional content to promote products and grow the brand's audience.",
   'exp2.title':'Web Developer &amp; Graphic Designer',
   'exp2.desc':'Built responsive web applications from concept to deployment, and created brand identities, marketing materials, and digital assets.',
-  'skill.web':'Web Development','skill.design':'Graphic Design','skill.uiux':'UI / UX Design',
-  'tools.label':'Skills &amp; Tools','tools.title':'Tools &amp; technologies I use',
-  'tools.sub':'From first sketch to final deploy — the creative and technical toolkit I work with every day.',
-  'tools.proficiency':'Proficiency',
-  'tools.showAll':'Show all tools','tools.hide':'Hide tools',
-  'tools.cat.photo':'Photo Editing','tools.cat.vector':'Vector Design','tools.cat.video':'Video Editing',
-  'tools.cat.framework':'PHP Framework','tools.cat.backend':'Backend Logic',
-  'tools.cat.database':'Database','tools.cat.frontend':'Frontend',
-  'tools.cat.uilib':'UI Library','tools.cat.jsframework':'JS Framework','tools.cat.dbtool':'Database Tool',
-  'tools.cat.mobile':'Mobile Apps',
+  'skill.web':'Web Development','skill.design':'Graphic Design',
   'svc.label':'Services','svc.title':'What I can do for you',
   'svc.sub':'Comprehensive digital solutions tailored to bring your vision to life.',
   'svc1.desc':'Custom websites and web applications built with modern technologies, responsive design, and optimized performance for any device.',
@@ -2011,7 +1714,7 @@ en: {
   'footer.byline':'Portfolio. Designed &amp; Developed by'
 },
 km: {
-  'nav.home':'ទំព័រដើម','nav.about':'អំពីខ្ញុំ','nav.skills':'ជំនាញ','nav.services':'សេវាកម្ម',
+  'nav.home':'ទំព័រដើម','nav.about':'អំពីខ្ញុំ','nav.services':'សេវាកម្ម',
   'nav.portfolio':'ស្នាដៃ','nav.projects':'គម្រោង','nav.contact':'ទំនាក់ទំនង',
   'proj.chess':'ហ្គេមអុក','proj.chess.cat':'ហ្គេម',
   'proj.imageup':'កម្មវិធីពង្រីករូបភាព','proj.imageup.cat':'ឧបករណ៍',
@@ -2032,16 +1735,7 @@ km: {
   'exp1.desc':'រៀបចំយុទ្ធនាការទីផ្សារ និងបង្កើតមាតិកាផ្សព្វផ្សាយ ដើម្បីផ្សព្វផ្សាយផលិតផល និងពង្រីកចំនួនអតិថិជនរបស់ម៉ាក។',
   'exp2.title':'អ្នកអភិវឌ្ឍន៍គេហទំព័រ និងអ្នករចនាក្រាហ្វិក',
   'exp2.desc':'អភិវឌ្ឍកម្មវិធីគេហទំព័រ ពីគំនិតរហូតដល់ការដាក់ឱ្យដំណើរការ និងបង្កើតអត្តសញ្ញាណម៉ាក សម្ភារៈទីផ្សារ និងធនធានឌីជីថល។',
-  'skill.web':'អភិវឌ្ឍន៍គេហទំព័រ','skill.design':'រចនាក្រាហ្វិក','skill.uiux':'រចនា UI / UX',
-  'tools.label':'ជំនាញ និងឧបករណ៍','tools.title':'ឧបករណ៍ និងបច្ចេកវិទ្យាដែលខ្ញុំប្រើ',
-  'tools.sub':'ពីគំនូរព្រាងដំបូង រហូតដល់ការដាក់ឱ្យដំណើរការ — ឧបករណ៍ច្នៃប្រឌិត និងបច្ចេកទេសដែលខ្ញុំប្រើជារៀងរាល់ថ្ងៃ។',
-  'tools.proficiency':'សមត្ថភាព',
-  'tools.showAll':'បង្ហាញឧបករណ៍ទាំងអស់','tools.hide':'លាក់ឧបករណ៍',
-  'tools.cat.photo':'កែរូបភាព','tools.cat.vector':'រចនាវ៉ិចទ័រ','tools.cat.video':'កាត់តវីដេអូ',
-  'tools.cat.framework':'Framework PHP','tools.cat.backend':'ផ្នែក Backend',
-  'tools.cat.database':'មូលដ្ឋានទិន្នន័យ','tools.cat.frontend':'ផ្នែក Frontend',
-  'tools.cat.uilib':'បណ្ណាល័យ UI','tools.cat.jsframework':'Framework JS','tools.cat.dbtool':'ឧបករណ៍មូលដ្ឋានទិន្នន័យ',
-  'tools.cat.mobile':'កម្មវិធីទូរស័ព្ទ',
+  'skill.web':'អភិវឌ្ឍន៍គេហទំព័រ','skill.design':'រចនាក្រាហ្វិក',
   'svc.label':'សេវាកម្ម','svc.title':'អ្វីដែលខ្ញុំអាចធ្វើសម្រាប់អ្នក',
   'svc.sub':'ដំណោះស្រាយឌីជីថលគ្រប់ជ្រុងជ្រោយ រៀបចំតាមតម្រូវការ ដើម្បីធ្វើឱ្យចក្ខុវិស័យរបស់អ្នកក្លាយជាការពិត។',
   'svc1.desc':'គេហទំព័រ និងកម្មវិធីគេហទំព័រតាមតម្រូវការ បង្កើតដោយបច្ចេកវិទ្យាទំនើប រចនាឆ្លើយតបគ្រប់ឧបករណ៍ និងដំណើរការលឿន។',
@@ -2100,29 +1794,6 @@ function setLang(lang){
 
 langToggle.addEventListener('click', ()=> setLang(currentLang === 'en' ? 'km' : 'en'));
 if(currentLang !== 'en') setLang(currentLang);
-
-/* ── TOOLS — hidden until the toggle opens them ── */
-const toolsPanel = document.getElementById('toolsPanel');
-const toolsToggle = document.getElementById('toolsToggle');
-let toolsTimer;
-toolsToggle.addEventListener('click', ()=>{
-  const open = toolsToggle.getAttribute('aria-expanded') !== 'true';
-  const label = toolsToggle.querySelector('span');
-  toolsToggle.setAttribute('aria-expanded', open);
-  label.dataset.i18n = open ? 'tools.hide' : 'tools.showAll';
-  label.innerHTML = I18N[currentLang][label.dataset.i18n];
-
-  // "auto" can't be animated, so pin the current height in px, then go to the target height in px
-  clearTimeout(toolsTimer);
-  toolsPanel.style.height = toolsPanel.offsetHeight + 'px';
-  toolsPanel.classList.remove('settled');
-  toolsPanel.offsetHeight; // flush, so the transition starts from the pinned height
-  toolsPanel.style.height = (open ? toolsPanel.scrollHeight : 0) + 'px';
-  toolsTimer = setTimeout(()=>{
-    toolsPanel.classList.toggle('settled', open);
-    toolsPanel.style.height = '';
-  }, 550);
-});
 
 /* ══════════════════════════════════════
    CONTACT FORM — Web3Forms
@@ -2222,7 +1893,7 @@ async function sendMsg(){
 
   /* 2 — 3D tilt + inner light sheen on cards */
   const TILT = 8; // max degrees
-  document.querySelectorAll('.tool-card, .svc-card, .port-card').forEach(card=>{
+  document.querySelectorAll('.svc-card, .port-card').forEach(card=>{
     card.classList.add('tilt');
     const glow = document.createElement('span');
     glow.className = 'card-glow';
@@ -2290,7 +1961,7 @@ async function sendMsg(){
     }, {passive:true});
     addEventListener('pointerdown', e=>{ if(!byMouse(e)) hide(); }, {passive:true}); // a tap or pen takes over
     addEventListener('mouseout', e=>{ if(!e.relatedTarget) hide(); });
-    document.querySelectorAll('a, button, input, textarea, .tool-card, .svc-card, .port-card, .exp-card, .social-btn, .menu-toggle')
+    document.querySelectorAll('a, button, input, textarea, .svc-card, .port-card, .exp-card, .social-btn, .menu-toggle')
       .forEach(el=>{
         el.addEventListener('pointerenter', e=>{ if(byMouse(e)) cg.classList.add('grow'); });
         el.addEventListener('pointerleave', ()=> cg.classList.remove('grow'));
